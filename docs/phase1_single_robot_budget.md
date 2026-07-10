@@ -1,5 +1,17 @@
 # 一期单台演示机器人预算与采购清单
 
+## 0. 文档状态与关联资料
+
+本文是课题/演示用单台自装机器人预算，采购口径包含 GPS、NFC、电池、基础焊接材料。市场化方向后续量产预算需要单独评估外观、结构、包装、供应链和渠道成本。
+
+| 文档 | 关系 |
+| --- | --- |
+| [document_index.md](document_index.md) | 项目文档总索引 |
+| [xiaozhi_existing_capabilities_analysis.md](xiaozhi_existing_capabilities_analysis.md) | 小智 ESP32 底座能力分析 |
+| [phase1_single_robot_implementation_plan.md](phase1_single_robot_implementation_plan.md) | 单台演示机器人研发落地计划 |
+| [research_topic_related.md](research_topic_related.md) | 课题方向需求说明 |
+| [marketization_related.md](marketization_related.md) | 市场化方向需求说明 |
+
 版本：v0.1  
 日期：2026-07-10  
 采购口径：淘宝或京东可购买；不含云服务器；不含正式外壳；包含 GPS、NFC、电池、基础焊接与固定材料。
@@ -191,4 +203,3 @@ NEO-6M 和 ATGM336H 都可用，一期重点是 UART NMEA 输出。
 - 主控、GPS、NFC 可各买 1 个备用，但备用件会突破 500 元红线，需另批。
 - 一期不把外壳、云服务器、批量生产工具计入本预算。
 - 所有采购订单截图或链接建议保存到项目资料目录，便于后续复盘和量产选型。
-

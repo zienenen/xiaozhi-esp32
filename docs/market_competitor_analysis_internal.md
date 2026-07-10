@@ -1,5 +1,14 @@
 # 市场化方向竞品分析（内部版）
 
+## 0. 关联资料
+
+| 文档 | 关系 |
+| --- | --- |
+| [document_index.md](document_index.md) | 项目文档总索引 |
+| [marketization_related.md](marketization_related.md) | 本竞品分析支撑的市场化需求说明书 |
+| [xiaozhi_existing_capabilities_analysis.md](xiaozhi_existing_capabilities_analysis.md) | 小智 ESP32 底座能力分析 |
+| [research_topic_related.md](research_topic_related.md) | 课题方向，对比市场化方向的另一条叙事 |
+
 ## 1. 分析目的
 
 本分析面向“盲盒多性格 AI 智能体 + 单一实体机器人”的市场化方向，目标不是简单罗列竞品，而是判断：
@@ -219,4 +228,3 @@
 - [Amazon: Loona Robot Pet Dog ChatGPT-4o](https://www.amazon.com/Loona-ChatGPT-4o-AI-Powered-Interaction-Monitoring/dp/B0DCF53PCH)
 - [Miko 官方页面](https://miko.ai/)
 - [Curio 官方页面](https://heycurio.com/)
-

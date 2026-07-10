@@ -1,5 +1,18 @@
 # 一期单台演示机器人落地计划
 
+## 0. 文档状态与关联资料
+
+本文偏研发主管视角，用于单台课题演示机器人的落地执行，包含 GPS/NFC 等硬件验证内容。市场化方向可参考其中的小智固件接入和单角色绑定思路，但不直接继承 GPS/NFC 为市场化一期 P0。
+
+| 文档 | 关系 |
+| --- | --- |
+| [document_index.md](document_index.md) | 项目文档总索引 |
+| [xiaozhi_existing_capabilities_analysis.md](xiaozhi_existing_capabilities_analysis.md) | 小智 ESP32 底座能力分析 |
+| [research_topic_related.md](research_topic_related.md) | 课题方向需求说明 |
+| [marketization_related.md](marketization_related.md) | 市场化方向需求说明 |
+| [phase1_phase2_architecture_plan.md](phase1_phase2_architecture_plan.md) | 一期/二期架构建议 |
+| [phase1_single_robot_budget.md](phase1_single_robot_budget.md) | 单台演示机器人预算与采购 |
+
 版本：v0.1  
 日期：2026-07-10  
 角色视角：研发主管  
@@ -7,7 +20,7 @@
 
 ## 1. 项目定位
 
-本计划基于当前小智 ESP32 固件仓库、`docs/project_role_agents.md`、`docs/blindbox_agent_tourism_demo_prd.md` 和 `docs/phase1_phase2_architecture_plan.md` 收敛而来。
+本计划基于当前小智 ESP32 固件仓库、[project_role_agents.md](project_role_agents.md)、[blindbox_agent_tourism_demo_prd.md](blindbox_agent_tourism_demo_prd.md) 和 [phase1_phase2_architecture_plan.md](phase1_phase2_architecture_plan.md) 收敛而来。
 
 一期目标不是建设完整商业化平台，而是用 1 台自装演示机器人验证最小产品闭环：
 
@@ -258,4 +271,3 @@ main/
 - 景区知识库和 RAG。
 - 自建小智服务端或混合语音链路。
 - 批量硬件结构和外壳设计。
-

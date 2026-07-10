@@ -1,10 +1,39 @@
 # 课题相关方向文档
 
+## 0. 关联资料
+
+| 文档 | 关系 |
+| --- | --- |
+| [document_index.md](document_index.md) | 项目文档总索引 |
+| [xiaozhi_existing_capabilities_analysis.md](xiaozhi_existing_capabilities_analysis.md) | 小智 ESP32 底座能力分析 |
+| [marketization_related.md](marketization_related.md) | 市场化方向需求，和课题方向共用底层能力 |
+| [blindbox_agent_tourism_demo_prd.md](blindbox_agent_tourism_demo_prd.md) | 早期综合 PRD，包含课题方向的原始需求沉淀 |
+| [phase1_phase2_architecture_plan.md](phase1_phase2_architecture_plan.md) | 一期/二期架构建议 |
+| [fullstack_implementation_guide.md](fullstack_implementation_guide.md) | 全栈实施说明 |
+| [phase1_single_robot_implementation_plan.md](phase1_single_robot_implementation_plan.md) | 单台演示机器人研发落地计划 |
+| [phase1_single_robot_budget.md](phase1_single_robot_budget.md) | 单台演示机器人预算与采购 |
+
 ## 1. 方向定位
 
 课题方向面向项目申报、技术验证、科研展示或创新性说明，核心表达不是“卖盲盒”，而是“基于开源智能硬件的多智能体文旅交互系统”。
 
 该方向强调技术路线、系统架构、数据处理、智能体定制、定位触发、人机交互和可验证成果。
+
+## 1.1 当前小智项目可复用能力
+
+课题方向基于小智 ESP32 开源项目展开，不是从零构建硬件交互系统。完整现状分析见 [xiaozhi_existing_capabilities_analysis.md](xiaozhi_existing_capabilities_analysis.md)。
+
+| 已有能力 | 对课题方向的价值 |
+| --- | --- |
+| 语音输入/输出 | 支撑景区讲解、用户问答、位置触发播报 |
+| ASR + LLM + TTS 链路 | 支撑景区数据增强问答和角色化讲解 |
+| Wi-Fi / 4G 网络能力 | 支撑设备与后台、向量知识库、管理端通信 |
+| 设备状态机 | 可接入定位触发、打卡、播报、聆听等流程 |
+| 显示能力 | 可展示设备状态、景点提示、打卡结果 |
+| MCP 工具系统 | 可扩展定位查询、打卡触发、设备状态等工具 |
+| UART 外设接入范式 | 为 GPS 模块接入提供软件参考 |
+| 多板卡适配 | 支撑课题 Demo 选择合适硬件快速验证 |
+| OTA/资源更新 | 支撑课题阶段固件迭代和资源更新 |
 
 ## 2. 课题目标
 
@@ -103,4 +132,3 @@
 | 角色 IP | 差异化智能体人设 |
 | 景区知识库 | 垂直领域知识增强 |
 | 管理端 | 系统配置与实验观测平台 |
-

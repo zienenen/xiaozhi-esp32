@@ -1,5 +1,17 @@
 # 盲盒角色智能体旅游打卡 Demo 需求文档
 
+## 0. 文档状态与关联资料
+
+本文是早期综合 PRD，混合了盲盒角色、景区数据、GPS 打卡、管理端等需求。当前已经拆分为市场化和课题两个方向，后续评审应优先阅读拆分后的方向文档。
+
+| 文档 | 关系 |
+| --- | --- |
+| [document_index.md](document_index.md) | 项目文档总索引 |
+| [marketization_related.md](marketization_related.md) | 市场化方向正式需求说明 |
+| [research_topic_related.md](research_topic_related.md) | 课题方向正式需求说明 |
+| [xiaozhi_existing_capabilities_analysis.md](xiaozhi_existing_capabilities_analysis.md) | 小智 ESP32 底座能力分析 |
+| [phase1_phase2_architecture_plan.md](phase1_phase2_architecture_plan.md) | 一期/二期架构建议 |
+
 ## 1. 项目背景
 
 本 Demo 基于小智 ESP32 开源项目进行二次开发，目标是验证“硬件盲盒角色 IP + 语音智能体 + 景点 GPS 打卡交互”的产品闭环。

@@ -1,5 +1,16 @@
 # Project Role Agents
 
+## Related Documents
+
+| Document | Relationship |
+| --- | --- |
+| [document_index.md](document_index.md) | Project document index |
+| [xiaozhi_existing_capabilities_analysis.md](xiaozhi_existing_capabilities_analysis.md) | Existing Xiaozhi ESP32 capability baseline |
+| [marketization_related.md](marketization_related.md) | Market-facing product requirements |
+| [research_topic_related.md](research_topic_related.md) | Research-topic product requirements |
+| [phase1_phase2_architecture_plan.md](phase1_phase2_architecture_plan.md) | Architecture planning |
+| [phase1_single_robot_implementation_plan.md](phase1_single_robot_implementation_plan.md) | R&D implementation plan |
+
 This project uses four lightweight role agents for coordination:
 
 - Product Manager Agent

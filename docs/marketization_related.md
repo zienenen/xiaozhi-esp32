@@ -1,5 +1,15 @@
 # 市场化方向需求说明书
 
+## 0. 关联资料
+
+| 文档 | 关系 |
+| --- | --- |
+| [document_index.md](document_index.md) | 项目文档总索引 |
+| [xiaozhi_existing_capabilities_analysis.md](xiaozhi_existing_capabilities_analysis.md) | 小智 ESP32 底座能力分析 |
+| [market_competitor_analysis_internal.md](market_competitor_analysis_internal.md) | 市场化竞品分析，支撑本需求定位 |
+| [research_topic_related.md](research_topic_related.md) | 课题方向需求，和本市场化方向共用底层能力但叙事不同 |
+| [blindbox_agent_tourism_demo_prd.md](blindbox_agent_tourism_demo_prd.md) | 早期综合 PRD，保留为需求演进记录 |
+
 ## 1. 产品定位
 
 市场化方向面向 18-26 岁、对潮玩/IP/盲盒/情绪消费有兴趣的年轻用户，尝试把“静态潮玩”升级为“会回应、会陪伴、有人格的 AI 实体角色”。
@@ -46,6 +56,22 @@
 | 购买理由 | 功能是否好用 | 角色是否想拥有、想晒、想互动 |
 | 复购逻辑 | 硬件升级 | 收集不同角色、稀有款、联名款 |
 | 分享点 | 功能演示 | 开盒揭晓、角色金句、人格反差 |
+
+## 1.4 当前小智项目可复用能力
+
+市场化方向不是从零开发硬件语音机器人，而是基于小智 ESP32 开源项目已有能力做产品化改造。完整现状分析见 [xiaozhi_existing_capabilities_analysis.md](xiaozhi_existing_capabilities_analysis.md)。
+
+| 已有能力 | 对市场化方向的价值 |
+| --- | --- |
+| 语音输入/输出 | 支撑角色对话、开盒揭晓、角色金句播报 |
+| ASR + LLM + TTS 链路 | 支撑多性格角色智能体的基础对话能力 |
+| Wi-Fi / 4G 网络能力 | 支撑设备获取绑定角色、角色配置和后台管理 |
+| 设备状态机 | 可接入首次启动、角色加载、待机、说话等流程 |
+| OLED/LCD 显示和通知 | 可展示角色名、状态、简单反馈 |
+| 本地音效 | 可用于开盒、成功、提醒等反馈 |
+| 多板卡适配 | 便于选择硬件快速做市场化 Demo |
+| MCP 工具系统 | 可扩展设备状态、角色配置、原厂控制能力 |
+| OTA/资源更新 | 后续可更新固件、角色资源、音效和配置 |
 
 ## 2. 目标用户
 
