@@ -49,7 +49,7 @@ npm run build
 
 - `/api/v1/device-config` 可返回演示设备配置。
 - `/api/v1/device-heartbeats` 可接收心跳。
-- `/api/v1/location-events` 可接收 GPS 接近摘要。
+- `/api/v1/location-events` 可接收约 10 秒一次的 GPS 位置信息和定位质量。
 - `/api/v1/checkins` 可处理 NFC 打卡。
 - `/api/v1/demo/simulate-checkin` 可生成模拟记录。
 - `/api/v1/demo/overview` 可聚合演示状态。
@@ -91,7 +91,7 @@ npm run build
 
 1. 拉取配置。
 2. 上报心跳。
-3. 上报 GPS 接近事件。
+3. 上报约 10 秒一次的 GPS 位置信息和接近事件。
 4. 上报 NFC 打卡事件。
 5. 重复打卡验证。
 6. 非法标签验证。
@@ -135,7 +135,7 @@ npm run build
 - 日志不输出明文 device token。
 - 前端不展示 device token。
 - `.env` 不提交。
-- GPS 不保存连续轨迹。
+- GPS 按约 10 秒一次上报位置；后端保存最近位置和签到时定位点，不保存长期连续轨迹。
 - 模拟记录有 `source=simulation`。
 - API 错误使用稳定 `code`。
 
@@ -184,4 +184,4 @@ npm run build
 - 前端 build 不通过，不进入页面合并。
 - 模拟打卡不能区分 `source=simulation`，不允许作为演示验收记录。
 - 任何日志输出明文 token，必须阻塞发布。
-- 保存连续 GPS 轨迹，必须重新走产品和安全确认。
+- 保存长期连续 GPS 轨迹或做轨迹回放，必须重新走产品和安全确认。

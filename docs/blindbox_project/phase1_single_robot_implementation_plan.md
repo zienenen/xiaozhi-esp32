@@ -24,9 +24,10 @@ docs/       项目文档
 - 后端：Django + DRF + PostgreSQL。
 - 前端：React + Vite + Ant Design，不采用 Ant Design Pro 完整模板。
 - 数据集：一期不启用 pgvector，先用普通 PostgreSQL + 数据集状态/片段摘要展示。
+- 数据库迁移：主线开发、演示和公网环境统一 PostgreSQL；SQLite 只允许极短期 smoke test，不沉淀演示数据。
 - 工具：先用 `tools/device_simulator/` 跑通软件闭环。
 - 固件：先不动 ESP32 固件核心，待软件闭环稳定后接 GPS/NFC。
-- 部署：当前不引入 Docker Compose，只保留 Nginx/Gunicorn 示例。
+- 部署：一期需要公网演示环境；当前不引入 Docker Compose，先保留 Nginx/Gunicorn 示例。
 
 ## 2. 一期目标
 
@@ -204,13 +205,14 @@ npm run build
 - 接入 GPS UART NMEA。
 - 接入 PN532 NFC。
 - ESP32 拉取后端配置。
-- ESP32 上报 GPS 接近摘要。
+- ESP32 按约 10 秒一次上报 GPS 位置信息和定位质量。
 - ESP32 上报 NFC 打卡。
 - 打卡成功触发角色播报。
 
 验收：
 
 - 室外或靠窗可读取 GPS。
+- 后端能看到约 10 秒级 GPS 位置更新。
 - NFC 可读取合法标签。
 - 后端记录真实设备打卡。
 - 演示页可展示真实设备状态。
@@ -257,3 +259,5 @@ npm run build
 | 前端范围膨胀 | 只做 P0 页面，不做完整后台系统 |
 | 登录权限过重 | 一期演示账号即可 |
 | 模拟数据误导验收 | 强制 `source=simulation` 标记 |
+| SQLite 后续迁移成本 | 主线开发、演示、公网环境统一 PostgreSQL |
+| 公网演示带来安全范围扩大 | 只做公网演示环境，不做完整生产化治理；token、CORS、日志脱敏必须到位 |
