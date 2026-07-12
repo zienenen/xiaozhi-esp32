@@ -24,6 +24,7 @@
 | 发布运行 | [release_operations_runbook.md](release_operations_runbook.md) | 本地运行、演示准备、故障恢复和节点上传规则 |
 | 问题清单 | [rd_lead_question_list.md](rd_lead_question_list.md) | 需要用户确认的问题、默认建议和阻塞规则 |
 | 安全治理 | [security_and_data_governance.md](security_and_data_governance.md) | 一期最低安全与数据治理边界，覆盖设备凭据、GPS/NFC、日志和演示账号 |
+| 开源选型 | [open_source_selection.md](open_source_selection.md) | 一期开源选型与复用边界，明确当前采用组件、暂缓组件和商业化前治理项 |
 | 全栈实施 | [fullstack_implementation_guide.md](fullstack_implementation_guide.md) | 后端、前端、设备端联调实施说明 |
 | 预算采购 | [phase1_single_robot_budget.md](phase1_single_robot_budget.md) | 单台演示机器人采购预算 |
 | 角色分工 | [project_role_agents.md](project_role_agents.md) | 产品、架构、研发、全栈等角色责任边界 |
@@ -62,9 +63,10 @@
 15. [release_operations_runbook.md](release_operations_runbook.md)
 16. [rd_lead_question_list.md](rd_lead_question_list.md)
 17. [security_and_data_governance.md](security_and_data_governance.md)
-18. [phase1_single_robot_budget.md](phase1_single_robot_budget.md)
-19. [project_role_agents.md](project_role_agents.md)
-20. [agent_document_requirements.md](agent_document_requirements.md)
+18. [open_source_selection.md](open_source_selection.md)
+19. [phase1_single_robot_budget.md](phase1_single_robot_budget.md)
+20. [project_role_agents.md](project_role_agents.md)
+21. [agent_document_requirements.md](agent_document_requirements.md)
 
 ## 3. 口径说明
 

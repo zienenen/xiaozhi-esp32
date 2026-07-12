@@ -15,7 +15,8 @@
 7. [release_operations_runbook.md](release_operations_runbook.md) - 一期发布与演示运行手册
 8. [rd_lead_question_list.md](rd_lead_question_list.md) - 研发主管问题清单
 9. [security_and_data_governance.md](security_and_data_governance.md) - 一期最低安全与数据治理边界
-10. [phase1_single_robot_budget.md](phase1_single_robot_budget.md) - 一期预算与淘宝/京东采购清单
+10. [open_source_selection.md](open_source_selection.md) - 一期开源选型与复用边界
+11. [phase1_single_robot_budget.md](phase1_single_robot_budget.md) - 一期预算与淘宝/京东采购清单
 
 ## 当前一期范围
 
@@ -43,6 +44,7 @@
 | `release_operations_runbook.md` | 一期发布、演示和故障处理手册 |
 | `rd_lead_question_list.md` | 需要用户确认的问题清单和默认推进规则 |
 | `security_and_data_governance.md` | 一期最低安全与数据治理边界，覆盖设备凭据、GPS/NFC、日志和演示账号 |
+| `open_source_selection.md` | 一期开源选型与复用边界，明确当前采用组件、暂缓组件和商业化前治理项 |
 | `phase1_single_robot_budget.md` | 一期预算和采购清单 |
 | `fullstack_implementation_guide.md` | 全栈实施说明 |
 | `project_role_agents.md` | 项目角色与协作边界 |

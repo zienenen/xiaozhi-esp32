@@ -54,8 +54,8 @@
 | `release_operations_runbook.md` | 已形成，待用户确认 | 研发主管智能体 + 全栈工程师智能体 | 构建、烧录、发布、回滚、演示流程必须确认 |
 | `espidf_runbook.md` | 待新建 | 全栈工程师智能体 | ESP-IDF 环境、构建、烧录、日志命令必须确认 |
 | `django_react_frontend_product_interaction_spec.md` | 产品交互已确认；API 依赖待全栈补充 | 产品经理智能体 + 全栈工程师智能体 | 页面、交互、状态已确认；API 依赖必须由全栈补充确认 |
-| `security_and_data_governance.md` | 已形成草案，待用户确认 | 架构师智能体 + 研发主管智能体 | 设备 ID、GPS、绑定关系、密钥、日志边界必须确认；一期只做最低边界，完整治理商业化阶段再补 |
-| `open_source_selection.md` | 待新建 | 架构师智能体 | 上游项目、依赖、复用边界、本地改造必须确认 |
+| `security_and_data_governance.md` | 已确认 | 架构师智能体 + 研发主管智能体 | 设备 ID、GPS、绑定关系、密钥、日志边界已确认；一期只做最低边界，完整治理商业化阶段再补 |
+| `open_source_selection.md` | 已确认 | 架构师智能体 | 上游项目、依赖、复用边界、本地改造已确认；一期只做必要选型边界，完整开源治理商业化阶段再补 |
 
 ## 3. 产品经理智能体要求
 
