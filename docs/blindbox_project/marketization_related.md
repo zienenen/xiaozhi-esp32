@@ -5,7 +5,13 @@
 | 文档 | 关系 |
 | --- | --- |
 | [document_index.md](document_index.md) | 项目文档总索引 |
+| [project_role_agents.md](project_role_agents.md) | 项目角色边界 |
+| [agent_document_requirements.md](agent_document_requirements.md) | 智能体文档责任和核对规则 |
 | [xiaozhi_existing_capabilities_analysis.md](xiaozhi_existing_capabilities_analysis.md) | 小智 ESP32 底座能力分析 |
+| [requirements_and_feature_inventory.md](requirements_and_feature_inventory.md) | 双主线需求、优先级和功能清单 |
+| [mvp_product_alignment.md](mvp_product_alignment.md) | 课题优先、市场化兼容的 MVP 口径 |
+| [django_react_frontend_product_interaction_spec.md](django_react_frontend_product_interaction_spec.md) | 三端页面产品交互规格 |
+| [product_manager_handoff_checklist.md](product_manager_handoff_checklist.md) | 产品经理交接清单，说明市场化保留边界和后续角色缺口 |
 | [market_competitor_analysis_internal.md](market_competitor_analysis_internal.md) | 市场化竞品分析，支撑本需求定位 |
 | [research_topic_related.md](research_topic_related.md) | 课题方向需求，和本市场化方向共用底层能力但叙事不同 |
 | [blindbox_agent_tourism_demo_prd.md](blindbox_agent_tourism_demo_prd.md) | 早期综合 PRD，保留为需求演进记录 |

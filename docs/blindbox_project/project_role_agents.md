@@ -6,10 +6,15 @@
 | --- | --- |
 | [document_index.md](document_index.md) | Project document index |
 | [xiaozhi_existing_capabilities_analysis.md](xiaozhi_existing_capabilities_analysis.md) | Existing Xiaozhi ESP32 capability baseline |
+| [requirements_and_feature_inventory.md](requirements_and_feature_inventory.md) | Product requirement and feature inventory |
+| [mvp_product_alignment.md](mvp_product_alignment.md) | MVP scope alignment |
+| [django_react_frontend_product_interaction_spec.md](django_react_frontend_product_interaction_spec.md) | Frontend product interaction spec |
+| [product_manager_handoff_checklist.md](product_manager_handoff_checklist.md) | Product handoff checklist for architecture, R&D, and full-stack work |
 | [marketization_related.md](marketization_related.md) | Market-facing product requirements |
 | [research_topic_related.md](research_topic_related.md) | Research-topic product requirements |
 | [phase1_phase2_architecture_plan.md](phase1_phase2_architecture_plan.md) | Architecture planning |
 | [phase1_single_robot_implementation_plan.md](phase1_single_robot_implementation_plan.md) | R&D implementation plan |
+| [agent_document_requirements.md](agent_document_requirements.md) | Agent document ownership and user confirmation rules |
 
 This project uses four lightweight role agents for coordination:
 
@@ -20,6 +25,10 @@ This project uses four lightweight role agents for coordination:
 
 The goal is to keep responsibility clear without creating extra process.
 
+Document responsibilities and confirmation rules are defined in
+[agent_document_requirements.md](agent_document_requirements.md). Each agent must
+follow that document before creating or changing project documentation.
+
 ## Project Context
 
 Current project: an ESP-IDF based Xiaozhi ESP32 firmware fork for a blind-box
@@ -27,10 +36,11 @@ character companion robot demo.
 
 Main demo direction:
 
-- One hardware device binds to one character IP.
-- The device supports voice interaction.
-- The demo may include GPS scenic check-in and character-based narration.
-- The first version should focus on the smallest working product loop.
+- One hardware device binds to one character IP / one agent.
+- The device supports voice interaction through the Xiaozhi ESP32 baseline.
+- The research-topic phase 1 prioritizes scenic-area data, vectorized knowledge, GPS coarse positioning, NFC precise check-in, and character-based narration.
+- The marketization direction remains a future mainline: blind-box multi-personality agents, single physical robot, factory-bound role, and young trendy-toy users.
+- The first version should focus on the smallest working product loop, without losing the future marketization boundary.
 
 ## Collaboration Flow
 
@@ -69,9 +79,10 @@ Owns:
 For this project, the Product Manager Agent focuses on:
 
 - Whether the blind-box role binding logic is clear.
-- Whether users can understand the character experience.
-- Whether GPS check-in is required in the current milestone.
-- Whether backend/config work is necessary for the demo or can be mocked.
+- Whether research-topic phase 1 P0 is clear: scenic dataset/vector knowledge, one-point GPS/NFC check-in, three-end management, and demo observability.
+- Whether users can understand the character experience and fixed-role binding.
+- Whether marketization needs are retained without expanding the research-topic phase 1 scope.
+- Whether backend/config work is required by product acceptance or can be simplified by architecture/full-stack implementation.
 
 Does not own:
 

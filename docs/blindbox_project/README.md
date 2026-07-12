@@ -8,8 +8,9 @@
 
 1. [document_index.md](document_index.md) - 项目文档索引与阅读顺序
 2. [project_role_agents.md](project_role_agents.md) - 项目角色分工与协作规则
-3. [phase1_single_robot_implementation_plan.md](phase1_single_robot_implementation_plan.md) - 一期单台演示机器人落地计划
-4. [phase1_single_robot_budget.md](phase1_single_robot_budget.md) - 一期预算与淘宝/京东采购清单
+3. [agent_document_requirements.md](agent_document_requirements.md) - 智能体文档责任、缺口补齐和用户核对规则
+4. [phase1_single_robot_implementation_plan.md](phase1_single_robot_implementation_plan.md) - 一期单台演示机器人落地计划
+5. [phase1_single_robot_budget.md](phase1_single_robot_budget.md) - 一期预算与淘宝/京东采购清单
 
 ## 当前一期范围
 
@@ -35,7 +36,15 @@
 | `phase1_single_robot_budget.md` | 一期预算和采购清单 |
 | `fullstack_implementation_guide.md` | 全栈实施说明 |
 | `project_role_agents.md` | 项目角色与协作边界 |
+| `agent_document_requirements.md` | 智能体文档责任、缺失文档补齐顺序和用户核对规则 |
+| `requirements_and_feature_inventory.md` | 双主线需求、优先级、既有功能和待确认项清单 |
+| `mvp_product_alignment.md` | 课题优先、市场化兼容的 MVP 产品口径 |
+| `django_react_frontend_product_interaction_spec.md` | Django + React 三端页面产品交互规格草案 |
+| `product_manager_handoff_checklist.md` | 产品经理交接给架构、研发、全栈的 P0 结论和缺口清单 |
+| `engineering_overview.md` | 已确认的工程架构总览，说明一期工程边界、模块划分、数据流、状态模型和风险 |
+| `frontend_backend_architecture_decision.md` | 前后端架构决策，确认一期采用 Django/DRF + PostgreSQL + React 轻量三端，并套用 xiaozhi.me 语音/MCP 能力 |
+| `web_api_contract.md` | 已确认的一期 Web API 与数据契约，覆盖设备、角色、点位、NFC、打卡、数据集、智能体上下文和知识库查询入口 |
+| `../../PROJECT_STRUCTURE.md` | 当前单仓多模块工程结构说明，标明 `backend/`、`frontend/`、`tools/device_simulator/`、`deploy/` 职责 |
 | `marketization_related.md` | 市场化方向资料 |
 | `market_competitor_analysis_internal.md` | 内部竞品分析 |
 | `research_topic_related.md` | 课题/科研方向资料 |
-

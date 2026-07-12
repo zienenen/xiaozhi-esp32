@@ -5,6 +5,8 @@
 | 文档 | 关系 |
 | --- | --- |
 | [document_index.md](document_index.md) | 项目文档总索引 |
+| [project_role_agents.md](project_role_agents.md) | 项目角色边界 |
+| [agent_document_requirements.md](agent_document_requirements.md) | 智能体文档责任和核对规则 |
 | [marketization_related.md](marketization_related.md) | 本竞品分析支撑的市场化需求说明书 |
 | [xiaozhi_existing_capabilities_analysis.md](xiaozhi_existing_capabilities_analysis.md) | 小智 ESP32 底座能力分析 |
 | [research_topic_related.md](research_topic_related.md) | 课题方向，对比市场化方向的另一条叙事 |

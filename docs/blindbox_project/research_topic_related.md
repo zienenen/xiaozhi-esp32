@@ -5,7 +5,13 @@
 | 文档 | 关系 |
 | --- | --- |
 | [document_index.md](document_index.md) | 项目文档总索引 |
+| [project_role_agents.md](project_role_agents.md) | 项目角色边界 |
+| [agent_document_requirements.md](agent_document_requirements.md) | 智能体文档责任和核对规则 |
 | [xiaozhi_existing_capabilities_analysis.md](xiaozhi_existing_capabilities_analysis.md) | 小智 ESP32 底座能力分析 |
+| [requirements_and_feature_inventory.md](requirements_and_feature_inventory.md) | 双主线需求、优先级和功能清单 |
+| [mvp_product_alignment.md](mvp_product_alignment.md) | 课题优先、市场化兼容的 MVP 口径 |
+| [django_react_frontend_product_interaction_spec.md](django_react_frontend_product_interaction_spec.md) | 三端页面产品交互规格 |
+| [product_manager_handoff_checklist.md](product_manager_handoff_checklist.md) | 产品经理交接清单，说明课题 P0 结论和后续资料缺口 |
 | [marketization_related.md](marketization_related.md) | 市场化方向需求，和课题方向共用底层能力 |
 | [blindbox_agent_tourism_demo_prd.md](blindbox_agent_tourism_demo_prd.md) | 早期综合 PRD，包含课题方向的原始需求沉淀 |
 | [phase1_phase2_architecture_plan.md](phase1_phase2_architecture_plan.md) | 一期/二期架构建议 |
@@ -41,7 +47,7 @@
 | --- | --- |
 | 验证开源硬件智能体改造能力 | 基于小智 ESP32 项目实现定制化语音智能硬件 |
 | 验证景区数据驱动智能体 | 使用景区资料构建向量知识库，为智能体提供可靠内容 |
-| 验证 GPS 场景触发交互 | 设备到达指定地点后自动触发打卡和讲解 |
+| 验证 GPS/NFC 场景触发交互 | 设备接近指定地点后由 GPS 粗定位提醒，再通过 NFC 精准确认打卡和讲解 |
 | 验证多角色表达差异 | 不同智能体基于同一景区数据呈现不同讲解风格 |
 | 验证管理与观测能力 | 通过管理端配置设备、智能体、景点和数据集 |
 
@@ -53,7 +59,7 @@
 | 智能体定制 | 基于角色 prompt、音色配置和景区知识库实现差异化智能体 |
 | 景区数据处理 | 原始资料清洗、文本拆分、metadata 标注、向量化入库 |
 | 检索增强生成 | 根据用户问题和当前景点上下文检索资料并生成回答 |
-| GPS 到点识别 | 基于经纬度、半径和防抖机制实现地点触发 |
+| GPS/NFC 到点识别 | 基于经纬度、半径和防抖机制实现接近提醒，再通过 NFC 标签完成精准确认 |
 | 系统管理 | 通过三端管理页面完成设备、角色、景点、数据集配置 |
 
 ## 4. 课题核心功能清单
@@ -67,10 +73,11 @@
 | 数据层 | 景区数据集 | 接入景区资料、FAQ、讲解文本 | P0 |
 | 数据层 | 文本拆分 | 按景点、主题、段落拆分 chunk | P0 |
 | 数据层 | 向量数据库 | 支持语义检索和 metadata 过滤 | P0 |
-| 交互层 | GPS 打卡 | 到指定地点触发打卡 | P0 |
+| 交互层 | GPS 粗定位提醒 | 到指定地点范围后触发靠近提醒 | P0 |
+| 交互层 | NFC 精准打卡 | 读取合法 NFC 标签后完成指定点位打卡 | P0 |
 | 交互层 | 景点问答 | 基于当前景点上下文回答问题 | P0 |
 | 管理端 | 三端页面 | PC/平板/手机配置和查看状态 | P0 |
-| 观测 | 打卡记录 | 查看设备打卡结果和时间 | P1 |
+| 观测 | 打卡记录 | 查看设备打卡结果、时间、点位和失败原因 | P0 |
 
 ## 5. 一期课题 Demo 范围
 
@@ -80,7 +87,7 @@
 | 设备身份识别 | 是 | 用于绑定和管理 |
 | 智能体配置 | 是 | 人设、音色、知识库 |
 | 景区数据向量化 | 是 | 课题核心能力之一 |
-| GPS 到点打卡 | 是 | 场景触发能力 |
+| GPS 粗定位 + NFC 精准打卡 | 是 | GPS 负责接近提醒，NFC 负责最终打卡确认 |
 | 角色化讲解 | 是 | 体现多智能体差异 |
 | 三端管理页面 | 是 | 配置与演示必需 |
 | 复杂商城/用户资产 | 否 | 属于市场化方向 |
@@ -103,10 +110,10 @@
   景区数据集 / 文本拆分 / Metadata / 向量数据库 / RAG 检索
 
 业务应用层
-  设备管理 / 角色管理 / 景点管理 / GPS 打卡 / 打卡记录
+  设备管理 / 角色管理 / 景点管理 / GPS 接近提醒 / NFC 精准打卡 / 打卡记录
 
 展示层
-  管理端三端页面 / GPS 打卡展示页面
+  管理端三端页面 / GPS/NFC 打卡展示页面
 ```
 
 ## 7. 课题验收指标
@@ -116,7 +123,8 @@
 | 设备识别成功 | 后台能识别指定硬件 device_id |
 | 智能体加载成功 | 设备能使用绑定角色的人设和音色 |
 | 景区数据检索成功 | 用户提问时能召回对应景点资料 |
-| GPS 打卡成功 | 进入指定半径后触发打卡 |
+| GPS 接近提醒成功 | 进入指定半径后提示靠近 NFC 点 |
+| NFC 精准打卡成功 | 读取合法 NFC 标签后完成打卡 |
 | 防重复有效 | 同一景点不会连续重复触发 |
 | 三端管理可用 | PC/平板/手机可查看和配置核心数据 |
 | 问答内容可解释 | 回答可追溯到景区数据片段 |

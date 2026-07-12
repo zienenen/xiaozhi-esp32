@@ -7,6 +7,8 @@
 | 文档 | 关系 |
 | --- | --- |
 | [document_index.md](document_index.md) | 项目文档总索引 |
+| [project_role_agents.md](project_role_agents.md) | 项目角色边界 |
+| [agent_document_requirements.md](agent_document_requirements.md) | 智能体文档责任和核对规则 |
 | [xiaozhi_existing_capabilities_analysis.md](xiaozhi_existing_capabilities_analysis.md) | 小智 ESP32 底座能力分析 |
 | [phase1_single_robot_implementation_plan.md](phase1_single_robot_implementation_plan.md) | 单台演示机器人研发落地计划 |
 | [research_topic_related.md](research_topic_related.md) | 课题方向需求说明 |
@@ -195,4 +197,3 @@ NEO-6M 和 ATGM336H 都可用，一期重点是 UART NMEA 输出。
 | 电池 | 电压正常，无鼓包，无破损。 |
 | 升压模块 | 输出 5V 稳定，再接主控。 |
 | 数据线 | 能烧录，不只是充电。 |
-

@@ -9,12 +9,15 @@ sdkconfig.old
 sdkconfig
 dependencies.lock
 .env
+.venv/
+node_modules/
 releases/
 main/assets/lang_config.h
 main/mmap_generate_emoji.h
 .DS_Store
 .cache
 *.pyc
+*.tsbuildinfo
 *.bin
 mmap_generate_*.h
 .clangd

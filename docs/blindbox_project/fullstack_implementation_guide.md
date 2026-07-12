@@ -7,6 +7,8 @@
 | 文档 | 关系 |
 | --- | --- |
 | [document_index.md](document_index.md) | 项目文档总索引 |
+| [project_role_agents.md](project_role_agents.md) | 项目角色边界 |
+| [agent_document_requirements.md](agent_document_requirements.md) | 智能体文档责任和核对规则 |
 | [xiaozhi_existing_capabilities_analysis.md](xiaozhi_existing_capabilities_analysis.md) | 小智 ESP32 底座能力分析 |
 | [research_topic_related.md](research_topic_related.md) | 课题方向需求说明 |
 | [marketization_related.md](marketization_related.md) | 市场化方向需求说明 |
@@ -70,32 +72,51 @@ flowchart TD
 
 ## 3. 推荐仓库结构
 
-当前仓库是固件仓库。一期可以在仓库内先增加 `server/` 和 `web/`，也可以拆成独立仓库。课题 Demo 阶段建议先放在当前仓库，便于统一交付。
+当前仓库是固件仓库。一期已确认采用单仓多模块方案：保留 `main/` 作为小智 ESP32 固件目录，新增 `backend/`、`frontend/`、`tools/device_simulator/` 和 `deploy/`。课题 Demo 阶段先放在当前仓库，便于统一交付。
 
 ```text
 xiaozhi-esp32-main/
   main/
-    location/
-    nfc/
-    checkin/
-    agent/
-  server/
+    # 原小智 ESP32 固件，后续只接入设备侧 API 调用
+  backend/
     manage.py
-    pyproject.toml
+    requirements.txt
     config/
     apps/
       devices/
       agents/
       spots/
-      checkins/
       nfc_tags/
-  web/
-    admin/
-    mobile/
+      checkins/
+      datasets/
+      demo/
+  frontend/
+    package.json
+    src/
+      app/
+      pages/
+      shared/
+  tools/
+    device_simulator/
+  deploy/
   docs/
-    phase1_phase2_architecture_plan.md
-    fullstack_implementation_guide.md
+    blindbox_project/
+  PROJECT_STRUCTURE.md
 ```
+
+当前脚手架状态：
+
+| 模块 | 状态 | 说明 |
+| --- | --- | --- |
+| `backend/` | 已创建 | Django 配置、DRF、apps 分层、`.env.example`、`requirements.txt` 已就位 |
+| `frontend/` | 已创建 | React/Vite/TypeScript/Ant Design、P0 页面入口、`package.json` 已就位 |
+| `tools/device_simulator/` | 已创建 | 可模拟设备配置拉取、心跳、GPS 接近和 NFC 打卡 |
+| `deploy/` | 已创建 | 提供简易本地/服务器部署说明、环境变量示例、Nginx/Gunicorn 可选参考；Docker Compose 后置 |
+
+框架验证：
+
+- 后端：`.venv\Scripts\python manage.py check` 已通过。
+- 前端：`npm run build` 已通过。
 
 ## 4. 后端模块设计
 
@@ -108,6 +129,8 @@ xiaozhi-esp32-main/
 | `spots` | 景点名称、经纬度、GPS 提醒半径、启用状态 |
 | `nfc_tags` | NFC 标签、所属景点、启用状态、安全版本 |
 | `checkins` | 打卡事件、幂等、防重复、记录查询 |
+| `datasets` | 真实景区数据集状态、摘要片段、知识查询 |
+| `demo` | 演示总览、无硬件模拟打卡 |
 
 ### 4.2 核心数据模型
 
