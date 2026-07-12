@@ -18,7 +18,12 @@
 | 课题需求 | [research_topic_related.md](research_topic_related.md) | 面向课题/科研/项目申报的景区数据 + GPS 智能体方向 |
 | 综合早期 PRD | [blindbox_agent_tourism_demo_prd.md](blindbox_agent_tourism_demo_prd.md) | 早期综合版，包含盲盒、景区、GPS、后台等混合需求，后续应拆分引用 |
 | 架构建议 | [phase1_phase2_architecture_plan.md](phase1_phase2_architecture_plan.md) | 一期/二期架构建议，偏课题 Demo 与工程落地 |
-| 实施计划 | [phase1_single_robot_implementation_plan.md](phase1_single_robot_implementation_plan.md) | 单台演示机器人落地计划，偏研发执行 |
+| 实施计划 | [phase1_single_robot_implementation_plan.md](phase1_single_robot_implementation_plan.md) | 一期工程实施计划，偏研发执行 |
+| 研发流程 | [development_process.md](development_process.md) | 单仓多模块开发流程、阶段门、提交规则 |
+| 测试质量 | [testing_and_quality.md](testing_and_quality.md) | 后端、前端、模拟器、硬件接入质量门 |
+| 发布运行 | [release_operations_runbook.md](release_operations_runbook.md) | 本地运行、演示准备、故障恢复和节点上传规则 |
+| 问题清单 | [rd_lead_question_list.md](rd_lead_question_list.md) | 需要用户确认的问题、默认建议和阻塞规则 |
+| 安全治理 | [security_and_data_governance.md](security_and_data_governance.md) | 一期最低安全与数据治理边界，覆盖设备凭据、GPS/NFC、日志和演示账号 |
 | 全栈实施 | [fullstack_implementation_guide.md](fullstack_implementation_guide.md) | 后端、前端、设备端联调实施说明 |
 | 预算采购 | [phase1_single_robot_budget.md](phase1_single_robot_budget.md) | 单台演示机器人采购预算 |
 | 角色分工 | [project_role_agents.md](project_role_agents.md) | 产品、架构、研发、全栈等角色责任边界 |
@@ -52,9 +57,14 @@
 10. [phase1_phase2_architecture_plan.md](phase1_phase2_architecture_plan.md)
 11. [fullstack_implementation_guide.md](fullstack_implementation_guide.md)
 12. [phase1_single_robot_implementation_plan.md](phase1_single_robot_implementation_plan.md)
-13. [phase1_single_robot_budget.md](phase1_single_robot_budget.md)
-14. [project_role_agents.md](project_role_agents.md)
-15. [agent_document_requirements.md](agent_document_requirements.md)
+13. [development_process.md](development_process.md)
+14. [testing_and_quality.md](testing_and_quality.md)
+15. [release_operations_runbook.md](release_operations_runbook.md)
+16. [rd_lead_question_list.md](rd_lead_question_list.md)
+17. [security_and_data_governance.md](security_and_data_governance.md)
+18. [phase1_single_robot_budget.md](phase1_single_robot_budget.md)
+19. [project_role_agents.md](project_role_agents.md)
+20. [agent_document_requirements.md](agent_document_requirements.md)
 
 ## 3. 口径说明
 
@@ -65,7 +75,7 @@
 | 小智 ESP32 | 两个方向共用的硬件语音交互底座 |
 | 景区/GPS | 课题方向 P0；市场化方向作为后续场景扩展 |
 | 管理端 | 市场化和课题方向都需要一期最小管理能力，但管理对象不同 |
-| 一期技术框架 | ESP32 小智固件 + `xiaozhi.me` 语音/MCP 不可见依赖 + Django/DRF + PostgreSQL + React/Ant Design Pro 轻量三端 |
+| 一期技术框架 | ESP32 小智固件 + `xiaozhi.me` 语音/MCP 不可见依赖 + Django/DRF + PostgreSQL + React/Vite/Ant Design 轻量三端 |
 | 官网能力 | 一期不复刻官网页面；官网仅作为内部依赖，对外展示自研页面和景区业务闭环 |
 | 工程脚手架 | 已采用单仓多模块：`main/` 保留固件，`backend/` 放 Django/DRF，`frontend/` 放 React/Vite，`tools/device_simulator/` 放无硬件模拟器，`deploy/` 放部署参考 |
 | 早期综合 PRD | 保留为需求演进记录，不作为单一最终口径 |

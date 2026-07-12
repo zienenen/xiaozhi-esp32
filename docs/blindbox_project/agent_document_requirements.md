@@ -49,12 +49,12 @@
 | `engineering_overview.md` | 已确认 | 架构师智能体 | 架构现状、模块边界、数据流、风险已确认；后续变更需再次确认 |
 | `frontend_backend_architecture_decision.md` | 已确认 | 架构师智能体 | 技术选型、方案比较、最终建议已确认；后续变更需再次确认 |
 | `web_api_contract.md` | 已确认，待全栈按实现细化 | 架构师智能体 + 全栈工程师智能体 | API、数据模型、错误、兼容策略已确认；实现细节由全栈补充 |
-| `development_process.md` | 待新建 | 研发主管智能体 | 需求、开发、评审、合并、复盘流程必须确认 |
-| `testing_and_quality.md` | 待新建 | 研发主管智能体 | 测试层级、质量门、回归清单必须确认 |
-| `release_operations_runbook.md` | 待新建 | 研发主管智能体 + 全栈工程师智能体 | 构建、烧录、发布、回滚、演示流程必须确认 |
+| `development_process.md` | 已形成，待用户确认 | 研发主管智能体 | 需求、开发、评审、合并、复盘流程必须确认 |
+| `testing_and_quality.md` | 已形成，待用户确认 | 研发主管智能体 | 测试层级、质量门、回归清单必须确认 |
+| `release_operations_runbook.md` | 已形成，待用户确认 | 研发主管智能体 + 全栈工程师智能体 | 构建、烧录、发布、回滚、演示流程必须确认 |
 | `espidf_runbook.md` | 待新建 | 全栈工程师智能体 | ESP-IDF 环境、构建、烧录、日志命令必须确认 |
 | `django_react_frontend_product_interaction_spec.md` | 产品交互已确认；API 依赖待全栈补充 | 产品经理智能体 + 全栈工程师智能体 | 页面、交互、状态已确认；API 依赖必须由全栈补充确认 |
-| `security_and_data_governance.md` | 待新建 | 架构师智能体 + 研发主管智能体 | 设备 ID、GPS、绑定关系、密钥、日志边界必须确认 |
+| `security_and_data_governance.md` | 已形成草案，待用户确认 | 架构师智能体 + 研发主管智能体 | 设备 ID、GPS、绑定关系、密钥、日志边界必须确认；一期只做最低边界，完整治理商业化阶段再补 |
 | `open_source_selection.md` | 待新建 | 架构师智能体 | 上游项目、依赖、复用边界、本地改造必须确认 |
 
 ## 3. 产品经理智能体要求

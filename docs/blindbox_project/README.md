@@ -9,8 +9,13 @@
 1. [document_index.md](document_index.md) - 项目文档索引与阅读顺序
 2. [project_role_agents.md](project_role_agents.md) - 项目角色分工与协作规则
 3. [agent_document_requirements.md](agent_document_requirements.md) - 智能体文档责任、缺口补齐和用户核对规则
-4. [phase1_single_robot_implementation_plan.md](phase1_single_robot_implementation_plan.md) - 一期单台演示机器人落地计划
-5. [phase1_single_robot_budget.md](phase1_single_robot_budget.md) - 一期预算与淘宝/京东采购清单
+4. [phase1_single_robot_implementation_plan.md](phase1_single_robot_implementation_plan.md) - 一期工程实施计划
+5. [development_process.md](development_process.md) - 一期研发流程
+6. [testing_and_quality.md](testing_and_quality.md) - 一期测试与质量门
+7. [release_operations_runbook.md](release_operations_runbook.md) - 一期发布与演示运行手册
+8. [rd_lead_question_list.md](rd_lead_question_list.md) - 研发主管问题清单
+9. [security_and_data_governance.md](security_and_data_governance.md) - 一期最低安全与数据治理边界
+10. [phase1_single_robot_budget.md](phase1_single_robot_budget.md) - 一期预算与淘宝/京东采购清单
 
 ## 当前一期范围
 
@@ -32,7 +37,12 @@
 | `xiaozhi_existing_capabilities_analysis.md` | 小智现有能力分析 |
 | `blindbox_agent_tourism_demo_prd.md` | 盲盒角色旅游打卡 Demo 需求 |
 | `phase1_phase2_architecture_plan.md` | 一期/二期架构建议 |
-| `phase1_single_robot_implementation_plan.md` | 一期单台机器人落地计划 |
+| `phase1_single_robot_implementation_plan.md` | 一期工程实施计划 |
+| `development_process.md` | 一期研发流程、阶段门、提交规则 |
+| `testing_and_quality.md` | 一期测试与质量门 |
+| `release_operations_runbook.md` | 一期发布、演示和故障处理手册 |
+| `rd_lead_question_list.md` | 需要用户确认的问题清单和默认推进规则 |
+| `security_and_data_governance.md` | 一期最低安全与数据治理边界，覆盖设备凭据、GPS/NFC、日志和演示账号 |
 | `phase1_single_robot_budget.md` | 一期预算和采购清单 |
 | `fullstack_implementation_guide.md` | 全栈实施说明 |
 | `project_role_agents.md` | 项目角色与协作边界 |

@@ -1,275 +1,259 @@
-# 一期单台演示机器人落地计划
+# 一期工程实施计划
 
-## 0. 文档状态与关联资料
+文档状态：pending_user_confirmation
+主责角色：研发主管
+更新时间：2026-07-12
 
-本文偏研发主管视角，用于单台课题演示机器人的落地执行，包含 GPS/NFC 等硬件验证内容。市场化方向可参考其中的小智固件接入和单角色绑定思路，但不直接继承 GPS/NFC 为市场化一期 P0。
+## 1. 当前确认口径
 
-| 文档 | 关系 |
-| --- | --- |
-| [document_index.md](document_index.md) | 项目文档总索引 |
-| [project_role_agents.md](project_role_agents.md) | 项目角色边界 |
-| [agent_document_requirements.md](agent_document_requirements.md) | 智能体文档责任和核对规则 |
-| [xiaozhi_existing_capabilities_analysis.md](xiaozhi_existing_capabilities_analysis.md) | 小智 ESP32 底座能力分析 |
-| [research_topic_related.md](research_topic_related.md) | 课题方向需求说明 |
-| [marketization_related.md](marketization_related.md) | 市场化方向需求说明 |
-| [phase1_phase2_architecture_plan.md](phase1_phase2_architecture_plan.md) | 一期/二期架构建议 |
-| [phase1_single_robot_budget.md](phase1_single_robot_budget.md) | 单台演示机器人预算与采购 |
+一期不再按“纯硬件四周 Demo”执行，而按已确认架构拆成软件闭环优先、硬件接入后置的工程计划。
 
-版本：v0.1  
-日期：2026-07-10  
-角色视角：研发主管  
-适用仓库：`xiaozhi-esp32-main`
-
-## 1. 项目定位
-
-本计划基于当前小智 ESP32 固件仓库、[project_role_agents.md](project_role_agents.md)、[blindbox_agent_tourism_demo_prd.md](blindbox_agent_tourism_demo_prd.md) 和 [phase1_phase2_architecture_plan.md](phase1_phase2_architecture_plan.md) 收敛而来。
-
-一期目标不是建设完整商业化平台，而是用 1 台自装演示机器人验证最小产品闭环：
-
-> 用户携带一个绑定固定角色 IP 的小智机器人，到达指定演示点位附近后，设备通过 GPS 判断接近，通过 NFC 精准确认打卡，并以角色口吻主动播报，随后可继续进行景点相关问答。
-
-## 2. 六字段需求定义
-
-| 字段 | 内容 |
-| --- | --- |
-| 背景 | 当前项目要验证“盲盒角色 IP + 语音智能体 + 景点打卡互动”是否具备演示价值和继续投入价值。 |
-| 用户 | 项目发起人、研发/调试人员、演示观看者；一期不面向真实游客规模化使用。 |
-| 输入 | 设备上电、Wi-Fi 配网、小智官方语音链路、GPS 坐标、NFC 标签、角色配置、景点配置。 |
-| 输出 | 设备播报、串口日志、打卡状态、本地记录、可拍摄的完整演示流程。 |
-| 边界 | 不做云服务器预算，不做正式外壳，不做 App，不做完整后台，不做商城/会员/长记忆/多景区路线。 |
-| 验收 | 1 台设备可完成“启动 -> 角色对话 -> GPS 接近 -> NFC 打卡 -> 角色播报 -> 景点问答”的连续演示。 |
-
-## 3. 一期范围
-
-### 3.1 P0 必做
-
-| 编号 | 功能 | 验收标准 |
-| --- | --- | --- |
-| P0-01 | 自装硬件跑通 | ESP32-S3、麦克风、功放喇叭、GPS、NFC、电池供电可同时工作。 |
-| P0-02 | 小智基础语音链路 | 设备可通过小智官方链路完成唤醒、听说、对话。 |
-| P0-03 | 单角色绑定 | 设备固定使用 1 个角色 prompt / voice_id，不提供用户切换入口。 |
-| P0-04 | GPS 定位读取 | 串口日志能看到有效 fix、经纬度、时间或卫星状态。 |
-| P0-05 | 景点距离判断 | 设备能根据配置坐标和半径判断是否接近演示点位。 |
-| P0-06 | NFC 标签确认 | 只有指定 NFC 标签可完成对应点位确认。 |
-| P0-07 | 防重复触发 | 同一景点短时间内不会反复播报。 |
-| P0-08 | 角色化播报 | 打卡成功后能用角色口吻播报固定或生成式文案。 |
-| P0-09 | 景点后续问答 | 打卡后用户可继续询问当前景点相关问题。 |
-| P0-10 | 调试兜底 | 支持串口日志观察；必要时可通过模拟坐标/手动触发保障室内演示。 |
-
-### 3.2 P1 可选
-
-| 编号 | 功能 | 说明 |
-| --- | --- | --- |
-| P1-01 | 简易配置 JSON | 用本地 JSON 或头文件维护角色、景点、NFC 标签映射。 |
-| P1-02 | 本地打卡持久化 | 使用 NVS 保存已打卡状态和冷却时间。 |
-| P1-03 | 简易演示页 | 如果后续需要，可做本地网页或串口工具展示状态；一期不强制。 |
-
-### 3.3 一期明确不做
-
-- 不采购成品小智设备拆机。
-- 不做正式工业外壳，只做基础固定。
-- 不计算云服务器和公网部署费用。
-- 不做完整后台、App、小程序、商城、会员、地图导航。
-- 不上传连续 GPS 轨迹。
-- 不把敏感 token、账号、语音原文写入日志。
-
-## 4. 推荐系统边界
+已确认工程结构：
 
 ```text
-ESP32-S3 主控
-  ├─ 小智现有语音链路：唤醒 / 录音 / ASR / LLM / TTS / 播放
-  ├─ location：GPS UART 读取、NMEA 解析、定位缓存
-  ├─ checkin：景点配置、距离计算、防重复触发
-  ├─ nfc：PN532 标签读取、tag_id 校验
-  └─ agent：单角色配置、打卡播报文案、景点上下文
+main/       小智 ESP32 固件
+backend/    Django + DRF + PostgreSQL
+frontend/   React + Vite + Ant Design
+tools/      device_simulator 和调试脚本
+deploy/     .env.example、Nginx/Gunicorn 示例
+docs/       项目文档
 ```
 
-模块边界要求：
+已确认技术路线：
 
-- `boards/<board>/config.h` 只放引脚、UART、I2C/SPI、硬件使能等板级配置。
-- `location` 只处理定位，不知道角色和播报。
-- `nfc` 只处理标签读取和校验，不负责景点业务。
-- `checkin` 负责景点匹配、防重复和打卡事件生成。
-- `agent` 负责角色配置和播报上下文。
-- `Application` 只做调度和事件接入，不堆业务算法。
+- 后端：Django + DRF + PostgreSQL。
+- 前端：React + Vite + Ant Design，不采用 Ant Design Pro 完整模板。
+- 数据集：一期不启用 pgvector，先用普通 PostgreSQL + 数据集状态/片段摘要展示。
+- 工具：先用 `tools/device_simulator/` 跑通软件闭环。
+- 固件：先不动 ESP32 固件核心，待软件闭环稳定后接 GPS/NFC。
+- 部署：当前不引入 Docker Compose，只保留 Nginx/Gunicorn 示例。
 
-## 5. 建议新增固件目录
+## 2. 一期目标
+
+一期目标是跑通“景区数据智能体 + GPS/NFC 打卡 + 三端演示管理”的最小闭环：
 
 ```text
-main/
-  location/
-    gps_service.h
-    gps_service.cc
-    nmea_parser.h
-    nmea_parser.cc
-    geo_distance.h
-    geo_distance.cc
-  nfc/
-    nfc_reader.h
-    nfc_reader.cc
-    tag_verifier.h
-    tag_verifier.cc
-  checkin/
-    spot_config.h
-    spot_matcher.h
-    spot_matcher.cc
-    checkin_service.h
-    checkin_service.cc
-  agent/
-    agent_config.h
-    agent_context.h
+演示账号登录
+  -> 管理设备、角色、点位、NFC、数据集
+  -> device_simulator 拉取设备配置
+  -> 模拟心跳 / GPS 接近 / NFC 打卡
+  -> 后端记录打卡结果
+  -> 前端演示页和记录页展示状态
+  -> 后续再接真实 ESP32 GPS/NFC
 ```
 
-如果一期时间紧，可以先把实现压缩，但目录边界建议保留，避免后续二期开平台时再大改。
+## 3. 阶段拆分
 
-## 6. 一期配置结构
+### P0-S0：节点整理与文档基线
 
-一期可以先使用头文件常量或 JSON 等价结构。
+目标：保证所有角色看到同一套工程口径。
 
-```json
-{
-  "agent": {
-    "agent_id": "agent_demo_001",
-    "name": "阿洛",
-    "voice_id": "voice_demo_001",
-    "personality_prompt": "你是一个活泼、好奇、会讲故事的景区陪伴角色。"
-  },
-  "spots": [
-    {
-      "spot_id": "spot_demo_001",
-      "name": "演示点一",
-      "latitude": 31.2304,
-      "longitude": 121.4737,
-      "radius_meters": 50,
-      "cooldown_seconds": 3600,
-      "checkin_message": "你到啦！这里就是我们今天的第一站。"
-    }
-  ],
-  "nfc_tags": [
-    {
-      "tag_id": "04AABBCCDD",
-      "spot_id": "spot_demo_001",
-      "enabled": true
-    }
-  ]
-}
+任务：
+
+- 确认单仓多模块结构。
+- 确认架构文档为 confirmed。
+- 补齐研发主管三份文档：
+  - `development_process.md`
+  - `testing_and_quality.md`
+  - `release_operations_runbook.md`
+- 建立研发主管问题清单：
+  - `rd_lead_question_list.md`
+- 提交并推送 GitHub 节点。
+
+验收：
+
+- `git status` 干净。
+- GitHub 可见当前节点。
+- 文档索引能找到研发主管文档。
+
+### P0-S1：工程框架校验
+
+目标：确认框架不是空目录，而是可启动/可构建的基础。
+
+任务：
+
+- 后端执行：
+
+```powershell
+cd backend
+python manage.py check
 ```
 
-## 7. 四周交付计划
+- 前端执行：
 
-### 第 1 周：硬件与小智基础链路
+```powershell
+cd frontend
+npm run build
+```
 
-目标：自装硬件能跑小智基础语音。
-
-任务：
-
-- 确认 ESP32-S3 N16R8 开发板型号。
-- 接入 INMP441 麦克风。
-- 接入 MAX98357A 功放和小喇叭。
-- 接入电池供电模块，但开发阶段优先 USB 供电调试。
-- 编译并烧录当前小智固件。
-- 验证唤醒、录音、播放、联网和小智官方链路。
-
-验收：
-
-- 设备能联网。
-- 能完成一次语音问答。
-- 喇叭音量可接受，无明显破音。
-- 串口日志可稳定观察。
-
-### 第 2 周：GPS 定位与景点匹配
-
-目标：设备能读取 GPS 并判断接近点位。
-
-任务：
-
-- 接入 NEO-6M 或 ATGM336H GPS。
-- 实现 GPS UART 读取。
-- 实现 NMEA 基础解析。
-- 输出 fix、经纬度、卫星数或定位质量。
-- 实现 Haversine 距离计算。
-- 实现 1-3 个演示点位配置。
-- 增加模拟坐标开关，用于室内演示兜底。
+- 检查 Git 忽略规则：
+  - `.venv/`
+  - `node_modules/`
+  - `dist/`
+  - `__pycache__/`
+  - `.env`
+  - `*.tsbuildinfo`
 
 验收：
 
-- 室外能获取有效定位。
-- 无 fix 时不触发打卡。
-- 模拟坐标能稳定触发进入点位范围。
+- 后端 check 通过。
+- 前端 build 通过。
+- 无依赖目录、构建产物、环境密钥进入 Git。
 
-### 第 3 周：NFC 确认、防重复和打卡播报
+### P0-S2：后端最小数据模型与 Admin
 
-目标：形成 GPS + NFC 的打卡闭环。
-
-任务：
-
-- 接入 PN532 NFC 模块。
-- 读取 NFC 标签 UID 或 payload。
-- 建立 `tag_id -> spot_id` 映射。
-- 实现 GPS 附近 + NFC 正确标签确认。
-- 实现冷却时间和防重复触发。
-- 打卡成功后触发提示音和角色播报。
-
-验收：
-
-- 错误 NFC 标签不触发。
-- 正确 NFC 标签可触发。
-- 未进入 GPS 半径时不误触发，除非测试模式开启。
-- 同一景点不会短时间重复播报。
-
-### 第 4 周：联调、验收和文档
-
-目标：形成可拍摄、可复现、可交接的演示版本。
+目标：后端具备承载 P0 数据的模型和管理入口。
 
 任务：
 
-- 整理角色 prompt 和演示话术。
-- 整理景点资料和问答样例。
-- 进行 3 轮完整演示测试。
-- 记录失败场景：无 GPS、弱网、错误 NFC、电量低。
-- 编写烧录、接线、演示、故障排查说明。
-- 提交 Git 并推送 GitHub。
+- 建立或完善 Django apps：
+  - `devices`
+  - `agents`
+  - `spots`
+  - `nfc_tags`
+  - `checkins`
+  - `datasets`
+  - `demo`
+- 实现基础模型。
+- 接入 Django Admin。
+- 增加演示种子数据方案。
 
 验收：
 
-- 完整流程可连续跑通 3 次。
-- 有视频或现场演示证据。
-- 有接线图/引脚表/配置说明。
-- 仓库有清晰 commit 和远程备份。
+- 可创建演示设备。
+- 可创建 2 个角色。
+- 可配置 1 个点位。
+- 可配置 NFC 标签。
+- 可配置数据集状态和片段摘要。
+- 可查看打卡记录。
 
-## 8. 验收清单
+### P0-S3：后端 API 契约落地
 
-| 类别 | 检查项 | 结果 |
-| --- | --- | --- |
-| 硬件 | ESP32-S3、麦克风、功放、喇叭、GPS、NFC、电池接线完成 | 待验收 |
-| 语音 | 可唤醒、可问答、可播放 | 待验收 |
-| GPS | 有效定位可读取，无 fix 不触发 | 待验收 |
-| NFC | 指定标签可识别，错误标签被拒绝 | 待验收 |
-| 打卡 | 进入半径 + NFC 后触发 | 待验收 |
-| 防重复 | 冷却时间内不重复播报 | 待验收 |
-| 角色 | 播报口吻符合角色设定 | 待验收 |
-| 问答 | 能回答当前景点相关问题 | 待验收 |
-| 供电 | 电池供电可完成一轮演示 | 待验收 |
-| 文档 | 接线、烧录、配置、演示步骤齐全 | 待验收 |
+目标：按 `web_api_contract.md` 跑通 API。
 
-## 9. 风险与兜底
+任务：
 
-| 风险 | 影响 | 兜底 |
-| --- | --- | --- |
-| GPS 室内不可用 | 无法现场触发 | 必须提供模拟坐标开关。 |
-| NFC 接线不稳定 | 打卡失败 | 保留串口命令或测试模式手动确认。 |
-| 电池供电不稳 | 设备重启或音频异常 | 开发阶段 USB 供电，演示前单独压测电池。 |
-| 小智官方链路不稳定 | 语音问答失败 | 准备固定播报文案和本地提示音兜底。 |
-| 麦克风/喇叭音质差 | 演示观感下降 | 预留备用麦克风、喇叭和功放模块。 |
-| 引脚冲突 | 外设无法同时工作 | 第 1 周锁定引脚表，后续不随意调整。 |
+- `/api/v1/device-config`
+- `/api/v1/device-heartbeats`
+- `/api/v1/location-events`
+- `/api/v1/checkins`
+- `/api/v1/demo/overview`
+- `/api/v1/demo/simulate-checkin`
+- `/api/v1/agents/{agent_id}/context`
+- `/api/v1/knowledge/search`
 
-## 10. 后续二期衔接
+验收：
 
-一期只验证设备侧闭环。若演示成立，二期再进入：
+- 合法设备能拉取配置。
+- 心跳能更新最近状态。
+- GPS 接近事件不产生成功打卡。
+- NFC 合法标签可成功打卡。
+- 重复打卡返回 duplicate。
+- 模拟打卡写入 `source=simulation`。
+- 知识查询可返回数据集片段摘要或简化搜索结果。
 
-- 自有业务后台。
-- 设备/角色/景点/打卡数据管理。
-- 用户 H5 或小程序。
-- 景区知识库和 RAG。
-- 自建小智服务端或混合语音链路。
-- 批量硬件结构和外壳设计。
+### P0-S4：设备模拟器软件闭环
+
+目标：硬件未到货时完成软件闭环。
+
+任务：
+
+- `tools/device_simulator/` 支持：
+  - 拉取配置
+  - 上报心跳
+  - 上报 GPS 接近
+  - 上报 NFC 打卡
+  - 模拟非法标签
+  - 模拟重复打卡
+- 模拟器参数对齐 `web_api_contract.md`。
+
+验收：
+
+- 后端产生对应记录。
+- 前端可见状态变化。
+- 模拟数据与真实数据可区分。
+
+### P0-S5：前端核心页面
+
+目标：提供可演示、可管理、可调试的响应式页面。
+
+任务：
+
+- 演示总览页。
+- 设备页。
+- 角色页。
+- 点位页。
+- NFC 标签页。
+- 数据集页。
+- 打卡记录页。
+- 手动模拟打卡页。
+
+验收：
+
+- PC/平板/手机核心信息不遮挡。
+- 演示页能显示设备、角色、GPS、NFC、打卡、数据集状态。
+- 模拟打卡页明确标记测试入口。
+- 错误状态可读，不只显示“失败”。
+
+### P0-S6：真实硬件接入
+
+目标：将软件闭环接入 ESP32、GPS、NFC。
+
+任务：
+
+- 接入 GPS UART NMEA。
+- 接入 PN532 NFC。
+- ESP32 拉取后端配置。
+- ESP32 上报 GPS 接近摘要。
+- ESP32 上报 NFC 打卡。
+- 打卡成功触发角色播报。
+
+验收：
+
+- 室外或靠窗可读取 GPS。
+- NFC 可读取合法标签。
+- 后端记录真实设备打卡。
+- 演示页可展示真实设备状态。
+- 小智语音链路可完成播报或问答兜底。
+
+### P0-S7：演示验收
+
+目标：形成可演示、可复现、可回滚的阶段成果。
+
+任务：
+
+- 准备演示账号。
+- 准备演示数据。
+- 准备演示脚本。
+- 执行 3 轮完整演示。
+- 记录失败项和修复项。
+- 提交 GitHub 节点。
+
+验收：
+
+- 软件模拟闭环可稳定复现。
+- 如硬件到位，真实硬件闭环至少跑通一次。
+- 有测试记录。
+- 有回滚路径。
+
+## 4. 当前优先级
+
+当前下一步顺序：
+
+1. 完成研发主管文档和问题清单。
+2. 校验现有 backend/frontend/tools/deploy 框架。
+3. 进入后端最小模型和 API。
+4. 进入 device_simulator 软件闭环。
+5. 进入前端页面。
+6. 最后接真实硬件。
+
+## 5. 主要风险
+
+| 风险 | 控制 |
+| --- | --- |
+| 过早改 ESP32 固件核心 | 先用 device_simulator 跑通软件闭环 |
+| pgvector 增加复杂度 | 一期不启用，先用普通 PostgreSQL 展示数据集状态 |
+| 小智官网 MCP 调用不稳定 | 先保留固定播报和后端上下文接口，MCP 联调作为独立验证 |
+| 前端范围膨胀 | 只做 P0 页面，不做完整后台系统 |
+| 登录权限过重 | 一期演示账号即可 |
+| 模拟数据误导验收 | 强制 `source=simulation` 标记 |

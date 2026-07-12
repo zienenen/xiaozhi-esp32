@@ -27,7 +27,7 @@
 
 - 一期只处理架构师责任范围内文档。
 - 一期建设后端和轻量三端适配，但不是完整商业化 App 或完整商业化后台。
-- 一期技术主线为：`ESP32 小智固件 + xiaozhi.me 语音链路 + Django/DRF + PostgreSQL + React/Ant Design Pro + GPS 粗定位 + NFC 精准确认`。
+- 一期技术主线为：`ESP32 小智固件 + xiaozhi.me 语音链路 + Django/DRF + PostgreSQL + React/Vite/Ant Design + GPS 粗定位 + NFC 精准确认`。
 - 一期 NFC 使用标签 UID 或静态 `tag_id` 校验；签名 payload、动态 token、防复制机制放到二期评估。
 - 一期 GPS 只用于附近提醒，不作为打卡成功的最终依据。
 - 一期后端主要提供业务配置和打卡调用接口，语音链路继续依托 `xiaozhi.me`，类似官网控制台的角色/提示词配置思路。
@@ -113,7 +113,7 @@ flowchart TD
   end
 
   subgraph Frontend["轻量三端"]
-    OpsWeb["运营后台 React + Ant Design Pro"]
+    OpsWeb["运营后台 React + Vite + Ant Design"]
     FactoryWeb["原厂/设备管理端"]
     UserH5["用户 H5"]
   end
@@ -275,7 +275,7 @@ stateDiagram-v2
 | 语音 | `xiaozhi.me` 官方链路 |
 | 后端 | Django + Django REST Framework |
 | 数据库 | PostgreSQL |
-| 前端 | React + Ant Design Pro，用户端 React H5 |
+| 前端 | React + Vite + Ant Design，响应式页面 |
 | 部署 | Nginx + Gunicorn + PostgreSQL，单台云服务器 |
 
 ### 7.1.1 当前工程脚手架状态
@@ -413,7 +413,7 @@ stateDiagram-v2
 | 项 | 状态 |
 | --- | --- |
 | 一期架构主线 | 已确认 |
-| Django/DRF/PostgreSQL/React/Ant Design Pro | 已确认 |
+| Django/DRF/PostgreSQL/React/Vite/Ant Design | 已确认 |
 | xiaozhi.me 一期语音依托 | 已确认 |
 | GPS 只做附近提醒 | 已确认 |
 | NFC 静态校验一期采用 | 已确认 |

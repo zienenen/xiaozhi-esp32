@@ -167,3 +167,21 @@ npm run build
 9. 确认模拟数据标记
 10. 提交并推送 GitHub
 
+## 8. 当前状态
+
+| 项 | 状态 |
+| --- | --- |
+| backend `manage.py check` | 架构侧已验证通过 |
+| frontend `npm run build` | 架构侧已验证通过 |
+| device_simulator 软件闭环 | 待实现/待验证 |
+| 后端 API 契约测试 | 待实现/待验证 |
+| 前端 P0 页面验证 | 待实现/待验证 |
+| 真实 ESP32 GPS/NFC 验证 | 硬件阶段执行 |
+
+## 9. 阻塞规则
+
+- 后端 check 不通过，不进入 API 实现合并。
+- 前端 build 不通过，不进入页面合并。
+- 模拟打卡不能区分 `source=simulation`，不允许作为演示验收记录。
+- 任何日志输出明文 token，必须阻塞发布。
+- 保存连续 GPS 轨迹，必须重新走产品和安全确认。

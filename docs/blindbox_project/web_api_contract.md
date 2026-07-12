@@ -8,7 +8,7 @@
 
 本文档用于定义课题一期已确认最小业务后台方案下，设备端、管理端、演示页和调试页需要的 API 与数据对象契约。
 
-当前一期框架已按 `Django/DRF + PostgreSQL + React/Ant Design Pro + xiaozhi.me 语音/MCP 不可见依赖` 收敛。本文已作为一期 API 与数据契约确认；后续仍需全栈工程师结合实现细节细化字段命名、分页、DRF serializer 和错误码落地。
+当前一期框架已按 `Django/DRF + PostgreSQL + React/Vite/Ant Design + xiaozhi.me 语音/MCP 不可见依赖` 收敛。本文已作为一期 API 与数据契约确认；后续仍需全栈工程师结合实现细节细化字段命名、分页、DRF serializer 和错误码落地。
 
 ## 1. 关联资料
 
@@ -539,7 +539,7 @@ POST /api/v1/demo/simulate-checkin
 | 编号 | 问题 | 责任角色 |
 | --- | --- | --- |
 | Q-01 | 设备认证二期是否从静态 token 升级为签名或动态 token | 架构师、安全/研发主管 |
-| Q-02 | 是否使用 pgvector；一期真实数据集若只做通用展示，可暂不启用 | 架构师、全栈工程师 |
+| Q-02 | 后续何时进入真实向量检索能力评估；一期不启用 pgvector | 架构师、全栈工程师 |
 | Q-03 | 数据集最终格式和统一整改时机 | 产品经理、架构师、全栈工程师 |
 | Q-04 | 是否需要导出打卡记录 | 产品 P1，研发主管确认排期 |
 | Q-05 | 小智官网侧工具/MCP 接入点是否能稳定调用 `/api/v1/agents/{agent_id}/context` 和 `/api/v1/knowledge/search` | 架构师、全栈工程师、产品经理 |

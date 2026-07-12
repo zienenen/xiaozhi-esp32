@@ -161,3 +161,29 @@ npm run build
 | 硬件接入 | GPS/NFC 固件模块、接线说明、串口日志 |
 | 演示阶段 | 演示账号、演示数据、演示脚本、故障预案 |
 
+## 10. 节点上传规则
+
+用户要求每个重要节点上传 GitHub。执行规则：
+
+1. 文档节点完成后提交。
+2. 框架节点完成后提交。
+3. 后端最小闭环完成后提交。
+4. 前端最小闭环完成后提交。
+5. device_simulator 软件闭环完成后提交。
+6. 真实硬件接入完成后提交。
+
+提交前必须执行：
+
+```powershell
+git status --short
+```
+
+如果出现以下路径，必须确认未被暂存：
+
+```text
+backend/.venv/
+frontend/node_modules/
+frontend/dist/
+__pycache__/
+.env
+```

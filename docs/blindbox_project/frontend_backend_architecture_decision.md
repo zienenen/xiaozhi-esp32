@@ -138,8 +138,8 @@ ESP32 固件
 | --- | --- |
 | 后端 | Django + Django REST Framework |
 | 数据库 | PostgreSQL |
-| 前端 | React 响应式页面 / Ant Design Pro |
-| 向量/数据集 | 一期使用真实景区数据；格式暂不固定，前端先用通用适配结构承载，后续统一整改 |
+| 前端 | React + Vite + Ant Design 响应式页面 |
+| 向量/数据集 | 一期不启用 pgvector；使用普通 PostgreSQL 保存数据集状态和片段摘要，后续如进入真实向量检索再评估 |
 
 结论：
 
@@ -246,12 +246,12 @@ ESP32 固件
 1. 一期新增最小业务后端，不做完整商业化平台。
 2. 后端采用 Django + Django REST Framework。
 3. 数据库采用 PostgreSQL。
-4. 前端采用 React + Ant Design Pro，用户侧采用 React H5 或同栈响应式页面。
+4. 前端采用 React + Vite + Ant Design，不采用 Ant Design Pro 完整模板，用户侧采用同栈响应式页面。
 5. 语音链路、设备接入和一期 MCP 可以继续依托 `xiaozhi.me`，官网页面作为不可见依赖。
 6. 设备、角色配置源、点位、NFC、打卡记录和数据集状态进入自研后台。
 7. GPS 只做附近提醒，不作为最终打卡依据；NFC 做精准确认。
 8. 一期不复刻小智官网控制台，对外展示自研轻量页面和景区业务闭环。
-9. 一期数据集使用真实景区数据，但数据格式暂不作为最终规范；前端先用通用结构展示，后续统一整改数据集模块。
+9. 一期数据集使用真实景区数据，但不启用 pgvector；先用普通 PostgreSQL + 数据集状态/片段摘要展示，后续如进入真实向量检索再评估。
 10. 设备配置以后端拉取为主，允许固件静态配置兜底。
 11. 管理端一期使用演示账号，不建设完整登录权限体系。
 12. GPS 不保存连续轨迹，只保存定位质量摘要，并按 10 秒级节流上报。
@@ -261,7 +261,7 @@ ESP32 固件
 仍需后续确认的架构边界：
 
 1. 数据集最终格式、字段规范和前端统一整改方案。
-2. 数据集是否启用 pgvector 或其他真实向量检索能力。
+2. 数据集最终格式、字段规范和前端统一整改方案。
 3. 二期是否建设自研 MCP 管理页面、工具注册中心和官网配置自动化能力。
 
 ## 7. 推荐决策路径
@@ -270,10 +270,10 @@ ESP32 固件
 | --- | --- | --- |
 | D0 | 产品边界确认 | 已确认：三端、数据集、打卡记录、模拟打卡为 P0 |
 | D1 | 架构口径确认 | 已确认：采用最小业务后台 + 官网语音链路 |
-| D2 | 技术栈确认 | 已确认：Django/DRF + PostgreSQL + React/Ant Design Pro |
+| D2 | 技术栈确认 | 已确认：Django/DRF + PostgreSQL + React/Vite/Ant Design |
 | D3 | API 和数据模型 | 已形成并确认 `web_api_contract.md`，待全栈按实现细节细化 |
-| D4 | 安全和数据治理 | 待补 `security_and_data_governance.md` |
-| D5 | 实施与测试 | 待补 `development_process.md`、`testing_and_quality.md`、`release_operations_runbook.md` |
+| D4 | 安全和数据治理 | 已形成 `security_and_data_governance.md` 草案，待用户确认 |
+| D5 | 实施与测试 | 已形成 `development_process.md`、`testing_and_quality.md`、`release_operations_runbook.md`，待用户确认 |
 
 ## 8. 对现有文档的处理建议
 
@@ -289,7 +289,7 @@ ESP32 固件
 | 编号 | 问题 | 建议确认方式 |
 | --- | --- | --- |
 | Q-01 | 数据集最终格式和前端统一整改时机 | 产品经理、架构师、全栈工程师 |
-| Q-02 | 是否启用 pgvector 或其他真实向量检索能力 | 架构师、全栈工程师 |
+| Q-02 | 后续何时进入真实向量检索能力评估 | 架构师、全栈工程师 |
 | Q-03 | Mock 页面是否可作为硬件异常时的演示兜底 | 用户确认风险接受度 |
 | Q-04 | 二期是否建设自研 MCP 管理页、工具注册中心和官网配置自动化能力 | 产品经理、架构师 |
 
@@ -299,5 +299,5 @@ ESP32 固件
 
 1. 纯固件 + 官网控制台无法完整满足已确认产品 P0。
 2. 一期直接自建完整小智语音服务过重。
-3. 一期采用“Django/DRF + PostgreSQL + React/Ant Design Pro + 官网语音/MCP 不可见依赖”的最小业务后台方案。
+3. 一期采用“Django/DRF + PostgreSQL + React/Vite/Ant Design + 官网语音/MCP 不可见依赖”的最小业务后台方案。
 4. 二期再按市场化要求逐步建设自研设备智能体控制台和官网能力替代层。
