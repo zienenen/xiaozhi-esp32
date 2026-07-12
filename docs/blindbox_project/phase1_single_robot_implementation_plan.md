@@ -1,4 +1,4 @@
-# 一期工程实施计划
+﻿# 一期工程实施计划
 
 文档状态：pending_user_confirmation
 主责角色：研发主管
@@ -54,11 +54,11 @@ docs/       项目文档
 - 确认单仓多模块结构。
 - 确认架构文档为 confirmed。
 - 补齐研发主管三份文档：
-  - `development_process.md`
-  - `testing_and_quality.md`
-  - `release_operations_runbook.md`
+  - [development_process.md](development_process.md)
+  - [testing_and_quality.md](testing_and_quality.md)
+  - [release_operations_runbook.md](release_operations_runbook.md)
 - 建立研发主管问题清单：
-  - `rd_lead_question_list.md`
+  - [rd_lead_question_list.md](rd_lead_question_list.md)
 - 提交并推送 GitHub 节点。
 
 验收：
@@ -130,7 +130,7 @@ npm run build
 
 ### P0-S3：后端 API 契约落地
 
-目标：按 `web_api_contract.md` 跑通 API。
+目标：按 [web_api_contract.md](web_api_contract.md) 跑通 API。
 
 任务：
 
@@ -166,7 +166,7 @@ npm run build
   - 上报 NFC 打卡
   - 模拟非法标签
   - 模拟重复打卡
-- 模拟器参数对齐 `web_api_contract.md`。
+- 模拟器参数对齐 [web_api_contract.md](web_api_contract.md)。
 
 验收：
 

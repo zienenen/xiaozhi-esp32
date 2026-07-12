@@ -1,4 +1,4 @@
-# MVP 产品对齐文档
+﻿# MVP 产品对齐文档
 
 文档状态：confirmed  
 主责智能体：产品经理智能体  
@@ -177,5 +177,5 @@
 
 | 日期 | 确认内容 |
 | --- | --- |
-| 2026-07-12 | 用户确认 `mvp_product_alignment.md` |
+| 2026-07-12 | 用户确认 [mvp_product_alignment.md](mvp_product_alignment.md) |
 | 2026-07-12 | 用户确认 Q01-Q04 均为“是” |

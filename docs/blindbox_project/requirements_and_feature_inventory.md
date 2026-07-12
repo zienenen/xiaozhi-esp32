@@ -1,4 +1,4 @@
-# 需求与功能清单总表
+﻿# 需求与功能清单总表
 
 文档状态：confirmed  
 主责智能体：产品经理智能体  
@@ -194,7 +194,7 @@
 | 日期 | 确认内容 |
 | --- | --- |
 | 2026-07-12 | 当前整改课题主线优先，市场化纳入考虑 |
-| 2026-07-12 | `requirements_and_feature_inventory.md` 可以先新建 |
+| 2026-07-12 | [requirements_and_feature_inventory.md](requirements_and_feature_inventory.md) 可以先新建 |
 | 2026-07-12 | MVP 需要写成双轨 MVP |
 | 2026-07-12 | README 中 GPS/NFC 一期范围适用于课题/演示方向 |
 | 2026-07-12 | 课题一期采用 GPS 粗定位 + NFC 精准打卡 |
@@ -205,5 +205,5 @@
 | 2026-07-12 | 景区数据集/向量库管理页列为课题一期 P0 |
 | 2026-07-12 | 一期 Demo 只要求 1 个景点点位完整跑通，多点位放 P1 |
 | 2026-07-12 | 手动模拟打卡页允许进入一期，作为无硬件或调试阶段联调入口 |
-| 2026-07-12 | 用户确认 `requirements_and_feature_inventory.md` |
+| 2026-07-12 | 用户确认 [requirements_and_feature_inventory.md](requirements_and_feature_inventory.md) |
 | 2026-07-12 | 用户确认一期 1 台硬件、2 个角色、已有景区数据源、在线演示、不做离线打卡、市场化字段仅预留、使用演示账号 |

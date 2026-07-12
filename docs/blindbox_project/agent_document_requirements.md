@@ -1,4 +1,4 @@
-# 智能体文档责任与核对要求
+﻿# 智能体文档责任与核对要求
 
 更新时间：2026-07-12
 
@@ -43,19 +43,19 @@
 
 | 文档 | 当前状态 | 主要责任智能体 | 核对要求 |
 | --- | --- | --- | --- |
-| `requirements_and_feature_inventory.md` | 已确认 | 产品经理智能体 | 需求范围、功能状态、P0/P1/P2 已确认；后续变更需再次确认 |
-| `mvp_product_alignment.md` | 已确认 | 产品经理智能体 | 产品定位、目标用户、主流程、非目标已确认；后续变更需再次确认 |
-| `product_manager_handoff_checklist.md` | 已确认 | 产品经理智能体 | 产品 P0 结论、验收和后续角色缺口已确认 |
-| `engineering_overview.md` | 已确认 | 架构师智能体 | 架构现状、模块边界、数据流、风险已确认；后续变更需再次确认 |
-| `frontend_backend_architecture_decision.md` | 已确认 | 架构师智能体 | 技术选型、方案比较、最终建议已确认；后续变更需再次确认 |
-| `web_api_contract.md` | 已确认，待全栈按实现细化 | 架构师智能体 + 全栈工程师智能体 | API、数据模型、错误、兼容策略已确认；实现细节由全栈补充 |
-| `development_process.md` | 已形成，待用户确认 | 研发主管智能体 | 需求、开发、评审、合并、复盘流程必须确认 |
-| `testing_and_quality.md` | 已形成，待用户确认 | 研发主管智能体 | 测试层级、质量门、回归清单必须确认 |
-| `release_operations_runbook.md` | 已形成，待用户确认 | 研发主管智能体 + 全栈工程师智能体 | 构建、烧录、发布、回滚、演示流程必须确认 |
-| `espidf_runbook.md` | 待新建 | 全栈工程师智能体 | ESP-IDF 环境、构建、烧录、日志命令必须确认 |
-| `django_react_frontend_product_interaction_spec.md` | 产品交互已确认；API 依赖待全栈补充 | 产品经理智能体 + 全栈工程师智能体 | 页面、交互、状态已确认；API 依赖必须由全栈补充确认 |
-| `security_and_data_governance.md` | 已确认 | 架构师智能体 + 研发主管智能体 | 设备 ID、GPS、绑定关系、密钥、日志边界已确认；一期只做最低边界，完整治理商业化阶段再补 |
-| `open_source_selection.md` | 已确认 | 架构师智能体 | 上游项目、依赖、复用边界、本地改造已确认；一期只做必要选型边界，完整开源治理商业化阶段再补 |
+| [requirements_and_feature_inventory.md](requirements_and_feature_inventory.md) | 已确认 | 产品经理智能体 | 需求范围、功能状态、P0/P1/P2 已确认；后续变更需再次确认 |
+| [mvp_product_alignment.md](mvp_product_alignment.md) | 已确认 | 产品经理智能体 | 产品定位、目标用户、主流程、非目标已确认；后续变更需再次确认 |
+| [product_manager_handoff_checklist.md](product_manager_handoff_checklist.md) | 已确认 | 产品经理智能体 | 产品 P0 结论、验收和后续角色缺口已确认 |
+| [engineering_overview.md](engineering_overview.md) | 已确认 | 架构师智能体 | 架构现状、模块边界、数据流、风险已确认；后续变更需再次确认 |
+| [frontend_backend_architecture_decision.md](frontend_backend_architecture_decision.md) | 已确认 | 架构师智能体 | 技术选型、方案比较、最终建议已确认；后续变更需再次确认 |
+| [web_api_contract.md](web_api_contract.md) | 已确认，待全栈按实现细化 | 架构师智能体 + 全栈工程师智能体 | API、数据模型、错误、兼容策略已确认；实现细节由全栈补充 |
+| [development_process.md](development_process.md) | 已形成，待用户确认 | 研发主管智能体 | 需求、开发、评审、合并、复盘流程必须确认 |
+| [testing_and_quality.md](testing_and_quality.md) | 已形成，待用户确认 | 研发主管智能体 | 测试层级、质量门、回归清单必须确认 |
+| [release_operations_runbook.md](release_operations_runbook.md) | 已形成，待用户确认 | 研发主管智能体 + 全栈工程师智能体 | 构建、烧录、发布、回滚、演示流程必须确认 |
+| [espidf_runbook.md](espidf_runbook.md) | 已建立占位，待硬件/固件研发补齐 | 全栈工程师智能体 | ESP-IDF 环境、构建、烧录、日志命令必须确认 |
+| [django_react_frontend_product_interaction_spec.md](django_react_frontend_product_interaction_spec.md) | 产品交互已确认；API 依赖待全栈补充 | 产品经理智能体 + 全栈工程师智能体 | 页面、交互、状态已确认；API 依赖必须由全栈补充确认 |
+| [security_and_data_governance.md](security_and_data_governance.md) | 已确认 | 架构师智能体 + 研发主管智能体 | 设备 ID、GPS、绑定关系、密钥、日志边界已确认；一期只做最低边界，完整治理商业化阶段再补 |
+| [open_source_selection.md](open_source_selection.md) | 已确认 | 架构师智能体 | 上游项目、依赖、复用边界、本地改造已确认；一期只做必要选型边界，完整开源治理商业化阶段再补 |
 
 ## 3. 产品经理智能体要求
 
@@ -81,10 +81,10 @@
 
 | 文档 | 要求 |
 | --- | --- |
-| `requirements_and_feature_inventory.md` | 汇总所有需求、功能清单、当前完成状态、已知限制、后续规划 |
-| `mvp_product_alignment.md` | 明确产品定位、目标用户、主流程、P0/P1/P2、需求判断标准 |
-| `django_react_frontend_product_interaction_spec.md` | 与全栈工程师共同定义管理端/用户端/设备端页面交互 |
-| `product_manager_handoff_checklist.md` | 汇总已确认 P0、验收边界和交给后续角色的文档缺口 |
+| [requirements_and_feature_inventory.md](requirements_and_feature_inventory.md) | 汇总所有需求、功能清单、当前完成状态、已知限制、后续规划 |
+| [mvp_product_alignment.md](mvp_product_alignment.md) | 明确产品定位、目标用户、主流程、P0/P1/P2、需求判断标准 |
+| [django_react_frontend_product_interaction_spec.md](django_react_frontend_product_interaction_spec.md) | 与全栈工程师共同定义管理端/用户端/设备端页面交互 |
+| [product_manager_handoff_checklist.md](product_manager_handoff_checklist.md) | 汇总已确认 P0、验收边界和交给后续角色的文档缺口 |
 
 ### 3.3 每次输出前必须核对
 
@@ -127,11 +127,11 @@
 
 | 文档 | 要求 |
 | --- | --- |
-| `engineering_overview.md` | 当前架构、技术栈、运行入口、模块表、数据流、状态模型、风险 |
-| `frontend_backend_architecture_decision.md` | 架构决策记录、候选方案、对比、推荐、迁移成本 |
-| `web_api_contract.md` | 与全栈工程师共同维护 API、数据模型、错误、兼容规则 |
-| `security_and_data_governance.md` | 与研发主管共同维护敏感数据、外部调用、密钥、删除恢复、安全清单 |
-| `open_source_selection.md` | 上游项目和依赖选型原则、采用理由、本地适配层 |
+| [engineering_overview.md](engineering_overview.md) | 当前架构、技术栈、运行入口、模块表、数据流、状态模型、风险 |
+| [frontend_backend_architecture_decision.md](frontend_backend_architecture_decision.md) | 架构决策记录、候选方案、对比、推荐、迁移成本 |
+| [web_api_contract.md](web_api_contract.md) | 与全栈工程师共同维护 API、数据模型、错误、兼容规则 |
+| [security_and_data_governance.md](security_and_data_governance.md) | 与研发主管共同维护敏感数据、外部调用、密钥、删除恢复、安全清单 |
+| [open_source_selection.md](open_source_selection.md) | 上游项目和依赖选型原则、采用理由、本地适配层 |
 
 ### 4.3 每次输出前必须核对
 
@@ -173,9 +173,9 @@
 
 | 文档 | 要求 |
 | --- | --- |
-| `development_process.md` | 需求字段、设计影响表、开发流程、评审标准、合并标准、复盘规则 |
-| `testing_and_quality.md` | 测试目标、命令、测试层级、最低测试要求、质量门、回归重点 |
-| `release_operations_runbook.md` | 与全栈工程师共同维护发布检查、smoke test、发布记录、回滚策略 |
+| [development_process.md](development_process.md) | 需求字段、设计影响表、开发流程、评审标准、合并标准、复盘规则 |
+| [testing_and_quality.md](testing_and_quality.md) | 测试目标、命令、测试层级、最低测试要求、质量门、回归重点 |
+| [release_operations_runbook.md](release_operations_runbook.md) | 与全栈工程师共同维护发布检查、smoke test、发布记录、回滚策略 |
 
 ### 5.3 每次输出前必须核对
 
@@ -217,10 +217,10 @@
 
 | 文档 | 要求 |
 | --- | --- |
-| `espidf_runbook.md` | ESP-IDF 环境、构建、烧录、串口日志、常见问题 |
-| `web_api_contract.md` | 与架构师共同维护实际 API 示例和错误行为 |
-| `release_operations_runbook.md` | 与研发主管共同维护构建、烧录、发布、回滚命令 |
-| `django_react_frontend_product_interaction_spec.md` | 与产品经理共同维护页面状态、交互和 API 依赖 |
+| [espidf_runbook.md](espidf_runbook.md) | ESP-IDF 环境、构建、烧录、串口日志、常见问题 |
+| [web_api_contract.md](web_api_contract.md) | 与架构师共同维护实际 API 示例和错误行为 |
+| [release_operations_runbook.md](release_operations_runbook.md) | 与研发主管共同维护构建、烧录、发布、回滚命令 |
+| [django_react_frontend_product_interaction_spec.md](django_react_frontend_product_interaction_spec.md) | 与产品经理共同维护页面状态、交互和 API 依赖 |
 
 ### 6.3 每次输出前必须核对
 
@@ -297,19 +297,19 @@ deprecated
 
 建议按以下顺序补齐：
 
-1. `requirements_and_feature_inventory.md`
-2. `mvp_product_alignment.md`
-3. `product_manager_handoff_checklist.md`
-4. `engineering_overview.md`
-5. `development_process.md`
-6. `testing_and_quality.md`
-7. `release_operations_runbook.md`
-8. `web_api_contract.md`
-9. `security_and_data_governance.md`
-10. `espidf_runbook.md`
-11. `frontend_backend_architecture_decision.md`
-12. `django_react_frontend_product_interaction_spec.md`
-13. `open_source_selection.md`
+1. [requirements_and_feature_inventory.md](requirements_and_feature_inventory.md)
+2. [mvp_product_alignment.md](mvp_product_alignment.md)
+3. [product_manager_handoff_checklist.md](product_manager_handoff_checklist.md)
+4. [engineering_overview.md](engineering_overview.md)
+5. [development_process.md](development_process.md)
+6. [testing_and_quality.md](testing_and_quality.md)
+7. [release_operations_runbook.md](release_operations_runbook.md)
+8. [web_api_contract.md](web_api_contract.md)
+9. [security_and_data_governance.md](security_and_data_governance.md)
+10. [espidf_runbook.md](espidf_runbook.md)
+11. [frontend_backend_architecture_decision.md](frontend_backend_architecture_decision.md)
+12. [django_react_frontend_product_interaction_spec.md](django_react_frontend_product_interaction_spec.md)
+13. [open_source_selection.md](open_source_selection.md)
 
 优先级原则：
 

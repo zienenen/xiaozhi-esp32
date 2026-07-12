@@ -1,4 +1,4 @@
-# 一期研发模块责任分工
+﻿# 一期研发模块责任分工
 
 文档状态：pending_user_confirmation
 主责角色：研发主管
@@ -53,22 +53,22 @@
 
 | 文档 | 用途 |
 | --- | --- |
-| `development_task_ownership.md` | 模块分工、验收、交接边界 |
-| `requirements_and_feature_inventory.md` | P0/P1/P2 功能范围 |
-| `phase1_single_robot_implementation_plan.md` | 一期实施顺序和风险 |
-| `development_process.md` | 阶段门、提交规则、协作规则 |
-| `testing_and_quality.md` | 质量门和最低验收路径 |
-| `release_operations_runbook.md` | 发布、公网演示、回滚、节点上传 |
-| `rd_lead_question_list.md` | 已确认问题和待验证问题 |
+| [development_task_ownership.md](development_task_ownership.md) | 模块分工、验收、交接边界 |
+| [requirements_and_feature_inventory.md](requirements_and_feature_inventory.md) | P0/P1/P2 功能范围 |
+| [phase1_single_robot_implementation_plan.md](phase1_single_robot_implementation_plan.md) | 一期实施顺序和风险 |
+| [development_process.md](development_process.md) | 阶段门、提交规则、协作规则 |
+| [testing_and_quality.md](testing_and_quality.md) | 质量门和最低验收路径 |
+| [release_operations_runbook.md](release_operations_runbook.md) | 发布、公网演示、回滚、节点上传 |
+| [rd_lead_question_list.md](rd_lead_question_list.md) | 已确认问题和待验证问题 |
 
 按需：
 
 | 文档 | 什么时候看 |
 | --- | --- |
-| `web_api_contract.md` | 审后端、前端、模拟器、硬件接口时 |
-| `security_and_data_governance.md` | 涉及 token、GPS、账号、公网、日志时 |
-| `open_source_selection.md` | 涉及新增依赖或改技术栈时 |
-| `phase1_single_robot_budget.md` | 涉及硬件采购或替代型号时 |
+| [web_api_contract.md](web_api_contract.md) | 审后端、前端、模拟器、硬件接口时 |
+| [security_and_data_governance.md](security_and_data_governance.md) | 涉及 token、GPS、账号、公网、日志时 |
+| [open_source_selection.md](open_source_selection.md) | 涉及新增依赖或改技术栈时 |
+| [phase1_single_robot_budget.md](phase1_single_robot_budget.md) | 涉及硬件采购或替代型号时 |
 
 不要求逐字阅读：
 
@@ -80,18 +80,18 @@
 
 | 文档 | 用途 |
 | --- | --- |
-| `development_task_ownership.md` 第 3 章 | 后端任务、交付物、边界 |
-| `web_api_contract.md` | API、数据对象、错误码、认证 |
-| `requirements_and_feature_inventory.md` 第 6、8、10 节 | P0 功能、共用管理端、非功能验收 |
-| `security_and_data_governance.md` 第 2、3、4、6、10 节 | token、GPS、日志、后端安全要求 |
-| `testing_and_quality.md` 后端/API 相关章节 | 后端质量门 |
+| [development_task_ownership.md](development_task_ownership.md) 第 3 章 | 后端任务、交付物、边界 |
+| [web_api_contract.md](web_api_contract.md) | API、数据对象、错误码、认证 |
+| [requirements_and_feature_inventory.md](requirements_and_feature_inventory.md) 第 6、8、10 节 | P0 功能、共用管理端、非功能验收 |
+| [security_and_data_governance.md](security_and_data_governance.md) 第 2、3、4、6、10 节 | token、GPS、日志、后端安全要求 |
+| [testing_and_quality.md](testing_and_quality.md) 后端/API 相关章节 | 后端质量门 |
 
 按需：
 
 | 文档 | 什么时候看 |
 | --- | --- |
-| `release_operations_runbook.md` | 配合部署、公网环境、PostgreSQL 时 |
-| `django_react_frontend_product_interaction_spec.md` | 前端需要字段或页面状态解释时 |
+| [release_operations_runbook.md](release_operations_runbook.md) | 配合部署、公网环境、PostgreSQL 时 |
+| [django_react_frontend_product_interaction_spec.md](django_react_frontend_product_interaction_spec.md) | 前端需要字段或页面状态解释时 |
 
 不需要看：
 
@@ -105,18 +105,18 @@
 
 | 文档 | 用途 |
 | --- | --- |
-| `development_task_ownership.md` 第 4 章 | 前端页面、状态、边界 |
-| `django_react_frontend_product_interaction_spec.md` | 页面交互和信息架构 |
-| `web_api_contract.md` | API 字段、错误码、状态码 |
-| `requirements_and_feature_inventory.md` 第 6、8、10 节 | P0 页面范围和验收 |
-| `testing_and_quality.md` 前端相关章节 | 构建和三端质量门 |
+| [development_task_ownership.md](development_task_ownership.md) 第 4 章 | 前端页面、状态、边界 |
+| [django_react_frontend_product_interaction_spec.md](django_react_frontend_product_interaction_spec.md) | 页面交互和信息架构 |
+| [web_api_contract.md](web_api_contract.md) | API 字段、错误码、状态码 |
+| [requirements_and_feature_inventory.md](requirements_and_feature_inventory.md) 第 6、8、10 节 | P0 页面范围和验收 |
+| [testing_and_quality.md](testing_and_quality.md) 前端相关章节 | 构建和三端质量门 |
 
 按需：
 
 | 文档 | 什么时候看 |
 | --- | --- |
-| `security_and_data_governance.md` | 涉及 token 展示、账号、GPS 敏感信息时 |
-| `release_operations_runbook.md` | 配置公网 API base URL 时 |
+| [security_and_data_governance.md](security_and_data_governance.md) | 涉及 token 展示、账号、GPS 敏感信息时 |
+| [release_operations_runbook.md](release_operations_runbook.md) | 配置公网 API base URL 时 |
 
 不需要看：
 
@@ -129,17 +129,17 @@
 
 | 文档 | 用途 |
 | --- | --- |
-| `development_task_ownership.md` 第 5 章 | 模拟器任务和完成标准 |
-| `web_api_contract.md` | 设备配置、心跳、GPS、NFC、打卡接口 |
-| `testing_and_quality.md` 模拟器相关章节 | 软件闭环质量门 |
-| `release_operations_runbook.md` 本地/公网运行章节 | 切换本地和公网后端 |
+| [development_task_ownership.md](development_task_ownership.md) 第 5 章 | 模拟器任务和完成标准 |
+| [web_api_contract.md](web_api_contract.md) | 设备配置、心跳、GPS、NFC、打卡接口 |
+| [testing_and_quality.md](testing_and_quality.md) 模拟器相关章节 | 软件闭环质量门 |
+| [release_operations_runbook.md](release_operations_runbook.md) 本地/公网运行章节 | 切换本地和公网后端 |
 
 按需：
 
 | 文档 | 什么时候看 |
 | --- | --- |
-| `security_and_data_governance.md` | 处理 device token、模拟数据标记时 |
-| `phase1_single_robot_implementation_plan.md` | 确认模拟器在整体顺序中的位置 |
+| [security_and_data_governance.md](security_and_data_governance.md) | 处理 device token、模拟数据标记时 |
+| [phase1_single_robot_implementation_plan.md](phase1_single_robot_implementation_plan.md) | 确认模拟器在整体顺序中的位置 |
 
 不需要看：
 
@@ -153,23 +153,23 @@
 
 | 文档 | 用途 |
 | --- | --- |
-| `development_task_ownership.md` 第 6 章 | 硬件固件任务、交付物、边界 |
-| `phase1_single_robot_budget.md` | 已确认硬件清单和采购型号 |
-| `xiaozhi_existing_capabilities_analysis.md` | 小智底座已有能力和可扩展点 |
-| `web_api_contract.md` 设备/GPS/NFC 相关章节 | 上报格式和打卡接口 |
-| `testing_and_quality.md` 硬件相关章节 | GPS/NFC 验收要求 |
+| [development_task_ownership.md](development_task_ownership.md) 第 6 章 | 硬件固件任务、交付物、边界 |
+| [phase1_single_robot_budget.md](phase1_single_robot_budget.md) | 已确认硬件清单和采购型号 |
+| [xiaozhi_existing_capabilities_analysis.md](xiaozhi_existing_capabilities_analysis.md) | 小智底座已有能力和可扩展点 |
+| [web_api_contract.md](web_api_contract.md) 设备/GPS/NFC 相关章节 | 上报格式和打卡接口 |
+| [testing_and_quality.md](testing_and_quality.md) 硬件相关章节 | GPS/NFC 验收要求 |
 
 按需：
 
 | 文档 | 什么时候看 |
 | --- | --- |
-| `security_and_data_governance.md` | 涉及 GPS 频率、token、日志脱敏时 |
-| `release_operations_runbook.md` | 真实设备连接公网后端时 |
-| `open_source_selection.md` | 涉及小智上游复用边界时 |
+| [security_and_data_governance.md](security_and_data_governance.md) | 涉及 GPS 频率、token、日志脱敏时 |
+| [release_operations_runbook.md](release_operations_runbook.md) | 真实设备连接公网后端时 |
+| [open_source_selection.md](open_source_selection.md) | 涉及小智上游复用边界时 |
 
 还需补齐：
 
-- `espidf_runbook.md`。硬件开工前应补，否则烧录、串口、接线验收容易不一致。
+- [espidf_runbook.md](espidf_runbook.md)。硬件开工前应补，否则烧录、串口、接线验收容易不一致。
 
 不需要看：
 
@@ -182,17 +182,17 @@
 
 | 文档 | 用途 |
 | --- | --- |
-| `development_task_ownership.md` 第 7 章 | 部署任务和验收 |
-| `release_operations_runbook.md` | 本地、公网、回滚、故障处理 |
-| `security_and_data_governance.md` | `.env`、token、公网、日志边界 |
-| `web_api_contract.md` | 公网 API base URL、认证、CORS 影响 |
+| [development_task_ownership.md](development_task_ownership.md) 第 7 章 | 部署任务和验收 |
+| [release_operations_runbook.md](release_operations_runbook.md) | 本地、公网、回滚、故障处理 |
+| [security_and_data_governance.md](security_and_data_governance.md) | `.env`、token、公网、日志边界 |
+| [web_api_contract.md](web_api_contract.md) | 公网 API base URL、认证、CORS 影响 |
 
 按需：
 
 | 文档 | 什么时候看 |
 | --- | --- |
-| `open_source_selection.md` | 涉及 Nginx/Gunicorn/PostgreSQL 选型边界时 |
-| `testing_and_quality.md` | 做公网 smoke test 时 |
+| [open_source_selection.md](open_source_selection.md) | 涉及 Nginx/Gunicorn/PostgreSQL 选型边界时 |
+| [testing_and_quality.md](testing_and_quality.md) | 做公网 smoke test 时 |
 
 不需要看：
 
@@ -206,16 +206,16 @@
 
 | 文档 | 用途 |
 | --- | --- |
-| `development_task_ownership.md` 第 8 章 | MCP 验证任务和兜底 |
-| `web_api_contract.md` 智能体上下文/知识查询接口 | 工具调用接口 |
-| `security_and_data_governance.md` 小智工具调用边界 | `X-Tool-Token`、日志、安全边界 |
-| `release_operations_runbook.md` 公网演示环境 | 公网 URL、HTTPS、CORS |
+| [development_task_ownership.md](development_task_ownership.md) 第 8 章 | MCP 验证任务和兜底 |
+| [web_api_contract.md](web_api_contract.md) 智能体上下文/知识查询接口 | 工具调用接口 |
+| [security_and_data_governance.md](security_and_data_governance.md) 小智工具调用边界 | `X-Tool-Token`、日志、安全边界 |
+| [release_operations_runbook.md](release_operations_runbook.md) 公网演示环境 | 公网 URL、HTTPS、CORS |
 
 按需：
 
 | 文档 | 什么时候看 |
 | --- | --- |
-| `open_source_selection.md` | 判断是否越界到自建小智服务端时 |
+| [open_source_selection.md](open_source_selection.md) | 判断是否越界到自建小智服务端时 |
 
 不需要看：
 
@@ -229,17 +229,17 @@
 
 | 文档 | 用途 |
 | --- | --- |
-| `development_task_ownership.md` 第 9 章 | 最终验收路径 |
-| `testing_and_quality.md` | 质量门、回归清单 |
-| `requirements_and_feature_inventory.md` 第 6、10、11 节 | P0 功能、非功能验收、确认项 |
-| `release_operations_runbook.md` | 演示前检查、故障处理、回滚 |
+| [development_task_ownership.md](development_task_ownership.md) 第 9 章 | 最终验收路径 |
+| [testing_and_quality.md](testing_and_quality.md) | 质量门、回归清单 |
+| [requirements_and_feature_inventory.md](requirements_and_feature_inventory.md) 第 6、10、11 节 | P0 功能、非功能验收、确认项 |
+| [release_operations_runbook.md](release_operations_runbook.md) | 演示前检查、故障处理、回滚 |
 
 按需：
 
 | 文档 | 什么时候看 |
 | --- | --- |
-| `web_api_contract.md` | 验证 API 状态码、错误码、字段时 |
-| `security_and_data_governance.md` | 验证 token、GPS、日志、权限边界时 |
+| [web_api_contract.md](web_api_contract.md) | 验证 API 状态码、错误码、字段时 |
+| [security_and_data_governance.md](security_and_data_governance.md) | 验证 token、GPS、日志、权限边界时 |
 
 不需要看：
 
@@ -269,11 +269,11 @@ backend/
 
 ### 3.2 输入资料
 
-- `requirements_and_feature_inventory.md`
-- `web_api_contract.md`
-- `security_and_data_governance.md`
-- `phase1_single_robot_implementation_plan.md`
-- `testing_and_quality.md`
+- [requirements_and_feature_inventory.md](requirements_and_feature_inventory.md)
+- [web_api_contract.md](web_api_contract.md)
+- [security_and_data_governance.md](security_and_data_governance.md)
+- [phase1_single_robot_implementation_plan.md](phase1_single_robot_implementation_plan.md)
+- [testing_and_quality.md](testing_and_quality.md)
 
 ### 3.3 P0 任务
 
@@ -318,7 +318,7 @@ python manage.py migrate
 
 并满足：
 
-- API 与 `web_api_contract.md` 不冲突。
+- API 与 [web_api_contract.md](web_api_contract.md) 不冲突。
 - 设备 token 日志脱敏。
 - 模拟数据有 `source=simulation`。
 - GPS 不保存长期连续轨迹。
@@ -339,10 +339,10 @@ frontend/
 
 ### 4.2 输入资料
 
-- `django_react_frontend_product_interaction_spec.md`
-- `web_api_contract.md`
-- `requirements_and_feature_inventory.md`
-- `testing_and_quality.md`
+- [django_react_frontend_product_interaction_spec.md](django_react_frontend_product_interaction_spec.md)
+- [web_api_contract.md](web_api_contract.md)
+- [requirements_and_feature_inventory.md](requirements_and_feature_inventory.md)
+- [testing_and_quality.md](testing_and_quality.md)
 
 ### 4.3 P0 页面
 
@@ -421,9 +421,9 @@ tools/device_simulator/
 
 ### 5.2 输入资料
 
-- `web_api_contract.md`
-- `testing_and_quality.md`
-- `release_operations_runbook.md`
+- [web_api_contract.md](web_api_contract.md)
+- [testing_and_quality.md](testing_and_quality.md)
+- [release_operations_runbook.md](release_operations_runbook.md)
 
 ### 5.3 P0 任务
 
@@ -476,10 +476,10 @@ docs/blindbox_project/phase1_single_robot_budget.md
 
 ### 6.2 输入资料
 
-- `phase1_single_robot_budget.md`
-- `xiaozhi_existing_capabilities_analysis.md`
-- `web_api_contract.md`
-- `testing_and_quality.md`
+- [phase1_single_robot_budget.md](phase1_single_robot_budget.md)
+- [xiaozhi_existing_capabilities_analysis.md](xiaozhi_existing_capabilities_analysis.md)
+- [web_api_contract.md](web_api_contract.md)
+- [testing_and_quality.md](testing_and_quality.md)
 
 ### 6.3 P0 任务
 
@@ -499,7 +499,7 @@ docs/blindbox_project/phase1_single_robot_budget.md
 
 硬件研发必须补：
 
-- `espidf_runbook.md`
+- [espidf_runbook.md](espidf_runbook.md)
 - GPS 接线表
 - PN532 接线表
 - 麦克风/功放接线表
@@ -542,10 +542,10 @@ frontend/.env.example
 
 ### 7.2 输入资料
 
-- `release_operations_runbook.md`
-- `security_and_data_governance.md`
-- `open_source_selection.md`
-- `web_api_contract.md`
+- [release_operations_runbook.md](release_operations_runbook.md)
+- [security_and_data_governance.md](security_and_data_governance.md)
+- [open_source_selection.md](open_source_selection.md)
+- [web_api_contract.md](web_api_contract.md)
 
 ### 7.3 P0 任务
 
@@ -639,7 +639,7 @@ frontend/.env.example
 
 ## 10. 模块交接规则
 
-1. 后端改 API 字段，必须同步 `web_api_contract.md` 并通知前端、模拟器、硬件。
+1. 后端改 API 字段，必须同步 [web_api_contract.md](web_api_contract.md) 并通知前端、模拟器、硬件。
 2. 前端发现接口缺字段，不得自行假造业务字段，必须提给后端和研发主管。
 3. 模拟器必须严格按 API 契约，不允许绕过后端直接改数据库。
 4. 硬件上报格式必须和模拟器一致。
@@ -676,4 +676,4 @@ D0 文档和接口确认
 | C-02 | 部署研发是否由后端兼任 | 人少时可兼任，但任务必须单独验收 |
 | C-03 | QA/验收是否由研发主管本人执行 | 建议研发主管执行，避免模块自测自验 |
 | C-04 | `R-P0-19 景区数据向量库` 是否改名为“一期景区数据集/知识摘要” | 建议改名，避免误做 pgvector |
-| C-05 | 是否立刻补 `espidf_runbook.md` | 建议硬件开工前补 |
+| C-05 | 是否立刻补 [espidf_runbook.md](espidf_runbook.md) | 建议硬件开工前补 |

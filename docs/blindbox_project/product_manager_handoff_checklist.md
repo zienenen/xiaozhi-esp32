@@ -1,4 +1,4 @@
-# 产品经理交接清单
+﻿# 产品经理交接清单
 
 文档状态：confirmed  
 主责智能体：产品经理智能体  
@@ -71,15 +71,15 @@
 
 | 缺口文档 | 当前状态 | 责任角色 | 产品侧输入 |
 | --- | --- | --- | --- |
-| `engineering_overview.md` | 已形成 draft，待架构师/用户确认 | 架构师智能体 | 以课题 P0 清单和三端页面为系统边界输入 |
-| `frontend_backend_architecture_decision.md` | 已形成 draft，待架构师/用户确认 | 架构师智能体 | 需要比较最小 Demo、可扩展 Web 后台、向量库接入方案 |
-| `web_api_contract.md` | 待新建 | 架构师 + 全栈工程师 | 需要覆盖设备、角色、绑定、点位、NFC、打卡、数据集 |
-| `development_process.md` | 待新建 | 研发主管智能体 | 需要把产品确认、架构确认、实现、验收分成阶段门 |
-| `testing_and_quality.md` | 待新建 | 研发主管智能体 | 需要覆盖 GPS/NFC、模拟打卡、三端页面、数据集状态 |
-| `release_operations_runbook.md` | 待新建 | 研发主管 + 全栈工程师 | 需要覆盖演示前检查、失败恢复和现场联调 |
-| `espidf_runbook.md` | 待新建 | 全栈工程师智能体 | 需要覆盖 ESP-IDF 环境、构建、烧录、串口日志 |
-| `security_and_data_governance.md` | 待新建 | 架构师 + 研发主管 | 需要覆盖设备 ID、GPS、绑定关系、模拟数据、密钥 |
-| `open_source_selection.md` | 待新建 | 架构师智能体 | 需要说明小智 ESP32 复用边界和本地新增层 |
+| [engineering_overview.md](engineering_overview.md) | 已形成 draft，待架构师/用户确认 | 架构师智能体 | 以课题 P0 清单和三端页面为系统边界输入 |
+| [frontend_backend_architecture_decision.md](frontend_backend_architecture_decision.md) | 已形成 draft，待架构师/用户确认 | 架构师智能体 | 需要比较最小 Demo、可扩展 Web 后台、向量库接入方案 |
+| [web_api_contract.md](web_api_contract.md) | 待新建 | 架构师 + 全栈工程师 | 需要覆盖设备、角色、绑定、点位、NFC、打卡、数据集 |
+| [development_process.md](development_process.md) | 待新建 | 研发主管智能体 | 需要把产品确认、架构确认、实现、验收分成阶段门 |
+| [testing_and_quality.md](testing_and_quality.md) | 待新建 | 研发主管智能体 | 需要覆盖 GPS/NFC、模拟打卡、三端页面、数据集状态 |
+| [release_operations_runbook.md](release_operations_runbook.md) | 待新建 | 研发主管 + 全栈工程师 | 需要覆盖演示前检查、失败恢复和现场联调 |
+| [espidf_runbook.md](espidf_runbook.md) | 待新建 | 全栈工程师智能体 | 需要覆盖 ESP-IDF 环境、构建、烧录、串口日志 |
+| [security_and_data_governance.md](security_and_data_governance.md) | 待新建 | 架构师 + 研发主管 | 需要覆盖设备 ID、GPS、绑定关系、模拟数据、密钥 |
+| [open_source_selection.md](open_source_selection.md) | 待新建 | 架构师智能体 | 需要说明小智 ESP32 复用边界和本地新增层 |
 
 ## 6. 当前仍需用户确认的问题
 

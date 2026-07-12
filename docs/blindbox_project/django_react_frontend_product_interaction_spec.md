@@ -1,4 +1,4 @@
-# Django + React 前端产品交互规格（产品草案）
+﻿# Django + React 前端产品交互规格（产品草案）
 
 > 文档状态：`confirmed`
 > 责任角色：产品经理智能体
@@ -476,7 +476,7 @@ PM 初步建议：一期采用方案 B，保留“预置数据集 + 状态展示
 
 | 日期 | 确认内容 |
 | --- | --- |
-| 2026-07-12 | 用户确认 `django_react_frontend_product_interaction_spec.md` |
+| 2026-07-12 | 用户确认 [django_react_frontend_product_interaction_spec.md](django_react_frontend_product_interaction_spec.md) |
 
 ## 13. 当前结论
 

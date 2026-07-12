@@ -1,4 +1,4 @@
-# 安全与数据治理边界
+﻿# 安全与数据治理边界
 
 文档状态：confirmed
 主责智能体：架构师智能体 + 研发主管智能体
@@ -14,11 +14,11 @@
 
 ## 1. 关联资料
 
-- `engineering_overview.md`
-- `frontend_backend_architecture_decision.md`
-- `web_api_contract.md`
-- `phase1_phase2_architecture_plan.md`
-- `fullstack_implementation_guide.md`
+- [engineering_overview.md](engineering_overview.md)
+- [frontend_backend_architecture_decision.md](frontend_backend_architecture_decision.md)
+- [web_api_contract.md](web_api_contract.md)
+- [phase1_phase2_architecture_plan.md](phase1_phase2_architecture_plan.md)
+- [fullstack_implementation_guide.md](fullstack_implementation_guide.md)
 
 ## 2. 一期数据分类
 
@@ -191,7 +191,7 @@ NFC 在一期作为最终位置校准和签到确认依据。
 
 设备模拟器：
 
-- 严格按 `web_api_contract.md` 调用接口。
+- 严格按 [web_api_contract.md](web_api_contract.md) 调用接口。
 - 模拟数据标记来源。
 - 不生成与真实设备混淆的生产编号。
 

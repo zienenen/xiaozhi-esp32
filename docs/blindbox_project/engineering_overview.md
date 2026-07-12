@@ -1,4 +1,4 @@
-# 工程架构总览
+﻿# 工程架构总览
 
 文档状态：`confirmed`
 
@@ -287,7 +287,7 @@ stateDiagram-v2
 | `frontend/` | 已创建 | React/Vite/TypeScript/Ant Design 脚手架、P0 页面入口已建立 |
 | `tools/device_simulator/` | 已创建 | 无硬件阶段模拟设备拉配置、心跳、GPS 接近、NFC 打卡 |
 | `deploy/` | 已创建 | 简易本地/服务器部署说明、环境变量示例、Nginx/Gunicorn 可选参考；Docker Compose 后置 |
-| `PROJECT_STRUCTURE.md` | 已创建 | 面向研发主管和全栈工程师的单仓多模块说明 |
+| [PROJECT_STRUCTURE.md](../../PROJECT_STRUCTURE.md) | 已创建 | 面向研发主管和全栈工程师的单仓多模块说明 |
 
 已执行的框架验证：
 

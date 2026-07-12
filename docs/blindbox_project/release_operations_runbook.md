@@ -1,4 +1,4 @@
-# 一期发布与演示运行手册
+﻿# 一期发布与演示运行手册
 
 文档状态：partially_confirmed
 主责角色：研发主管 + 全栈工程师
@@ -66,7 +66,7 @@ python simulate_device.py --help
 - 模拟 GPS 接近。
 - 模拟 NFC 打卡。
 
-具体命令以后续 `tools/device_simulator/README.md` 为准。
+具体命令以后续 [tools/device_simulator/README.md](../../tools/device_simulator/README.md) 为准。
 
 ## 4. 演示前检查
 

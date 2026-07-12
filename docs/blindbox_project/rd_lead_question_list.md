@@ -1,4 +1,4 @@
-# 研发主管问题清单
+﻿# 研发主管问题清单
 
 文档状态：partially_confirmed
 主责角色：研发主管
@@ -58,9 +58,9 @@
 
 | 问题 | 应进入文档 |
 | --- | --- |
-| 设备 token、GPS、模拟数据、日志脱敏 | `security_and_data_governance.md` |
-| ESP-IDF 构建、烧录、串口日志 | `espidf_runbook.md` |
-| 小智开源复用边界、官网依赖、自建服务评估 | `open_source_selection.md` |
+| 设备 token、GPS、模拟数据、日志脱敏 | [security_and_data_governance.md](security_and_data_governance.md) |
+| ESP-IDF 构建、烧录、串口日志 | [espidf_runbook.md](espidf_runbook.md) |
+| 小智开源复用边界、官网依赖、自建服务评估 | [open_source_selection.md](open_source_selection.md) |
 
 ## 7. 当前研发主管建议
 

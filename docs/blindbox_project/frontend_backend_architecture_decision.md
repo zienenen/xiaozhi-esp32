@@ -1,4 +1,4 @@
-# 前后端架构决策
+﻿# 前后端架构决策
 
 文档状态：confirmed  
 主责智能体：架构师智能体  
@@ -32,9 +32,9 @@
 
 | 冲突点 | 文档位置/表述 | 风险 |
 | --- | --- | --- |
-| 一期是否做业务后台 | `phase1_phase2_architecture_plan.md` 一处写“一期依托官网、二期建设自有后台和三端页面” | 会导致管理端、数据集状态、打卡记录被推迟 |
+| 一期是否做业务后台 | [phase1_phase2_architecture_plan.md](phase1_phase2_architecture_plan.md) 一处写“一期依托官网、二期建设自有后台和三端页面” | 会导致管理端、数据集状态、打卡记录被推迟 |
 | 一期又推荐 Django/React | 同一文档技术建议处写“一期建议 Django + DRF + PostgreSQL + React” | 与“不做后台”形成冲突 |
-| 全栈文档默认一期有后台 | `fullstack_implementation_guide.md` 以 Django + React + PostgreSQL 为一期落地方案 | 如果架构未确认，研发执行会无依据 |
+| 全栈文档默认一期有后台 | [fullstack_implementation_guide.md](fullstack_implementation_guide.md) 以 Django + React + PostgreSQL 为一期落地方案 | 如果架构未确认，研发执行会无依据 |
 | 产品 P0 要求三端页面 | PM 已确认三端管理、数据集状态、打卡记录、模拟打卡为 P0 | 如果一期无任何业务后台，需要其他方案承载这些 P0 |
 
 因此本文回答的问题不是“产品要不要三端页面”，而是：
@@ -271,9 +271,9 @@ ESP32 固件
 | D0 | 产品边界确认 | 已确认：三端、数据集、打卡记录、模拟打卡为 P0 |
 | D1 | 架构口径确认 | 已确认：采用最小业务后台 + 官网语音链路 |
 | D2 | 技术栈确认 | 已确认：Django/DRF + PostgreSQL + React/Vite/Ant Design |
-| D3 | API 和数据模型 | 已形成并确认 `web_api_contract.md`，待全栈按实现细节细化 |
-| D4 | 安全和数据治理 | 已形成 `security_and_data_governance.md` 草案，待用户确认 |
-| D5 | 实施与测试 | 已形成 `development_process.md`、`testing_and_quality.md`、`release_operations_runbook.md`，待用户确认 |
+| D3 | API 和数据模型 | 已形成并确认 [web_api_contract.md](web_api_contract.md)，待全栈按实现细节细化 |
+| D4 | 安全和数据治理 | 已形成 [security_and_data_governance.md](security_and_data_governance.md) 草案，待用户确认 |
+| D5 | 实施与测试 | 已形成 [development_process.md](development_process.md)、[testing_and_quality.md](testing_and_quality.md)、[release_operations_runbook.md](release_operations_runbook.md)，待用户确认 |
 
 ## 8. 对现有文档的处理建议
 

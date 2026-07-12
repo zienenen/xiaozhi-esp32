@@ -1,4 +1,4 @@
-# 一期研发流程
+﻿# 一期研发流程
 
 文档状态：pending_user_confirmation  
 主责角色：研发主管  
@@ -23,12 +23,12 @@ docs/       项目文档
 
 | 文档 | 用途 |
 | --- | --- |
-| `requirements_and_feature_inventory.md` | 产品 P0/P1/P2 范围 |
-| `frontend_backend_architecture_decision.md` | 已确认前后端架构 |
-| `engineering_overview.md` | 工程边界和数据流 |
-| `web_api_contract.md` | API 与数据契约 |
-| `testing_and_quality.md` | 测试和质量门 |
-| `release_operations_runbook.md` | 发布和演示运行手册 |
+| [requirements_and_feature_inventory.md](requirements_and_feature_inventory.md) | 产品 P0/P1/P2 范围 |
+| [frontend_backend_architecture_decision.md](frontend_backend_architecture_decision.md) | 已确认前后端架构 |
+| [engineering_overview.md](engineering_overview.md) | 工程边界和数据流 |
+| [web_api_contract.md](web_api_contract.md) | API 与数据契约 |
+| [testing_and_quality.md](testing_and_quality.md) | 测试和质量门 |
+| [release_operations_runbook.md](release_operations_runbook.md) | 发布和演示运行手册 |
 
 ## 3. 当前工程原则
 
@@ -44,7 +44,7 @@ docs/       项目文档
 | 模块 | 职责 | 当前阶段要求 |
 | --- | --- | --- |
 | `main/` | 小智 ESP32 固件、后续 GPS/NFC 接入 | 一期前半段不动核心；硬件到位后再接 |
-| `backend/` | 设备、角色、点位、NFC、打卡、数据集、演示 API | 先按 `web_api_contract.md` 搭模型和接口 |
+| `backend/` | 设备、角色、点位、NFC、打卡、数据集、演示 API | 先按 [web_api_contract.md](web_api_contract.md) 搭模型和接口 |
 | `frontend/` | 管理页、演示页、模拟打卡页 | React + Vite + Ant Design，优先核心流程 |
 | `tools/device_simulator/` | 模拟设备拉配置、心跳、GPS、NFC 打卡 | 必须严格对齐 API 契约 |
 | `deploy/` | 环境变量、Nginx、Gunicorn 示例 | 不上 Docker Compose，先服务本地/单机部署 |
@@ -177,7 +177,7 @@ docs/       项目文档
 
 如果用户未及时回复：
 
-1. 非阻塞问题按 `rd_lead_question_list.md` 默认建议推进。
+1. 非阻塞问题按 [rd_lead_question_list.md](rd_lead_question_list.md) 默认建议推进。
 2. 阻塞问题只阻塞对应实现，不阻塞无关任务。
 3. 每个阶段门完成后提交 GitHub 节点。
 4. 一期公网演示环境已确认；任何涉及公网生产化治理、真实密钥扩散、长期连续位置轨迹、完整权限系统的事项必须再次确认。
