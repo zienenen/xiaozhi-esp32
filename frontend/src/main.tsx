@@ -8,7 +8,7 @@ import "./styles.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <ConfigProvider locale={zhCN}>
+    <ConfigProvider locale={zhCN} theme={{ token: { colorPrimary: "#0f766e", borderRadius: 12, colorBgLayout: "#f3f7f5" } }}>
       <App />
     </ConfigProvider>
   </React.StrictMode>
