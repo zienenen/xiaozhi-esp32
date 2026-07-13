@@ -1,17 +1,20 @@
 import { createContext, ReactNode, useContext, useMemo, useState } from "react";
+import { api, setBasicAuth } from "./api";
 
 export type DemoRole = "factory_admin" | "project_admin" | "tester" | "viewer";
-type AuthValue = { role: DemoRole | null; login: (role: DemoRole) => void; logout: () => void; canManage: boolean; canSimulate: boolean };
+type AuthValue = { role: DemoRole | null; login: (role: DemoRole, username: string, password: string) => Promise<void>; logout: () => void; canManage: boolean; canSimulate: boolean };
 
 const AuthContext = createContext<AuthValue | null>(null);
-const storageKey = "blindbox_demo_role";
-
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [role, setRole] = useState<DemoRole | null>(() => sessionStorage.getItem(storageKey) as DemoRole | null);
+  const [role, setRole] = useState<DemoRole | null>(null);
   const value = useMemo<AuthValue>(() => ({
     role,
-    login(nextRole) { sessionStorage.setItem(storageKey, nextRole); setRole(nextRole); },
-    logout() { sessionStorage.removeItem(storageKey); setRole(null); },
+    async login(nextRole, username, password) {
+      setBasicAuth(username, password);
+      try { await api.get("/demo/overview"); setRole(nextRole); }
+      catch (error) { setBasicAuth(); throw error; }
+    },
+    logout() { setBasicAuth(); setRole(null); },
     canManage: role === "factory_admin" || role === "project_admin",
     canSimulate: role === "factory_admin" || role === "tester"
   }), [role]);

@@ -1,6 +1,6 @@
 # Device Simulator
 
-仅使用 Python 标准库的设备联调模拟器。它不会模拟语音链路，也不能替代 ESP32 验收。所有 NFC 模拟请求均固定携带 `source=simulation`，日志不打印设备 token。
+仅使用 Python 标准库的设备联调模拟器。它不会模拟语音链路，也不能替代 ESP32 验收。配置、心跳和 GPS 使用设备凭据；NFC 模拟通过受保护的 `/demo/simulate-checkin` 接口执行，由后端固定写入 `source=simulation`。日志不打印任何凭据。
 
 ## 配置
 
@@ -14,7 +14,7 @@ python simulate_device.py flow --help
 全流程（GPS 默认上报一次；需要验证约 10 秒周期时指定次数）：
 
 ```powershell
-python simulate_device.py --base-url http://127.0.0.1:8000/api/v1 --device-id device_001 --device-token demo-device-token flow --gps-count 2 --interval 10
+python simulate_device.py --base-url http://127.0.0.1:8000/api/v1 --device-id device_001 --device-token demo-device-token --admin-username demo_admin --admin-password demo-password flow --gps-count 2 --interval 10
 ```
 
 单步命令：
@@ -23,18 +23,18 @@ python simulate_device.py --base-url http://127.0.0.1:8000/api/v1 --device-id de
 python simulate_device.py config
 python simulate_device.py heartbeat
 python simulate_device.py gps --count 3 --interval 10 --event-type near_spot
-python simulate_device.py checkin --case success
+python simulate_device.py --admin-username demo_admin --admin-password demo-password checkin --case success
 ```
 
 异常用例由后端测试数据决定标签状态。未登记标签默认使用 `UNKNOWN_TAG`，停用标签默认使用 `DISABLED_TAG`，均可用 `--tag-id` 覆盖；重复用例会在一次命令中对同一标签连续请求两次：
 
 ```powershell
-python simulate_device.py checkin --case unknown --tag-id UNKNOWN_TAG
-python simulate_device.py checkin --case disabled --tag-id DISABLED_TAG
-python simulate_device.py checkin --case duplicate
+python simulate_device.py --admin-username demo_admin --admin-password demo-password checkin --case unknown --tag-id UNKNOWN_TAG
+python simulate_device.py --admin-username demo_admin --admin-password demo-password checkin --case disabled --tag-id DISABLED_TAG
+python simulate_device.py --admin-username demo_admin --admin-password demo-password checkin --case duplicate
 ```
 
-合法/非法设备可通过切换 `--device-id`、`--device-token` 模拟。HTTP 错误、业务 `success=false`、非 JSON 响应和后端不可用都会输出到 stderr 并返回退出码 1。
+合法/非法设备可通过切换 `--device-id`、`--device-token` 模拟。NFC 命令必须提供测试/管理员账号（命令行或 `SIM_ADMIN_*` 环境变量）。HTTP 错误、业务 `success=false`、非 JSON 响应和后端不可用都会输出到 stderr 并返回退出码 1。
 
 ## 输出样例
 

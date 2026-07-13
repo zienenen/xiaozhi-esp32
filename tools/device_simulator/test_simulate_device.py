@@ -45,7 +45,7 @@ class SimulatorTests(unittest.TestCase):
 
     def setUp(self):
         Handler.requests.clear()
-        self.settings = sim.Settings(f"http://127.0.0.1:{self.server.server_port}/api/v1", "device_test", "secret", "spot_1", "tag_1", 1.2, 3.4, 2)
+        self.settings = sim.Settings(f"http://127.0.0.1:{self.server.server_port}/api/v1", "device_test", "secret", "admin", "password", "spot_1", "tag_1", 1.2, 3.4, 2)
 
     def test_full_request_shapes_and_simulation_marker(self):
         sim.pull_config(self.settings)
@@ -53,10 +53,10 @@ class SimulatorTests(unittest.TestCase):
         sim.location(self.settings)
         sim.checkin(self.settings)
         self.assertEqual([r[1].split("?")[0] for r in Handler.requests], [
-            "/api/v1/device-config", "/api/v1/device-heartbeats", "/api/v1/location-events", "/api/v1/checkins"
+            "/api/v1/device-config", "/api/v1/device-heartbeats", "/api/v1/location-events", "/api/v1/demo/simulate-checkin"
         ])
-        self.assertEqual(Handler.requests[-1][2]["source"], "simulation")
         self.assertEqual(Handler.requests[-1][2]["device_id"], "device_test")
+        self.assertTrue(Handler.requests[-1][3]["Authorization"].startswith("Basic "))
         self.assertEqual(Handler.requests[0][3]["X-Device-Token"], "secret")
 
     def test_api_error_is_failure(self):

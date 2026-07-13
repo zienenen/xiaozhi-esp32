@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import datetime as dt
 import json
 import os
@@ -24,6 +25,8 @@ class Settings:
     base_url: str
     device_id: str
     device_token: str
+    admin_username: str
+    admin_password: str
     spot_id: str
     tag_id: str
     latitude: float
@@ -39,15 +42,22 @@ class Settings:
             "User-Agent": "mysterybox-device-simulator/1.0",
         }
 
+    @property
+    def admin_headers(self) -> dict[str, str]:
+        if not self.admin_username or not self.admin_password:
+            raise SimulatorError("NFC simulation requires --admin-username and --admin-password")
+        credentials = base64.b64encode(f"{self.admin_username}:{self.admin_password}".encode("utf-8")).decode("ascii")
+        return {"Content-Type": "application/json", "Authorization": f"Basic {credentials}", "User-Agent": "mysterybox-device-simulator/1.0"}
+
 
 def event_time() -> str:
     return dt.datetime.now(dt.timezone.utc).isoformat()
 
 
-def request_json(settings: Settings, method: str, path: str, payload: dict[str, Any] | None = None) -> dict[str, Any]:
+def request_json(settings: Settings, method: str, path: str, payload: dict[str, Any] | None = None, *, headers: dict[str, str] | None = None) -> dict[str, Any]:
     url = f"{settings.base_url.rstrip('/')}/{path.lstrip('/')}"
     body = None if payload is None else json.dumps(payload).encode("utf-8")
-    request = urllib.request.Request(url, data=body, headers=settings.headers, method=method)
+    request = urllib.request.Request(url, data=body, headers=headers or settings.headers, method=method)
     try:
         with urllib.request.urlopen(request, timeout=settings.timeout) as response:
             raw = response.read().decode("utf-8")
@@ -97,12 +107,11 @@ def location(settings: Settings, *, event_type: str = "near_spot") -> dict[str, 
 
 
 def checkin(settings: Settings, tag_id: str | None = None) -> dict[str, Any]:
-    return request_json(settings, "POST", "checkins", {
+    return request_json(settings, "POST", "demo/simulate-checkin", {
         "device_id": settings.device_id, "spot_id": settings.spot_id,
-        "tag_id": tag_id or settings.tag_id, "method": "gps_nearby_nfc_confirmed",
-        "source": "simulation", "event_time": event_time(),
-        "location_quality": {"fix": True, "satellites": 8, "hdop": 1.2},
-    })
+        "tag_id": tag_id or settings.tag_id, "simulate_gps_nearby": True,
+        "reason": "device simulator integration test",
+    }, headers=settings.admin_headers)
 
 
 def emit(name: str, action) -> dict[str, Any]:
@@ -143,6 +152,8 @@ def parser() -> argparse.ArgumentParser:
     p.add_argument("--base-url", default=os.getenv("SIM_BASE_URL", "http://127.0.0.1:8000/api/v1"))
     p.add_argument("--device-id", default=os.getenv("SIM_DEVICE_ID", "device_001"))
     p.add_argument("--device-token", default=os.getenv("SIM_DEVICE_TOKEN", "demo-device-token"))
+    p.add_argument("--admin-username", default=os.getenv("SIM_ADMIN_USERNAME", ""))
+    p.add_argument("--admin-password", default=os.getenv("SIM_ADMIN_PASSWORD", ""))
     p.add_argument("--spot-id", default=os.getenv("SIM_SPOT_ID", "spot_gate_001"))
     p.add_argument("--tag-id", default=os.getenv("SIM_TAG_ID", "04AABBCCDD"))
     p.add_argument("--latitude", type=float, default=float(os.getenv("SIM_LATITUDE", "31.2304")))
@@ -169,7 +180,7 @@ def main() -> int:
     if getattr(args, "count", 1) < 1 or getattr(args, "gps_count", 1) < 1:
         print("ERROR: count must be at least 1", file=sys.stderr)
         return 2
-    settings = Settings(args.base_url, args.device_id, args.device_token, args.spot_id, args.tag_id,
+    settings = Settings(args.base_url, args.device_id, args.device_token, args.admin_username, args.admin_password, args.spot_id, args.tag_id,
                         args.latitude, args.longitude, args.timeout)
     try:
         run(args, settings)

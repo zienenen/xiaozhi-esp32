@@ -1,19 +1,11 @@
 from django.urls import path
-from rest_framework.response import Response
-from rest_framework.views import APIView
-
-
-class DeviceConfigView(APIView):
-    def get(self, request):
-        return Response({"success": True, "data": {"module": "devices", "todo": "device config"}, "error": None})
-
-
-class DeviceHeartbeatView(APIView):
-    def post(self, request):
-        return Response({"success": True, "data": {"module": "devices", "todo": "heartbeat accepted"}, "error": None})
-
+from .views import BindingEventsView, BindingView, DeviceConfigView, DeviceDetailView, DeviceHeartbeatView, DeviceListView
 
 urlpatterns = [
-    path("device-config", DeviceConfigView.as_view(), name="device-config"),
-    path("device-heartbeats", DeviceHeartbeatView.as_view(), name="device-heartbeats"),
+    path("device-config", DeviceConfigView.as_view()),
+    path("device-heartbeats", DeviceHeartbeatView.as_view()),
+    path("devices", DeviceListView.as_view()),
+    path("devices/<str:device_id>", DeviceDetailView.as_view()),
+    path("bindings", BindingView.as_view()),
+    path("binding-events", BindingEventsView.as_view()),
 ]

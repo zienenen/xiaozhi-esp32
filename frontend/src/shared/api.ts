@@ -9,6 +9,14 @@ export const api = axios.create({
   headers: { Accept: "application/json", "Content-Type": "application/json" }
 });
 
+export function setBasicAuth(username?: string, password?: string) {
+  if (!username || password === undefined) {
+    delete api.defaults.headers.common.Authorization;
+    return;
+  }
+  api.defaults.headers.common.Authorization = `Basic ${btoa(unescape(encodeURIComponent(`${username}:${password}`)))}`;
+}
+
 export function unwrap<T>(value: ApiEnvelope<T> | T): T {
   if (value && typeof value === "object" && "success" in value) {
     const envelope = value as ApiEnvelope<T>;

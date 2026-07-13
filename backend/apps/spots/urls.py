@@ -1,13 +1,4 @@
 from django.urls import path
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from .views import SpotDetailView, SpotDisableView, SpotListView
 
-
-class SpotsView(APIView):
-    def get(self, request):
-        return Response({"success": True, "data": {"module": "spots", "todo": "list spots"}, "error": None})
-
-
-urlpatterns = [
-    path("spots", SpotsView.as_view(), name="spots"),
-]
+urlpatterns = [path("spots", SpotListView.as_view()), path("spots/<str:spot_id>", SpotDetailView.as_view()), path("spots/<str:spot_id>/disable", SpotDisableView.as_view())]

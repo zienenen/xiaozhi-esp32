@@ -6,7 +6,7 @@ React + Vite + TypeScript + Ant Design 响应式管理与演示前端，一套 W
 
 | 路由 | 功能 |
 | --- | --- |
-| `/login` | 无密码、无 token 的演示身份入口 |
+| `/login` | 后端演示账号认证与演示身份入口 |
 | `/` | 设备、角色、GPS、NFC、打卡、数据集聚合总览与失败原因 |
 | `/devices`、`/devices/:id` | 设备搜索、在线筛选与详情 |
 | `/agents` | 角色、Prompt、voice_id、数据集关联编辑 |
@@ -27,7 +27,7 @@ npm install
 npm run dev
 ```
 
-默认使用同源 `/api/v1`。需要直连独立后端时，在未提交的本地 `.env` 中配置：
+开发服务器默认把同源 `/api/v1` 代理到 `http://127.0.0.1:8000`。先按后端 README 初始化演示账号；登录凭据只保存在当前页面内存中，刷新或退出后清除。需要直连独立后端时，在未提交的本地 `.env` 中配置：
 
 ```text
 VITE_API_BASE_URL=http://127.0.0.1:8000/api/v1
