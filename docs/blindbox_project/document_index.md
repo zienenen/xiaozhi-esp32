@@ -21,6 +21,7 @@
 | 实施计划 | [phase1_single_robot_implementation_plan.md](phase1_single_robot_implementation_plan.md) | 一期工程实施计划，偏研发执行 |
 | 研发流程 | [development_process.md](development_process.md) | 单仓多模块开发流程、阶段门、提交规则 |
 | 测试质量 | [testing_and_quality.md](testing_and_quality.md) | 后端、前端、模拟器、硬件接入质量门 |
+| 验收交接 | [phase1_acceptance_handoff.md](phase1_acceptance_handoff.md) | 研发主管最终验收记录、ACC 状态、已处理问题和剩余外部阻塞 |
 | 发布运行 | [release_operations_runbook.md](release_operations_runbook.md) | 本地运行、演示准备、故障恢复和节点上传规则 |
 | 问题清单 | [rd_lead_question_list.md](rd_lead_question_list.md) | 需要用户确认的问题、默认建议和阻塞规则 |
 | 安全治理 | [security_and_data_governance.md](security_and_data_governance.md) | 一期最低安全与数据治理边界，覆盖设备凭据、GPS/NFC、日志和演示账号 |

@@ -171,12 +171,14 @@ npm run build
 
 | 项 | 状态 |
 | --- | --- |
-| backend `manage.py check` | 架构侧已验证通过 |
-| frontend `npm run build` | 架构侧已验证通过 |
-| device_simulator 软件闭环 | 待实现/待验证 |
-| 后端 API 契约测试 | 待实现/待验证 |
-| 前端 P0 页面验证 | 待实现/待验证 |
+| backend `manage.py check` | 2026-07-13 研发主管复核通过 |
+| frontend `npm run build` | 2026-07-13 研发主管复核通过；存在 chunk 体积警告，不阻塞一期 |
+| PostgreSQL migrate / seed | 2026-07-13 本机项目内 PostgreSQL 17.10 验证通过 |
+| device_simulator 软件闭环 | 2026-07-13 HTTP flow 验证通过 |
+| 后端 API 契约测试 | 2026-07-13 后端 15 个自动化测试通过，模拟器 3 个测试通过 |
+| 前端 P0 页面验证 | 2026-07-13 PC / 平板 / 手机登录后核心页面通过 Chrome 自动化冒烟 |
 | 真实 ESP32 GPS/NFC 验证 | 硬件阶段执行 |
+| 公网环境与小智工具/MCP | 公网环境阶段执行 |
 
 ## 9. 阻塞规则
 
