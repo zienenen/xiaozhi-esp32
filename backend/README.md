@@ -50,8 +50,25 @@ python manage.py test apps.demo --settings=config.test_settings
 
 `config.test_settings` uses an in-memory database only for isolated automated tests. Development, demo, and public environments use PostgreSQL exclusively.
 
+## Local PostgreSQL Acceptance Runtime
+
+For the current Windows acceptance machine, PostgreSQL 17.10 is installed as a project-local binary runtime under ignored `tmp/` paths, without a Windows service or administrator installation.
+
+```powershell
+cd D:\mysterybox\xiaozhi-esp32-main
+tmp\pgextract\pgsql\bin\pg_ctl.exe -D tmp\pgdata -l tmp\pg.log start
+tmp\pgextract\pgsql\bin\pg_isready.exe -h 127.0.0.1 -p 5432 -U postgres
+
+cd backend
+.\.venv\Scripts\python.exe manage.py migrate --noinput
+.\.venv\Scripts\python.exe manage.py seed_demo
+.\.venv\Scripts\python.exe manage.py migrate --check --noinput
+```
+
+Local acceptance connection values are kept in ignored `backend/.env`: database `blindbox`, user `blindbox`, host `127.0.0.1`, port `5432`. Do not commit local `.env`, `tmp/pgdata`, or PostgreSQL binaries.
+
 ## Handoff Issues
 
 | ID | Issue | Current evidence | Required action | Owner | Status |
 | --- | --- | --- | --- | --- | --- |
-| BE-HO-01 | The local PostgreSQL acceptance environment is unavailable. No PostgreSQL service/runtime, Docker, or Podman was found, and `127.0.0.1:5432` is unreachable. | `python manage.py check` passes; 13 backend tests pass; migrations have no model drift; real PostgreSQL `python manage.py migrate` cannot connect. | Provide reachable PostgreSQL connection values in `.env`, run `python manage.py migrate`, run `python manage.py seed_demo`, and record the results. | 研发主管 | 待处理 |
+| BE-HO-01 | Local PostgreSQL acceptance environment was missing. | Resolved on 2026-07-13: PostgreSQL 17.10 project-local runtime started on `127.0.0.1:5432`; `python manage.py migrate --noinput` passed; `python manage.py seed_demo` passed; `python manage.py migrate --check --noinput` passed; `python manage.py check` passed; 15 backend tests passed; simulator 3 tests passed. | No further action for local software acceptance. Keep public/demo PostgreSQL provisioning as a deployment task. | 研发主管 | 已处理 |
