@@ -68,6 +68,65 @@ python simulate_device.py --help
 
 具体命令以后续 [tools/device_simulator/README.md](../../tools/device_simulator/README.md) 为准。
 
+### 3.4 局域网真实硬件联调启动
+
+当 ESP32 需要访问本机自研后端时，不能使用 `127.0.0.1`。`127.0.0.1` 对 ESP32 来说是设备自己，不是电脑。
+
+启动规则：
+
+1. 查询电脑局域网 IP，例如 `192.168.x.x`。
+2. 后端必须监听所有网卡：
+
+```powershell
+cd backend
+.\.venv\Scripts\Activate.ps1
+python manage.py runserver 0.0.0.0:8000
+```
+
+3. `.env` 中需要放行当天电脑局域网 IP：
+
+```text
+DJANGO_ALLOWED_HOSTS=127.0.0.1,localhost,192.168.x.x
+CORS_ALLOWED_ORIGINS=http://127.0.0.1:5173,http://localhost:5173,http://192.168.x.x:5173
+```
+
+4. 前端如需手机/平板同网段查看，也监听所有网卡：
+
+```powershell
+cd frontend
+npm run dev -- --host 0.0.0.0
+```
+
+5. 固件或硬件联调配置中的 API base URL 使用：
+
+```text
+http://192.168.x.x:8000/api/v1
+```
+
+不得使用：
+
+```text
+http://127.0.0.1:8000/api/v1
+```
+
+联调接口最小验证：
+
+```powershell
+curl.exe -H "X-Device-Id: device_001" -H "X-Device-Token: demo-device-token" "http://192.168.x.x:8000/api/v1/device-config?device_id=device_001"
+```
+
+```powershell
+curl.exe -X POST "http://192.168.x.x:8000/api/v1/device-heartbeats" -H "Content-Type: application/json" -H "X-Device-Id: device_001" -H "X-Device-Token: demo-device-token" -d "{\"device_id\":\"device_001\",\"firmware_version\":\"esp32-hw-test\",\"battery_percent\":100}"
+```
+
+真实硬件验收前的数据规则：
+
+- 先执行后端的真实硬件测试数据重置命令；命令未实现前，由后端研发按 [development_task_ownership.md](development_task_ownership.md) BE-12 补齐。
+- 清空模拟/手工打卡记录，避免前端把假数据当真实硬件数据展示。
+- 保留 `device_001`、绑定角色、点位和 NFC 配置，保证 ESP32 可拉取配置。
+- 设备在线状态只能由真实 ESP32 心跳更新；手工 curl 只作为接口 smoke test，不作为最终验收证据。
+- 如电脑防火墙拦截 8000/5173 端口，需要放行当前网络或临时关闭对应拦截后再测。
+
 ## 4. 演示前检查
 
 ### 4.1 软件闭环检查

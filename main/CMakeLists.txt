@@ -32,6 +32,9 @@ set(SOURCES "audio/audio_codec.cc"
             "mcp_server.cc"
             "system_info.cc"
             "application.cc"
+            "device_api_client.cc"
+            "gps_service.cc"
+            "pn532_service.cc"
             "ota.cc"
             "settings.cc"
             "device_state_machine.cc"
@@ -1040,6 +1043,7 @@ idf_component_register(SRCS ${SOURCES}
                         esp_psram
                         esp_netif
                         esp_eth
+                        esp_http_client
                         esp_driver_gpio
                         esp_driver_uart
                         esp_driver_spi

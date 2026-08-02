@@ -30,7 +30,18 @@ class DeviceConfigView(APIView):
             return api_error("config_not_ready", "设备配置尚未就绪")
         return envelope({
             "device_id": device.device_id,
-            "agent": {"agent_id": agent.agent_id, "name": agent.name, "voice_id": agent.voice_id, "personality_prompt": agent.personality_prompt, "dataset_id": agent.dataset_id},
+            "agent": {
+                "agent_id": agent.agent_id,
+                "name": agent.name,
+                "voice_id": agent.voice_id,
+                "personality_prompt": agent.personality_prompt,
+                "knowledge_references": agent.knowledge_references,
+                "tool_endpoint_url": agent.tool_endpoint_url,
+                "config_version": agent.config_version,
+                "prompt_version": agent.prompt_version,
+                "official_sync_status": agent.official_sync_status,
+                "dataset_id": agent.dataset_id,
+            },
             "spots": [{"spot_id": spot.spot_id, "name": spot.name, "latitude": float(spot.latitude), "longitude": float(spot.longitude), "gps_radius_meters": spot.gps_radius_meters, "dataset_id": spot.dataset_id} for spot in spots],
             "nfc_tags": [{"tag_id": tag.tag_id, "spot_id": tag.spot_id, "status": tag.status} for tag in tags],
         })

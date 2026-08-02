@@ -147,6 +147,18 @@ private:
         });
     }
 
+    void InitializeAmplifierEnable() {
+        gpio_config_t config = {};
+        config.pin_bit_mask = 1ULL << AUDIO_SPK_ENABLE_GPIO;
+        config.mode = GPIO_MODE_OUTPUT;
+        config.pull_up_en = GPIO_PULLUP_DISABLE;
+        config.pull_down_en = GPIO_PULLDOWN_DISABLE;
+        config.intr_type = GPIO_INTR_DISABLE;
+        ESP_ERROR_CHECK(gpio_config(&config));
+        ESP_ERROR_CHECK(gpio_set_level(AUDIO_SPK_ENABLE_GPIO, 1));
+        ESP_LOGI(TAG, "MAX98357A enabled on GPIO%d", AUDIO_SPK_ENABLE_GPIO);
+    }
+
     // 物联网初始化，逐步迁移到 MCP 协议
     void InitializeTools() {
         static LampController lamp(LAMP_GPIO);
@@ -161,6 +173,7 @@ public:
         InitializeDisplayI2c();
         InitializeSsd1306Display();
         InitializeButtons();
+        InitializeAmplifierEnable();
         InitializeTools();
     }
 

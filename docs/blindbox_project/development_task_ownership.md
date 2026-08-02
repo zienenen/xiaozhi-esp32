@@ -290,6 +290,13 @@ backend/
 | BE-09 | 实现手动模拟打卡接口 | 生成 `source=simulation` 记录 |
 | BE-10 | 实现演示种子数据初始化 | 一条命令生成演示设备、角色、点位、NFC、数据集 |
 | BE-11 | 实现小智工具接口基础能力 | `/agents/{agent_id}/context`、`/knowledge/search` 可被公网调用验证 |
+| BE-12 | 建立真实硬件测试数据重置命令 | 可一键清空模拟/手工打卡和手工心跳状态，保留 `device_001` 配置供真实 ESP32 拉取 |
+| BE-13 | 支持局域网真实设备联调 | 后端监听 `0.0.0.0:8000` 时，ESP32 可通过电脑局域网 IP 调用 `/device-config` 和 `/device-heartbeats` |
+| BE-14 | 建立真实 NFC `tag_id` 替换流程 | PN532 读到真实 UID 后，可替换占位标签并在前端/NFC 页面核对，不把占位标签当最终验收数据 |
+| BE-15 | 建立角色配置版本与官网同步状态 | 角色 prompt、性格、voice_id、知识库引用有版本、同步状态、最后同步时间和失败原因 |
+| BE-16 | 建立对话记录模型 | 可保存设备、角色、用户输入、AI 回复、来源、点位、时间和摘要 |
+| BE-17 | 建立官网同步日志 | 可记录人工/半自动同步到小智官网的配置快照、操作人、状态和错误 |
+| BE-18 | 建立工具调用日志 | 小智工具/MCP 调用我方接口时有入参摘要、结果、耗时、失败原因和 token 脱敏日志 |
 
 ### 3.4 明确不做
 
@@ -324,6 +331,59 @@ python manage.py migrate
 - GPS 不保存长期连续轨迹。
 - PostgreSQL 为主线数据库。
 
+### 3.7 真实硬件联调追加任务（2026-07-18）
+
+触发背景：用户已开始接入真实 ESP32-S3、GPS、麦克风、后续 PN532/NFC、电池与功放喇叭。研发主管已要求删除当前假数据，后续演示数据必须能区分“真实硬件上报”和“模拟器/手工模拟”。
+
+后端研发接手前只需要阅读：
+
+- 本文件第 3 章、第 9-12 章。
+- [web_api_contract.md](web_api_contract.md) 中设备配置、心跳、GPS、NFC 打卡接口。
+- [release_operations_runbook.md](release_operations_runbook.md) 第 3.4 节。
+- [testing_and_quality.md](testing_and_quality.md) QG-2、QG-5。
+- [phase1_acceptance_handoff.md](phase1_acceptance_handoff.md) 第 7、8 节。
+
+当前真实硬件联调基线：
+
+| 项 | 当前值/规则 |
+| --- | --- |
+| 设备 ID | `device_001` |
+| 设备 token | `demo-device-token` |
+| 本机局域网 API 示例 | `http://192.168.168.155:8000/api/v1`，实际以运行机器当天 IP 为准 |
+| ESP32 访问地址 | 禁止写 `127.0.0.1`，必须使用电脑局域网 IP 或公网地址 |
+| 当前数据库状态 | 已清空打卡记录；`device_001` 保留配置但在线状态重置为 `unknown` |
+| NFC 标签 | 当前 `04AABBCCDD` 仅为占位；PN532 读到真实 UID 后必须替换或新增真实标签 |
+| 真实在线判定 | 只能由真实 ESP32 调用 `/device-heartbeats` 后形成，不用模拟器或手工请求冒充验收 |
+
+后端 agent 的落地任务：
+
+1. 增加或整理一个后端管理命令，例如 `reset_hw_test_data`，用于真实硬件验收前清空模拟打卡、手工打卡、过期心跳、旧 GPS 状态，同时保留最小配置。
+2. 补充 `seed_demo` 或独立命令参数，明确“演示种子数据”和“真实硬件测试基线”的区别。
+3. 用局域网 IP 验证：
+   - `GET /api/v1/device-config`
+   - `POST /api/v1/device-heartbeats`
+   - 请求头包含 `X-Device-Id` 和 `X-Device-Token`
+4. 修正 README 或运行手册中的示例，避免硬件研发误填 `127.0.0.1`。
+5. 在测试记录中写明本轮是否由真实 ESP32 触发；没有真实串口/设备证据时，不得把联调标记为 ACC-07 完成。
+
+完成标准：
+
+- `python manage.py check` 通过。
+- `python manage.py migrate --check --noinput` 通过。
+- 真实硬件测试基线命令可重复执行，重复执行不破坏 `device_001` 配置。
+- 前端总览页能在真实 ESP32 心跳后显示设备在线；未收到真实心跳时保持未知/离线。
+
+#### 2026-07-18 BE-13 执行记录
+
+| 子项 | 状态 | 真实证据 |
+| --- | --- | --- |
+| ESP32 调用 `/device-heartbeats` | 通过；18:47 阻塞已解除 | 2026-07-19 家庭网再次验证：ESP32 `192.168.1.10` 连续两次 `Heartbeat accepted: HTTP 200`；PostgreSQL 中 `device_001=online`、`last_seen_at=2026-07-19T05:16:01.306886+00:00`、`firmware_version=blindbox-2.2.6`。此前 2026-07-18 办公网验证证据继续保留 |
+| ESP32 调用 `/device-config` | 待验收 | 当前无设备侧调用日志，不用电脑手工请求替代 |
+| 局域网地址与白名单 | 通过本轮环境验证 | ESP32 `192.168.101.10`，电脑 WLAN `192.168.101.119`；本地 `.env` 已加入当天地址；下次联调需重新确认 IP |
+| GPS/NFC 真实事件 | 待验收 | `last_gps_status=not_connected`；尚无 PN532 `tag_id` |
+
+因此 BE-13 当前为**部分通过**：真实 ESP32 心跳已接入自研平台，但设备配置拉取和 GPS/NFC 事件仍需后续设备侧证据。
+
 ## 4. 前端模块
 
 ### 4.1 负责范围
@@ -357,6 +417,9 @@ frontend/
 | FE-07 | 数据集页 | 展示数据集状态、片段摘要、关联角色或点位 |
 | FE-08 | 打卡记录页 | 展示成功、失败、重复、模拟打卡记录 |
 | FE-09 | 手动模拟打卡页 | 可触发模拟记录，并明显标记模拟数据 |
+| FE-10 | 对话记录页 | 展示会话、用户内容、AI 回复、关联设备/角色/点位和来源 |
+| FE-11 | 角色配置版本页 | 展示 prompt、性格、voice_id、知识库引用、配置版本和预览 |
+| FE-12 | 官网同步状态页 | 展示每个角色/设备是否已同步到小智官网、最后同步时间、失败原因和人工操作备注 |
 
 ### 4.4 状态要求
 
@@ -471,7 +534,8 @@ tools/device_simulator/
 ```text
 main/
 docs/blindbox_project/phase1_single_robot_budget.md
-后续补充 espidf_runbook.md
+docs/blindbox_project/espidf_runbook.md
+docs/blindbox_project/phase1_hardware_wiring_manual.md
 ```
 
 ### 6.2 输入资料
@@ -480,6 +544,8 @@ docs/blindbox_project/phase1_single_robot_budget.md
 - [xiaozhi_existing_capabilities_analysis.md](xiaozhi_existing_capabilities_analysis.md)
 - [web_api_contract.md](web_api_contract.md)
 - [testing_and_quality.md](testing_and_quality.md)
+- [espidf_runbook.md](espidf_runbook.md)
+- [phase1_hardware_wiring_manual.md](phase1_hardware_wiring_manual.md)
 
 ### 6.3 P0 任务
 
@@ -495,11 +561,67 @@ docs/blindbox_project/phase1_single_robot_budget.md
 | HW-08 | 串口日志可诊断 | GPS、NFC、网络、后端错误有日志 |
 | HW-09 | 电池供电演示验证 | 可脱离电脑完成短时演示 |
 
+### 6.3.1 2026-07-25 硬件工程师当前任务包
+
+当前背景：小智官网语音链路已由真实硬件跑通；INMP441 麦克风通过；MAX98357A + 3W 喇叭已能实体发声但杂音较大；真实 ESP32 心跳已进入自研后端。下一步不能继续把 Wi-Fi 当定位能力，Wi-Fi 只代表联网，不能替代 GPS 经纬度。
+
+硬件工程师接手前只读以下文档，避免 token 消耗过大：
+
+- 本文件第 6 章、第 9-10 章。
+- [phase1_hardware_wiring_manual.md](phase1_hardware_wiring_manual.md) 全文。
+- [espidf_runbook.md](espidf_runbook.md) 第 2、3、5、6、10、11、12.1、12.2 节。
+- [web_api_contract.md](web_api_contract.md) 第 5.1-5.4 节。
+- [testing_and_quality.md](testing_and_quality.md) QG-5 与第 8.1 节。
+
+当前硬件任务状态：
+
+| 任务 | 当前状态 | 下一步 |
+| --- | --- | --- |
+| HW-01 ESP32-S3 | 通过 | 保持现有板卡和串口记录，不重新选板 |
+| HW-02 麦克风/功放 | 功能通过，音质待优化 | 降低音量/增益、缩短 I2S 线、检查共地和电源去耦；不因杂音阻塞 GPS/NFC 主线 |
+| HW-03 GPS | 未通过 | 先解决 GPIO18 冲突；确认新的 GPS UART RX/TX；再接 NEO-6M 读 NMEA |
+| HW-04 PN532 NFC | 未通过 | 先确认实物接口模式和电压，再接线读取真实 UID/tag_id |
+| HW-05 GPS 上报 | 未开始 | NMEA 读通后按约 10 秒调用 `/api/v1/location-events` |
+| HW-06 NFC 打卡 | 未开始 | 读到真实 tag_id 后调用 `/api/v1/checkins`，后端替换占位标签 |
+| HW-07 小智语音链路 | 通过 | 后续改 GPS/NFC 时必须回归：唤醒、识别、官网记录、喇叭播放 |
+| HW-08 串口诊断 | 部分通过 | 补 GPS/NFC/device-config 成功和失败日志 |
+| HW-09 电池供电 | 未开始 | GPS/NFC/喇叭稳定后再接 TP4056、升压和 18650 |
+
+硬件工程师本轮只做四个 P0 闭环：
+
+1. `device-config` 设备侧拉取：ESP32 开机或联网后调用 `GET /api/v1/device-config`，串口打印成功/失败摘要，不输出 token。
+2. GPS：确认安全引脚，读取 NMEA，能区分 `fix` / `no fix`，再按约 10 秒上报定位摘要。
+3. NFC：确认 PN532 接口，读取真实 UID，交给后端替换占位 tag，随后触发真实打卡。
+4. 电池后置：前三项稳定前不接电池；电池只做短时演示压测，不做低功耗优化。
+
+禁止事项：
+
+- 禁止继续把 GPS TX 接 GPIO18。
+- 禁止用 Wi-Fi 连接状态冒充 GPS 定位。
+- 禁止同时新增 GPS、PN532、电池三个模块。
+- 禁止在串口、截图、文档中输出 Wi-Fi 密码、激活码、device token。
+- 禁止为了接 GPS/NFC 破坏已通过的小智官网语音链路。
+
+交付证据格式：
+
+```text
+模块：
+接线照片：
+修改 main/ 文件：
+串口关键日志：
+后端接口日志：
+前端页面核对：
+是否真实硬件触发：
+失败项：
+下一步：
+```
+
 ### 6.4 必须补充的硬件文档
 
 硬件研发必须补：
 
 - [espidf_runbook.md](espidf_runbook.md)
+- [phase1_hardware_wiring_manual.md](phase1_hardware_wiring_manual.md)
 - GPS 接线表
 - PN532 接线表
 - 麦克风/功放接线表
@@ -591,12 +713,264 @@ frontend/.env.example
 | MCP-03 | 验证知识查询接口 | 可调用 `/api/v1/knowledge/search` |
 | MCP-04 | 验证 token | 无 token 或错误 token 被拒绝 |
 | MCP-05 | 验证超时兜底 | 接口失败时不影响基础播报兜底 |
+| MCP-06 | 记录工具调用日志 | 每次 context/knowledge 调用有调用摘要、结果、耗时、失败原因 |
+| MCP-07 | 建立官网同步操作记录 | 官网侧工具、prompt、voice_id 的人工同步结果能在我方平台留痕 |
 
 ### 8.3 完成标准
 
 - 小智侧能成功调用至少一个我方公网接口。
 - 失败时有明确日志。
 - 如果官网工具/MCP 不稳定，演示仍可走固定播报或后端预置上下文兜底。
+
+## 8.4 2026-07-26 产品经理最新 P0 后的研发待办分配
+
+本节用于承接产品经理最新确认项，避免前端、后端、硬件分别理解导致口径不一致。
+
+依据文档：
+
+| 文档 | 需关注内容 |
+| --- | --- |
+| [product_manager_handoff_checklist.md](product_manager_handoff_checklist.md) | D-13、D-14、D-15；第 3 节 P0；第 5.1.2、5.1.6 节 |
+| [django_react_frontend_product_interaction_spec.md](django_react_frontend_product_interaction_spec.md) | 页面清单、角色智能体配置、A-09-1、A-09-2 |
+| [requirements_and_feature_inventory.md](requirements_and_feature_inventory.md) | R-P0-32、R-P0-33、R-P0-34、R-P0-35；R-P1-05 |
+| [mvp_product_alignment.md](mvp_product_alignment.md) | T-P0-16、T-P0-17、T-P0-18；Q-05、Q-06、Q-07 |
+
+### 8.4.1 后端研发待办
+
+目标：让自研平台成为一期“角色配置源”和“演示数据中心”。即使小智官网仍负责真实语音链路，自研平台也必须能看到配置、同步状态、对话记录和操作留痕。
+
+| 编号 | 任务 | 输出物 | 验收标准 |
+| --- | --- | --- | --- |
+| BE-PM-01 | 扩展角色/智能体配置模型 | `Agent` 或关联配置表，包含提示词/性格设定、`voice_id`、知识引用、配置版本、官网同步状态、最近同步时间 | 修改角色配置后，后端能标记为“待同步到官网” |
+| BE-PM-02 | 实现对话记录模型和 API | `ConversationSession`、`ConversationMessage` 的迁移、序列化、列表/详情接口 | 至少返回设备、角色、用户输入、AI 回复、景点、知识片段摘要、时间、来源 |
+| BE-PM-03 | 实现官网同步快照/日志 API | `OfficialSyncLog` 或等价表；提供待复制到官网的配置快照 | 能记录“待同步/已同步/失败/需人工处理”、操作者、时间、备注 |
+| BE-PM-04 | 清理假数据并补真实演示测试数据 | seed 命令中加入最小真实演示数据；标记数据来源 | 前端打开不空白，且数据可解释为演示机器人真实链路测试数据 |
+| BE-PM-05 | 补接口权限和脱敏 | device token、tool token、后台接口不泄露密钥 | API 响应不返回真实 token/密码 |
+| BE-PM-06 | 补迁移和测试 | Django migration、`manage.py check`、核心 API 测试 | PostgreSQL 下迁移通过，核心接口返回 2xx/4xx 符合契约 |
+
+暂缓项：`ToolInvocationLog` 属于 P1，可以先建模型或预留接口，但不得影响 P0 对话记录和官网同步状态交付。
+
+后端研发只需优先阅读：
+
+- 本文第 3 章和第 8.4 节。
+- [web_api_contract.md](web_api_contract.md)。
+- [requirements_and_feature_inventory.md](requirements_and_feature_inventory.md) 第 6、8、10 节。
+- [product_manager_handoff_checklist.md](product_manager_handoff_checklist.md) D-13、D-14、D-15。
+
+### 8.4.2 前端研发待办
+
+目标：让演示时“看起来是一套完整自研平台”，能看到角色设置、对话内容、官网同步状态和同步快照。
+
+| 编号 | 任务 | 输出物 | 验收标准 |
+| --- | --- | --- | --- |
+| FE-PM-01 | 角色配置页增强 | 展示/编辑提示词、性格设定、`voice_id`、知识引用、配置版本 | 修改后页面显示“待同步到官网” |
+| FE-PM-02 | 官网同步状态展示 | 状态标签、最近同步时间、操作者、失败原因 | 支持“待同步/已同步/失败/需人工处理” |
+| FE-PM-03 | 官网同步快照页 | 可复制的官网配置快照，包括提示词、音色、工具 URL、知识引用 | 演示人员能按页面内容手动同步到小智官网 |
+| FE-PM-04 | 对话记录页 | 列表、筛选、详情，支持设备/角色/时间/景点/来源筛选 | 能看到用户输入、AI 回复、知识片段摘要、来源 |
+| FE-PM-05 | 首页入口和空状态 | 首页/侧边栏加入对话记录、官网同步状态入口 | 无数据、加载中、失败状态都有明确提示 |
+| FE-PM-06 | 构建验证 | `npm run build` | 构建通过，PC/平板/手机宽度下无阻塞性问题 |
+
+暂缓项：工具调用日志页面属于 P1，不阻塞一期演示；如果后端已提供模型，可只放入口或占位状态。
+
+前端研发只需优先阅读：
+
+- 本文第 4 章和第 8.4 节。
+- [django_react_frontend_product_interaction_spec.md](django_react_frontend_product_interaction_spec.md)。
+- [web_api_contract.md](web_api_contract.md)。
+- [requirements_and_feature_inventory.md](requirements_and_feature_inventory.md) 第 6、8、10 节。
+
+### 8.4.3 硬件/固件研发待办
+
+目标：保持小智官网语音链路已跑通的成果，同时把真实设备状态、配置版本、GPS/NFC 和必要对话证据接入自研平台。
+
+| 编号 | 任务 | 输出物 | 验收标准 |
+| --- | --- | --- | --- |
+| HW-PM-01 | 保持小智官网语音链路稳定 | 串口日志、官网记录、现场视频/照片 | 唤醒、收音、回复、喇叭播放均可复现 |
+| HW-PM-02 | 接入自研平台配置拉取 | 固件调用 `GET /api/v1/device-config`，日志打印配置版本 | ESP32 使用局域网 IP 或公网域名访问，不能写 `127.0.0.1` |
+| HW-PM-03 | 接入设备心跳 | 固件调用 `POST /api/v1/device-heartbeats` | 后端和前端能显示设备在线 |
+| HW-PM-04 | 提供对话记录导入证据 | 如果官网暂不能自动回传对话，则提供串口日志/人工导入字段规范 | 自研平台能形成至少一条真实演示对话记录 |
+| HW-PM-05 | GPS 验证 | 避开 GPIO18 冲突，完成 NMEA 读取和位置上报 | 平台能看到真实或明确标记的 GPS 测试点 |
+| HW-PM-06 | NFC 验证 | PN532 读取真实 UID，并上报打卡 | 平台能看到真实 NFC tag_id/checkin |
+| HW-PM-07 | 硬件变更控制 | 每次只改一个模块，电池最后接入 | 出问题能快速回退，不把音频、GPS、NFC、电池一起混改 |
+
+硬件侧约束：
+
+- Wi-Fi 只负责联网，不等同于 GPS 定位。
+- GPS 不使用 GPIO18；该脚位已与当前固件灯控存在冲突风险。
+- 电池、TP4056、升压/供电链路放到 GPS/NFC/音频稳定之后再处理。
+- 固件日志不得打印真实 `device_token`。
+
+硬件/固件研发只需优先阅读：
+
+- 本文第 6 章和第 8.4 节。
+- [phase1_hardware_wiring_manual.md](phase1_hardware_wiring_manual.md)。
+- [espidf_runbook.md](espidf_runbook.md)。
+- [web_api_contract.md](web_api_contract.md) 设备、心跳、GPS、NFC 相关章节。
+- [phase1_single_robot_budget.md](phase1_single_robot_budget.md) 已采购硬件清单。
+
+### 8.4.4 跨模块执行顺序
+
+| 顺序 | 模块 | 交付点 |
+| --- | --- | --- |
+| 1 | 后端 | 先落库表、迁移、API、seed 数据 |
+| 2 | 前端 | 基于后端 API 做角色配置、对话记录、官网同步页 |
+| 3 | 硬件/固件 | 先接 device-config/heartbeat，再接 GPS/NFC，对话记录先走可导入证据 |
+| 4 | 小智官网同步 | 先人工/半自动同步提示词、音色、工具 URL，并在自研平台留痕 |
+| 5 | 研发主管验收 | 用一条真实演示链路贯穿：角色配置 -> 官网同步 -> 设备在线 -> 对话记录 -> GPS/NFC |
+
+### 8.4.5 可直接发给各研发 Agent 的任务句
+
+后端 Agent：
+
+> 请只阅读 `docs/blindbox_project/development_task_ownership.md` 第 3 章和第 8.4 节、`docs/blindbox_project/web_api_contract.md`、`docs/blindbox_project/requirements_and_feature_inventory.md` 第 6/8/10 节、`docs/blindbox_project/product_manager_handoff_checklist.md` D-13/D-14/D-15，然后完成 BE-PM-01 到 BE-PM-06；重点是角色配置源、对话记录、官网同步快照/日志、真实演示 seed 数据、PostgreSQL 迁移和 API 测试。
+
+前端 Agent：
+
+> 请只阅读 `docs/blindbox_project/development_task_ownership.md` 第 4 章和第 8.4 节、`docs/blindbox_project/django_react_frontend_product_interaction_spec.md`、`docs/blindbox_project/web_api_contract.md`、`docs/blindbox_project/requirements_and_feature_inventory.md` 第 6/8/10 节，然后完成 FE-PM-01 到 FE-PM-06；重点是角色配置页、对话记录页、官网同步状态/快照页和构建验证。
+
+硬件/固件 Agent：
+
+> 请只阅读 `docs/blindbox_project/development_task_ownership.md` 第 6 章和第 8.4 节、`docs/blindbox_project/phase1_hardware_wiring_manual.md`、`docs/blindbox_project/espidf_runbook.md`、`docs/blindbox_project/web_api_contract.md` 设备/GPS/NFC 相关章节、`docs/blindbox_project/phase1_single_robot_budget.md` 已采购清单，然后完成 HW-PM-01 到 HW-PM-07；重点是保持小智官网语音链路稳定、接入自研平台 device-config/heartbeat、验证 GPS/NFC，并提供可进入自研平台的真实对话记录证据。
+
+## 8.5 2026-07-26 实时对话入库链路任务
+
+本节承接用户最新确认：一期不优先从小智官网后台拉取历史聊天记录。既然硬件端已经能在小智官方语音链路中捕获 user/assistant 文本，就采用“硬件实时上报，我方后端按句入库”的方式形成真实对话记录。
+
+目标链路：
+
+```text
+用户对 ESP32 说话
+  -> ESP32 连接小智官方语音链路
+  -> 固件捕获 user/assistant 文本和 official_session_id
+  -> ESP32 POST 到我方 Django
+  -> Django 写入 ConversationSession / ConversationMessage
+  -> 前端用户端展示最近真实对话和当前沟通状态
+```
+
+### 8.5.1 后端任务
+
+| 编号 | 任务 | 输出物 | 验收标准 |
+| --- | --- | --- | --- |
+| BE-RT-01 | 新增设备鉴权的对话事件上报接口 | `POST /api/v1/device-conversation-events` | 使用 `X-Device-Id` / `X-Device-Token`，不要求后台登录 |
+| BE-RT-02 | 按官网 session 聚合会话 | 根据 `official_session_id` 自动创建或复用 `ConversationSession` | 同一 `official_session_id` 下 user/assistant 消息进入同一会话 |
+| BE-RT-03 | 按句写入消息 | 每次上报写入一条 `ConversationMessage` | user/assistant 顺序和时间可追溯 |
+| BE-RT-04 | 后端绑定关系兜底 | 不盲信设备传入的 `agent_id`，优先以后端 `device_id -> bound_agent` 为准 | 设备传错 agent_id 不会污染绑定关系 |
+| BE-RT-05 | 用户端最近对话查询 | 最近真实对话查询接口或复用现有 conversation 接口加过滤 | 前端可展示当前设备最近若干条真实对话 |
+| BE-RT-06 | 测试与脱敏 | 单元测试/API smoke，日志不打印 device token | `manage.py check` 通过，测试覆盖鉴权、创建会话、追加消息 |
+
+建议请求体：
+
+```json
+{
+  "official_session_id": "a4681f38",
+  "role": "user",
+  "content": "帮我介绍一下这个景点",
+  "content_source": "xiaozhi_official_device_log",
+  "session_source": "xiaozhi_official",
+  "agent_id": "agent_alo",
+  "spot_id": "spot_gate_001",
+  "created_at": "2026-07-26T21:30:00+08:00"
+}
+```
+
+#### 8.5.1.1 后端执行记录（2026-07-26）
+
+| 编号 | 状态 | 实际交付与验证 |
+| --- | --- | --- |
+| BE-RT-01 | 已完成 | 新增 `POST /api/v1/device-conversation-events`，复用 `X-Device-Id` / `X-Device-Token` 鉴权，不要求后台登录；错误 token 返回 `401 invalid_device_token` |
+| BE-RT-02 | 已完成 | `ConversationSession` 新增 `official_session_id`，并增加 `(device, official_session_id)` 唯一约束；同一设备的同一官网 session 自动复用 |
+| BE-RT-03 | 已完成 | 每个有效事件新增一条 `ConversationMessage`；首次建会话返回 `201`，后续追加返回 `200`，角色与时间可追溯 |
+| BE-RT-04 | 已完成 | 会话 `agent` 强制取后端 `DeviceBinding`；请求中的 `agent_id` 只作为审计 metadata，错误报告值不会污染绑定关系 |
+| BE-RT-05 | 已完成 | 复用 `GET /api/v1/conversation-sessions?device_id=...` 和 `GET /api/v1/user/companion`，未重复建立 conversation 查询资源 |
+| BE-RT-06 | 已完成 | metadata 对 token、password、secret、authorization、credential、API key、access key、private key、cookie 等敏感键递归遮蔽；响应不回显设备凭据 |
+
+数据库迁移 `conversations.0002_conversationsession_official_session_id` 已应用到 PostgreSQL。后端全量 29 项测试通过，`manage.py check`、`makemigrations --check`、`migrate --check` 均通过。后端测试覆盖设备鉴权、会话创建与复用、逐句追加、绑定角色优先、非法角色拒绝和敏感 metadata 脱敏。
+
+### 8.5.2 硬件/固件任务
+
+| 编号 | 任务 | 输出物 | 验收标准 |
+| --- | --- | --- | --- |
+| HW-RT-01 | 扩展 `CONVERSATION_EVIDENCE` | 捕获 user/assistant 文本后继续打印串口证据 | 断网时仍有可读兜底日志 |
+| HW-RT-02 | 实时 POST 对话事件 | 固件调用 `POST /api/v1/device-conversation-events` | 每句 user/assistant 都能进入后端 |
+| HW-RT-03 | 设备鉴权 | 请求头带 `X-Device-Id` / `X-Device-Token` | 后端认证通过，串口不打印明文 token |
+| HW-RT-04 | 会话字段 | 上报 `official_session_id`、`role`、`content`、来源、时间 | 后端可按官方 session 聚合 |
+| HW-RT-05 | 失败兜底 | 网络失败时不影响小智语音链路 | 对话继续，串口保留待补证据 |
+
+#### 8.5.2.1 硬件/固件执行记录（2026-07-26）
+
+HW-RT-01～HW-RT-05 已完成真实硬件验收：
+
+| 编号 | 状态 | 实机证据 |
+| --- | --- | --- |
+| HW-RT-01 | 通过 | 官方链路每次捕获 user/assistant 句子时继续打印完整 `CONVERSATION_EVIDENCE` |
+| HW-RT-02 | 通过 | 独立 FreeRTOS 队列异步 POST；真实会话首句返回 HTTP 201，后续 8 句返回 HTTP 200 |
+| HW-RT-03 | 通过 | 复用 `X-Device-Id` / `X-Device-Token`；串口、文档和提交文件均未输出明文 token |
+| HW-RT-04 | 通过 | 每句包含 `official_session_id`、`role`、`content`、`content_source`、`session_source` 和带 `+08:00` 的 ISO 8601 时间 |
+| HW-RT-05 | 通过 | HTTP 在独立任务执行；网络/队列/内存失败分支只记录告警并保留串口证据，不阻塞官方 STT/TTS 回调 |
+
+真实验收会话：
+
+```text
+official_session_id=d0d109c0
+device_id=device_001
+agent_id=agent_alo（以后端绑定关系为准）
+source=device_log
+message_count=9
+```
+
+串口关键结果：
+
+```text
+CONVERSATION_EVIDENCE {..."role":"user"...}
+Conversation event accepted: HTTP 201
+CONVERSATION_EVIDENCE {..."role":"assistant"...}
+Conversation event accepted: HTTP 200
+```
+
+用户确认喇叭正常回应；同轮心跳和 GPS 约 10 秒上报继续返回 HTTP 200，证明实时对话入库没有破坏小智官方语音链路。当前刷入固件 SHA-256 为 `B9201141E7F004F6C58FFD7D633CAE04E62FFB933365CED1953722190B33208D`。
+
+### 8.5.3 前端任务
+
+| 编号 | 任务 | 输出物 | 验收标准 |
+| --- | --- | --- | --- |
+| FE-RT-01 | 修正用户端“锁死”表达 | 文案改为“已绑定专属伙伴 / 用户不可自行切换” | 不再出现“锁死”“锁定不可用”等误导文案 |
+| FE-RT-02 | 我的伙伴页展示真实状态 | 当前绑定角色、设备在线、聆听/思考/回复/空闲状态 | 用户能理解设备已连接且正在对话 |
+| FE-RT-03 | 展示最近真实对话 | 从后端 conversation 接口读取最近消息 | 不使用前端假数据冒充实时对话 |
+| FE-RT-04 | 轻量刷新 | 先用 3-5 秒轮询刷新，后续再评估 WebSocket | 新消息能在用户端较快出现 |
+| FE-RT-05 | 来源标识 | 明确显示 `xiaozhi_official_device_log` / `manual_import` / `simulation` 等来源 | 真实、模拟、手工导入不混淆 |
+
+#### 2026-07-26 FE-RT 执行记录
+
+| 编号 | 完成情况 | 实现位置 | 验证结果 |
+| --- | --- | --- | --- |
+| FE-RT-01 | 已完成 | `frontend/src/app/App.tsx`、`frontend/src/pages/UserExperiencePages.tsx` | 用户端统一使用“已绑定专属伙伴，用户不可自行切换”；源码扫描未发现“锁死”“锁定不可用”“未解锁不可用” |
+| FE-RT-02 | 已完成前端展示 | `frontend/src/pages/UserExperiencePages.tsx` | 展示当前绑定角色、设备在线状态、最近在线时间和根据最近入库消息呈现的对话状态；真实硬件状态仍以联调结果为准 |
+| FE-RT-03 | 已完成 | `frontend/src/pages/UserExperiencePages.tsx`、`frontend/src/shared/types.ts` | 从 `GET /api/v1/user/companion?recent_limit=5` 返回的 `recent_conversations.messages` 渲染最近消息；已删除静态示例问答 |
+| FE-RT-04 | 已完成 | `frontend/src/shared/useApi.ts`、`frontend/src/pages/UserExperiencePages.tsx` | 使用 5 秒静默轮询；轮询时不切回整页 loading 状态 |
+| FE-RT-05 | 已完成前端识别与展示 | `frontend/src/shared/types.ts`、`frontend/src/pages/UserExperiencePages.tsx` | 仅将 `device_log` / `xiaozhi_official_device_log` 展示为最近真实硬件对话，并逐条展示来源；模拟、手工来源类型保持独立 |
+
+前端验证命令：
+
+```powershell
+cd frontend
+npm run build
+```
+
+验证结果：TypeScript 与 Vite 生产构建通过。当前结论仅代表前端实现和契约类型检查通过，不代表 ESP32 -> Django -> React 真实对话链路已经完成硬件验收；最终验收需由真实设备产生 user/assistant 消息并确认页面在 5 秒轮询窗口内更新。
+
+### 8.5.4 可直接发给各研发 Agent 的任务句
+
+后端 Agent：
+
+> 请只阅读 `docs/blindbox_project/development_task_ownership.md` 第 8.5 节、`docs/blindbox_project/web_api_contract.md` 对话记录相关章节、`docs/blindbox_project/django_react_frontend_product_interaction_spec.md` 第 5.2 和 6.11 节，然后新增设备鉴权接口 `POST /api/v1/device-conversation-events`。ESP32 每次捕获小智官方链路的 user/assistant 文本后会上报该接口；后端需按 `official_session_id` 自动创建或复用 `ConversationSession`，每句写入 `ConversationMessage`，优先以后端设备绑定关系确定 agent，不要求后台登录，并补测试和脱敏。
+
+硬件/固件 Agent：
+
+> 请只阅读 `docs/blindbox_project/development_task_ownership.md` 第 8.5 节、`docs/blindbox_project/espidf_runbook.md`、`docs/blindbox_project/web_api_contract.md` 设备鉴权相关章节，然后把当前只打印串口的 `CONVERSATION_EVIDENCE` 扩展为同时 POST 到 `POST /api/v1/device-conversation-events`。每次捕获小智官方链路 user 文本或 assistant 回复时，都带 `official_session_id`、`role`、`content`、来源、时间和设备鉴权；失败时保留串口日志，不影响小智语音链路。
+
+前端 Agent：
+
+> 请只阅读 `docs/blindbox_project/django_react_frontend_product_interaction_spec.md` 第 5.2、6.11、12 节，`docs/blindbox_project/frontend_style_demo/interactive_prototype_design_notes.md` 用户端相关章节，以及 `docs/blindbox_project/development_task_ownership.md` 第 8.5 节，然后修正用户端文案：不要显示“锁死”，改成“已绑定专属伙伴，用户不可自行切换”；“我的伙伴”页展示当前绑定角色、设备在线/对话状态和从后端 conversation 接口读取的最近真实对话，先用 3-5 秒轮询刷新，不能用假数据冒充实时聊天。
 
 ## 9. 验收模块
 

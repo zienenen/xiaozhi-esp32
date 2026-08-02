@@ -16,7 +16,8 @@
 8. [rd_lead_question_list.md](rd_lead_question_list.md) - 研发主管问题清单
 9. [security_and_data_governance.md](security_and_data_governance.md) - 一期最低安全与数据治理边界
 10. [open_source_selection.md](open_source_selection.md) - 一期开源选型与复用边界
-11. [phase1_single_robot_budget.md](phase1_single_robot_budget.md) - 一期预算与淘宝/京东采购清单
+11. [xiaozhi_official_capabilities/README.md](xiaozhi_official_capabilities/README.md) - 小智官网能力对照与自研回退双轨
+12. [phase1_single_robot_budget.md](phase1_single_robot_budget.md) - 一期预算与淘宝/京东采购清单
 
 ## 当前一期范围
 
@@ -45,6 +46,12 @@
 | [rd_lead_question_list.md](rd_lead_question_list.md) | 需要用户确认的问题清单和默认推进规则 |
 | [security_and_data_governance.md](security_and_data_governance.md) | 一期最低安全与数据治理边界，覆盖设备凭据、GPS/NFC、日志和演示账号 |
 | [open_source_selection.md](open_source_selection.md) | 一期开源选型与复用边界，明确当前采用组件、暂缓组件和商业化前治理项 |
+| [xiaozhi_official_capabilities/README.md](xiaozhi_official_capabilities/README.md) | 小智官网能力对照、自研替代优先级和官网回退双轨策略 |
+| [xiaozhi_official_capabilities/capability_map.md](xiaozhi_official_capabilities/capability_map.md) | 小智官网/官方链路能力地图，标明自研、依赖和后置能力 |
+| [xiaozhi_official_capabilities/dual_track_architecture.md](xiaozhi_official_capabilities/dual_track_architecture.md) | 官网兼容轨、自研替代轨和兜底轨架构 |
+| [xiaozhi_official_capabilities/migration_roadmap.md](xiaozhi_official_capabilities/migration_roadmap.md) | 从小智官网依赖迁移到自研平台的阶段路线 |
+| [xiaozhi_official_capabilities/fullstack_handoff.md](xiaozhi_official_capabilities/fullstack_handoff.md) | 给全栈工程师的模块边界和任务包说明 |
+| [xiaozhi_official_capabilities/commercial_iot_reference_usmile.md](xiaozhi_official_capabilities/commercial_iot_reference_usmile.md) | 类比 usmile 智能牙刷的商业化设备连接、App 配网、云端和 OTA 架构参考 |
 | [phase1_single_robot_budget.md](phase1_single_robot_budget.md) | 一期预算和采购清单 |
 | [fullstack_implementation_guide.md](fullstack_implementation_guide.md) | 全栈实施说明 |
 | [project_role_agents.md](project_role_agents.md) | 项目角色与协作边界 |

@@ -4,7 +4,7 @@ import { DemoRole, useAuth } from "../shared/auth";
 import { readableError } from "../shared/api";
 
 const roles = [
-  { value: "viewer", label: "演示查看者（只读）" }, { value: "tester", label: "研发测试人员（可模拟）" },
+  { value: "viewer", label: "伙伴用户（用户端）" }, { value: "tester", label: "研发测试人员（可模拟）" },
   { value: "project_admin", label: "项目管理员（业务配置）" }, { value: "factory_admin", label: "原厂管理员（全量管理）" }
 ];
 export function LoginPage() {

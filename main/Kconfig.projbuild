@@ -6,6 +6,116 @@ config OTA_URL
     help
         The application will access this URL to check for new firmwares and server address.
 
+menu "Blindbox self-hosted device API"
+
+config BLINDBOX_DEVICE_API_ENABLED
+    bool "Connect to the self-hosted blindbox platform"
+    default n
+
+if BLINDBOX_DEVICE_API_ENABLED
+
+config BLINDBOX_DEVICE_API_URL
+    string "Heartbeat endpoint URL"
+    default ""
+    help
+        Set this in the local, git-ignored sdkconfig using the computer's
+        current LAN address. Do not use 127.0.0.1 for a physical device.
+
+config BLINDBOX_DEVICE_CONFIG_URL
+    string "Device config endpoint URL (optional)"
+    default ""
+    help
+        Leave empty to derive /device-config from the heartbeat URL. When set,
+        use the full URL including ?device_id=device_001. Keep LAN addresses in
+        the local, git-ignored sdkconfig.
+
+config BLINDBOX_DEVICE_ID
+    string "Device ID"
+    default "device_001"
+
+config BLINDBOX_DEVICE_API_TOKEN
+    string "Device token"
+    default ""
+    help
+        Keep the token in the local, git-ignored sdkconfig. Do not commit it.
+
+config BLINDBOX_HEARTBEAT_INTERVAL_SECONDS
+    int "Heartbeat interval in seconds"
+    range 10 3600
+    default 30
+
+endif
+
+endmenu
+
+menu "Blindbox GPS"
+
+config BLINDBOX_GPS_ENABLED
+    bool "Enable UART NMEA GPS"
+    default n
+    help
+        Enable only after GPS TX has been moved away from GPIO18. GPS status
+        is logged locally and reported when the device API is also enabled.
+
+if BLINDBOX_GPS_ENABLED
+
+config BLINDBOX_GPS_UART_PORT
+    int "GPS UART port"
+    range 1 2
+    default 1
+
+config BLINDBOX_GPS_UART_RX_GPIO
+    int "ESP32 GPIO receiving GPS TX"
+    range 1 48
+    default 17
+    help
+        GPIO17 is the current candidate. GPIO18 is forbidden because the
+        bread-compact-wifi board uses it as LAMP_GPIO.
+
+config BLINDBOX_GPS_UART_BAUD_RATE
+    int "GPS UART baud rate"
+    range 1200 115200
+    default 9600
+
+endif
+
+endmenu
+
+menu "Blindbox PN532"
+
+config BLINDBOX_PN532_ENABLED
+    bool "Enable PN532 NFC over I2C"
+    default n
+    help
+        Enable only after confirming the PN532 board is in I2C mode and uses
+        3.3V logic. The UID is normalized to uppercase hexadecimal.
+
+if BLINDBOX_PN532_ENABLED
+
+config BLINDBOX_PN532_I2C_PORT
+    int "PN532 I2C port"
+    range 0 1
+    default 1
+
+config BLINDBOX_PN532_SDA_GPIO
+    int "PN532 SDA GPIO"
+    range 1 48
+    default 8
+
+config BLINDBOX_PN532_SCL_GPIO
+    int "PN532 SCL GPIO"
+    range 1 48
+    default 9
+
+config BLINDBOX_PN532_I2C_FREQUENCY
+    int "PN532 I2C frequency"
+    range 10000 400000
+    default 100000
+
+endif
+
+endmenu
+
 choice
     prompt "Flash Assets"
     default FLASH_DEFAULT_ASSETS if !USE_EMOTE_MESSAGE_STYLE

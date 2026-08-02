@@ -21,5 +21,6 @@ urlpatterns = [
     path("api/v1/", include("apps.nfc_tags.urls")),
     path("api/v1/", include("apps.checkins.urls")),
     path("api/v1/", include("apps.datasets.urls")),
+    path("api/v1/", include("apps.conversations.urls")),
     path("api/v1/", include("apps.demo.urls")),
 ]

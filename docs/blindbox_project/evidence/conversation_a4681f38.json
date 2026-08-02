@@ -1,0 +1,49 @@
+{
+  "schema_version": "blindbox.conversation_import.v1",
+  "event_type": "conversation_session_import",
+  "device_id": "device_001",
+  "agent_id": "agent_alo",
+  "official_session_id": "a4681f38",
+  "session_source": "xiaozhi_official",
+  "content_source": "xiaozhi_official_device_log",
+  "hardware_verified": true,
+  "hardware_tested_at": "2026-07-26T18:11:05+08:00",
+  "platform_import_status": "ready_for_conversation_api",
+  "messages": [
+    {
+      "role": "user",
+      "content": "呃，你好，请告诉我现在几点了。",
+      "captured_at": "2026-07-26T18:11:05+08:00"
+    },
+    {
+      "role": "assistant",
+      "content": "好呀，我帮你看看现在几点喔！",
+      "captured_at": "2026-07-26T18:11:06+08:00"
+    },
+    {
+      "role": "assistant",
+      "content": "现在时间是傍晚六点十一分，是礼拜天喔！",
+      "captured_at": "2026-07-26T18:11:10+08:00"
+    },
+    {
+      "role": "assistant",
+      "content": "你今天放假在家吗？",
+      "captured_at": "2026-07-26T18:11:14+08:00"
+    },
+    {
+      "role": "user",
+      "content": "呃，你好，现在几点了，再说一次。",
+      "captured_at": "2026-07-26T18:11:22+08:00"
+    },
+    {
+      "role": "assistant",
+      "content": "现在是傍晚六点十一分，礼拜天喔～",
+      "captured_at": "2026-07-26T18:11:23+08:00"
+    },
+    {
+      "role": "assistant",
+      "content": "怎么啦，是肚子饿了在想晚餐要吃啥吗？",
+      "captured_at": "2026-07-26T18:11:26+08:00"
+    }
+  ]
+}

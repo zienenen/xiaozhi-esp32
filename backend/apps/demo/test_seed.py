@@ -6,6 +6,7 @@ from django.core.management import call_command
 from django.test import TestCase
 
 from apps.agents.models import Agent
+from apps.conversations.models import ConversationMessage, ConversationSession, OfficialSyncLog
 from apps.datasets.models import Dataset
 from apps.devices.models import Device
 from apps.nfc_tags.models import NfcTag
@@ -23,6 +24,9 @@ class DemoSeedTests(TestCase):
         self.assertEqual(ScenicSpot.objects.count(), 1)
         self.assertEqual(NfcTag.objects.count(), 1)
         self.assertEqual(Dataset.objects.count(), 1)
+        self.assertEqual(ConversationSession.objects.count(), 1)
+        self.assertEqual(ConversationMessage.objects.count(), 2)
+        self.assertEqual(OfficialSyncLog.objects.count(), 1)
         device = Device.objects.get()
         self.assertTrue(device.check_token("seed-device-secret"))
         self.assertNotIn("seed-device-secret", device.device_token_hash)

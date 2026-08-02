@@ -50,6 +50,46 @@ python manage.py test apps.demo --settings=config.test_settings
 
 `config.test_settings` uses an in-memory database only for isolated automated tests. Development, demo, and public environments use PostgreSQL exclusively.
 
+## Real Hardware Baseline
+
+`seed_demo` creates simulator/demo configuration and the placeholder NFC tag `04AABBCCDD`. It does not create hardware acceptance evidence. Before each real ESP32 run, reset event and runtime state while preserving `device_001`, its token hash, binding, agents, spots, NFC configuration, and datasets:
+
+```powershell
+python manage.py reset_hw_test_data
+```
+
+The command is transactional and repeatable. It clears all previous check-ins and resets every device heartbeat/GPS runtime field. After it runs, `device_001` remains configured with `online_status=unknown`; only a subsequent real ESP32 heartbeat may count as hardware acceptance evidence.
+
+### LAN Device Smoke
+
+Find the computer's current LAN IP and add it to `DJANGO_ALLOWED_HOSTS` in `.env`. Start Django on all interfaces:
+
+```powershell
+ipconfig
+python manage.py runserver 0.0.0.0:8000
+```
+
+Use the computer LAN address from the ESP32, for example `http://192.168.x.x:8000/api/v1`. Never configure the ESP32 with `127.0.0.1`, because that address points back to the ESP32 itself.
+
+```powershell
+curl.exe -H "X-Device-Id: device_001" -H "X-Device-Token: demo-device-token" "http://192.168.x.x:8000/api/v1/device-config?device_id=device_001"
+
+curl.exe -X POST "http://192.168.x.x:8000/api/v1/device-heartbeats" -H "Content-Type: application/json" -H "X-Device-Id: device_001" -H "X-Device-Token: demo-device-token" -d "{\"device_id\":\"device_001\",\"firmware_version\":\"esp32-hw-test\",\"battery_percent\":100}"
+```
+
+A curl/Postman request is only an API smoke test. Run `reset_hw_test_data` again after manual testing so the dashboard returns to `unknown`; do not mark ACC-07 complete without real ESP32/serial evidence.
+
+### Replace The NFC Placeholder
+
+After PN532 serial output shows the physical tag UID, replace the placeholder with the real 4, 7, or 10-byte hexadecimal UID:
+
+```powershell
+python manage.py reset_hw_test_data
+python manage.py set_hw_nfc_tag "04:11:22:33"
+```
+
+The command normalizes separators/case, activates the real tag on `spot_gate_001`, and removes the placeholder when possible. If historical records protect the placeholder, it disables it instead, so `device-config` exposes only the real active UID. The command can be run repeatedly with the same UID. Verify the resulting `tag_id` in Django Admin or the NFC management page before sending a real `/checkins` event.
+
 ## Local PostgreSQL Acceptance Runtime
 
 For the current Windows acceptance machine, PostgreSQL 17.10 is installed as a project-local binary runtime under ignored `tmp/` paths, without a Windows service or administrator installation.

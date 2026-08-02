@@ -15,7 +15,8 @@ XIAOZHI_TOOL_TOKEN = os.getenv("XIAOZHI_TOOL_TOKEN", "")
 INSTALLED_APPS = [
     "django.contrib.admin", "django.contrib.auth", "django.contrib.contenttypes", "django.contrib.sessions",
     "django.contrib.messages", "django.contrib.staticfiles", "corsheaders", "rest_framework",
-    "apps.devices", "apps.agents", "apps.spots", "apps.nfc_tags", "apps.checkins", "apps.datasets", "apps.demo",
+    "apps.devices", "apps.agents", "apps.spots", "apps.nfc_tags", "apps.checkins", "apps.datasets",
+    "apps.conversations", "apps.demo",
 ]
 
 MIDDLEWARE = [

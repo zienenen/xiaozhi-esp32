@@ -105,6 +105,9 @@
 | `voice_id` | string | 否 | 音色引用 |
 | `dataset_id` | string | 否 | 关联景区数据集 |
 | `status` | string | 是 | `active` / `disabled` / `draft` |
+| `prompt_version` | string | 否 | 我方平台维护的 prompt/人设配置版本 |
+| `official_sync_status` | string | 否 | `not_synced` / `synced` / `failed` / `manual_required` |
+| `official_synced_at` | datetime | 否 | 最近一次同步到小智官网或人工确认同步的时间 |
 | `series` | string | 否 | 市场化预留 |
 | `rarity` | string | 否 | 市场化预留 |
 
@@ -193,6 +196,60 @@
   }
 ]
 ```
+
+### 4.8 ConversationSession
+
+| 字段 | 类型 | 必需 | 说明 |
+| --- | --- | --- | --- |
+| `session_id` | string | 是 | 对话会话 ID |
+| `device_id` | string | 是 | 关联设备 |
+| `agent_id` | string | 是 | 关联角色 |
+| `spot_id` | string | 否 | 关联点位，没有则为空 |
+| `source` | string | 是 | `official_manual_import` / `tool_callback` / `device_log` / `self_hosted_voice` |
+| `started_at` | datetime | 是 | 会话开始时间 |
+| `ended_at` | datetime | 否 | 会话结束时间 |
+| `summary` | string | 否 | 对话摘要 |
+| `status` | string | 是 | `open` / `closed` / `failed` |
+
+### 4.9 ConversationMessage
+
+| 字段 | 类型 | 必需 | 说明 |
+| --- | --- | --- | --- |
+| `message_id` | string | 是 | 消息 ID |
+| `session_id` | string | 是 | 所属会话 |
+| `role` | string | 是 | `user` / `assistant` / `system` / `tool` |
+| `content` | string | 是 | 文本内容或摘要 |
+| `content_source` | string | 是 | `manual` / `official_export` / `device_log` / `api` |
+| `created_at` | datetime | 是 | 消息时间 |
+| `metadata` | object | 否 | ASR 置信度、工具名、错误码等摘要 |
+
+### 4.10 OfficialSyncLog
+
+| 字段 | 类型 | 必需 | 说明 |
+| --- | --- | --- | --- |
+| `sync_id` | string | 是 | 同步记录 ID |
+| `target_type` | string | 是 | `agent` / `device` / `tool` / `voice` |
+| `target_id` | string | 是 | 目标 ID |
+| `payload_snapshot` | object | 是 | 本次准备同步到官网的配置快照，敏感字段脱敏 |
+| `sync_mode` | string | 是 | `manual_copy` / `semi_auto` / `api` |
+| `status` | string | 是 | `pending` / `synced` / `failed` / `manual_required` |
+| `operator` | string | 否 | 操作人 |
+| `synced_at` | datetime | 否 | 同步完成时间 |
+| `failure_reason` | string | 否 | 失败原因 |
+
+### 4.11 ToolInvocationLog
+
+| 字段 | 类型 | 必需 | 说明 |
+| --- | --- | --- | --- |
+| `invocation_id` | string | 是 | 调用 ID |
+| `tool_name` | string | 是 | 工具名，如 `get_agent_context` |
+| `agent_id` | string | 否 | 关联角色 |
+| `device_id` | string | 否 | 关联设备 |
+| `request_summary` | object | 否 | 入参摘要，不保存明文 token |
+| `response_summary` | object | 否 | 返回摘要 |
+| `status` | string | 是 | `success` / `failed` |
+| `duration_ms` | number | 否 | 调用耗时 |
+| `created_at` | datetime | 是 | 调用时间 |
 
 ## 5. 设备侧 API
 
@@ -380,6 +437,89 @@ POST /api/v1/checkins
 | `spot_mismatch` | 标签不属于当前点位 |
 | `device_not_bound` | 设备未绑定角色 |
 | `spot_disabled` | 点位已停用 |
+
+### 5.5 上报小智官方链路对话事件
+
+```http
+POST /api/v1/device-conversation-events
+Content-Type: application/json
+X-Device-Id: device_001
+X-Device-Token: <device-token>
+```
+
+用途：ESP32 在小智官方语音链路中捕获一条 user 文本或 assistant 回复后，按句实时上报。后端使用已认证设备及其当前绑定关系创建或复用会话，不要求管理端登录。
+
+请求示例：
+
+```json
+{
+  "official_session_id": "d0d109c0",
+  "role": "user",
+  "content": "我让你自我介绍一下。",
+  "content_source": "xiaozhi_official_device_log",
+  "session_source": "xiaozhi_official",
+  "created_at": "2026-07-26T22:55:22+08:00"
+}
+```
+
+字段：
+
+| 字段 | 类型 | 必需 | 说明 |
+| --- | --- | --- | --- |
+| `official_session_id` | string | 是 | 小智官方协议 session ID；同一 ID 的消息聚合到同一会话 |
+| `role` | string | 是 | 仅允许 `user` / `assistant` |
+| `content` | string | 是 | 本次捕获的一句文本，不做前端伪造 |
+| `content_source` | string | 否 | 固件固定为 `xiaozhi_official_device_log` |
+| `session_source` | string | 否 | 固件固定为 `xiaozhi_official` |
+| `created_at` | datetime | 否 | ISO 8601；当前中国区一期固件发送 `+08:00` 时区 |
+| `agent_id` | string | 否 | 仅作为报告值；后端必须优先使用设备当前绑定角色 |
+| `spot_id` | string/null | 否 | 可选点位上下文 |
+| `metadata` | object | 否 | 可选扩展字段；后端必须脱敏 token、authorization 等敏感键 |
+
+首次创建官网 session 的响应为 HTTP 201；同一官网 session 后续追加消息返回 HTTP 200：
+
+```json
+{
+  "success": true,
+  "data": {
+    "accepted": true,
+    "session_created": true,
+    "session_id": "session_1162ee462f6d48c8ad7fd8f86060096b",
+    "official_session_id": "d0d109c0",
+    "message_id": "message_example",
+    "device_id": "device_001"
+  },
+  "error": null,
+  "request_id": "req_example"
+}
+```
+
+错误：
+
+| code/状态 | 含义 |
+| --- | --- |
+| `device_not_found` | 缺少或不存在的设备身份 |
+| `invalid_device_token` | 设备 token 不正确 |
+| `device_not_bound` | 设备未绑定角色 |
+| HTTP 400 | `official_session_id`、`role`、`content` 或时间格式无效 |
+
+设备侧约束：
+
+- 必须先打印 `CONVERSATION_EVIDENCE`，再以零等待方式放入独立上报队列。
+- HTTP 请求不得在官方 STT/TTS 回调线程中同步执行。
+- 请求头使用本机 Git 忽略配置中的设备 token；日志不得打印明文 token。
+- HTTP 超时、拒绝、队列满、内存不足或设备 API 离线时，必须保留串口证据并继续小智对话。
+- 当前接口每次成功请求都会新增一条消息；固件失败后不盲目自动重试，避免未定义幂等键时产生重复消息。
+
+后端实现记录（2026-07-26）：
+
+- `ConversationSession.official_session_id` 已落库，并以 `(device, official_session_id)` 唯一约束防止同一设备的官网会话被拆分。
+- 会话和消息的数据库 `source` / `content_source` 使用现有 `device_log` 枚举；请求中的 `xiaozhi_official`、`xiaozhi_official_device_log` 保留在消息 metadata，供前端区分真实来源。
+- 后端绑定关系优先于请求体 `agent_id`；报告值不一致时仅记录审计标记。
+- metadata 中 token、password、secret、authorization、credential、API key、access key、private key、cookie 等敏感键递归替换为 `***`，接口响应不返回设备 token。
+- PostgreSQL 迁移 `conversations.0002_conversationsession_official_session_id` 已应用；后端全量 29 项测试和 `manage.py check` 已通过。
+
+2026-07-26 真实硬件验收：官方 session `d0d109c0` 的 9 条 user/assistant 消息已由 `device_001` 按句上报并聚合到同一 `ConversationSession`，后端绑定角色为 `agent_alo`。
 
 ## 6. 管理端 API
 

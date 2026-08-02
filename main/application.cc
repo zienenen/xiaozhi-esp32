@@ -9,6 +9,9 @@
 #include "mcp_server.h"
 #include "assets.h"
 #include "settings.h"
+#include "device_api_client.h"
+#include "gps_service.h"
+#include "pn532_service.h"
 
 #include <cstring>
 #include <esp_log.h>
@@ -72,7 +75,10 @@ void Application::Initialize() {
     auto codec = board.GetAudioCodec();
     audio_service_.Initialize(codec);
     audio_service_.Start();
-
+    // Both services are Kconfig-disabled by default. HW-PM-07 requires
+    // enabling and validating only one new peripheral at a time.
+    GpsService::GetInstance().Start();
+    Pn532Service::GetInstance().Start();
     AudioServiceCallbacks callbacks;
     callbacks.on_send_queue_available = [this]() {
         xEventGroupSetBits(event_group_, MAIN_EVENT_SEND_AUDIO);
@@ -276,6 +282,9 @@ void Application::HandleNetworkConnectedEvent() {
             app->activation_task_handle_ = nullptr;
             vTaskDelete(NULL);
         }, "activation", 4096 * 2, this, 2, &activation_task_handle_);
+    } else {
+        // On reconnect the official voice protocol is already initialized.
+        DeviceApiClient::GetInstance().Start();
     }
 
     // Update the status bar immediately to show the network state
@@ -284,6 +293,7 @@ void Application::HandleNetworkConnectedEvent() {
 }
 
 void Application::HandleNetworkDisconnectedEvent() {
+    DeviceApiClient::GetInstance().Stop();
     // Close current conversation when network disconnected
     auto state = GetDeviceState();
     if (state == kDeviceStateConnecting || state == kDeviceStateListening || state == kDeviceStateSpeaking) {
@@ -298,6 +308,9 @@ void Application::HandleNetworkDisconnectedEvent() {
 
 void Application::HandleActivationDoneEvent() {
     ESP_LOGI(TAG, "Activation done");
+    // Keep self-hosted API traffic behind the official OTA/protocol setup so
+    // configuration and heartbeat requests cannot delay voice activation.
+    DeviceApiClient::GetInstance().Start();
 
     SystemInfo::PrintHeapStats();
     SetDeviceState(kDeviceStateIdle);
@@ -542,6 +555,8 @@ void Application::InitializeProtocol() {
                 auto text = cJSON_GetObjectItem(root, "text");
                 if (cJSON_IsString(text)) {
                     ESP_LOGI(TAG, "<< %s", text->valuestring);
+                    DeviceApiClient::GetInstance().LogConversationEvidence(
+                        protocol_->session_id().c_str(), "assistant", text->valuestring);
                     Schedule([display, message = std::string(text->valuestring)]() {
                         display->SetChatMessage("assistant", message.c_str());
                     });
@@ -551,6 +566,8 @@ void Application::InitializeProtocol() {
             auto text = cJSON_GetObjectItem(root, "text");
             if (cJSON_IsString(text)) {
                 ESP_LOGI(TAG, ">> %s", text->valuestring);
+                DeviceApiClient::GetInstance().LogConversationEvidence(
+                    protocol_->session_id().c_str(), "user", text->valuestring);
                 Schedule([display, message = std::string(text->valuestring)]() {
                     display->SetChatMessage("user", message.c_str());
                 });
@@ -1128,4 +1145,3 @@ void Application::ResetProtocol() {
         protocol_.reset();
     });
 }
-

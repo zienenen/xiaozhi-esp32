@@ -20,14 +20,22 @@
 | 架构建议 | [phase1_phase2_architecture_plan.md](phase1_phase2_architecture_plan.md) | 一期/二期架构建议，偏课题 Demo 与工程落地 |
 | 实施计划 | [phase1_single_robot_implementation_plan.md](phase1_single_robot_implementation_plan.md) | 一期工程实施计划，偏研发执行 |
 | 研发流程 | [development_process.md](development_process.md) | 单仓多模块开发流程、阶段门、提交规则 |
+| 研发日志 | [development_logs/README.md](development_logs/README.md) | 记录真实联调问题、根因、修复方式和后续规避规则 |
 | 测试质量 | [testing_and_quality.md](testing_and_quality.md) | 后端、前端、模拟器、硬件接入质量门 |
 | 验收交接 | [phase1_acceptance_handoff.md](phase1_acceptance_handoff.md) | 研发主管最终验收记录、ACC 状态、已处理问题和剩余外部阻塞 |
 | 发布运行 | [release_operations_runbook.md](release_operations_runbook.md) | 本地运行、演示准备、故障恢复和节点上传规则 |
 | 问题清单 | [rd_lead_question_list.md](rd_lead_question_list.md) | 需要用户确认的问题、默认建议和阻塞规则 |
 | 安全治理 | [security_and_data_governance.md](security_and_data_governance.md) | 一期最低安全与数据治理边界，覆盖设备凭据、GPS/NFC、日志和演示账号 |
 | 开源选型 | [open_source_selection.md](open_source_selection.md) | 一期开源选型与复用边界，明确当前采用组件、暂缓组件和商业化前治理项 |
+| 官网能力对照 | [xiaozhi_official_capabilities/README.md](xiaozhi_official_capabilities/README.md) | 小智官网能力、自研替代优先级和回退调用策略 |
+| 官网能力地图 | [xiaozhi_official_capabilities/capability_map.md](xiaozhi_official_capabilities/capability_map.md) | 小智官网/官方链路能力拆解，标明自研、依赖和后置能力 |
+| 双轨架构 | [xiaozhi_official_capabilities/dual_track_architecture.md](xiaozhi_official_capabilities/dual_track_architecture.md) | 官网兼容轨、自研替代轨和兜底轨运行架构 |
+| 迁移路线 | [xiaozhi_official_capabilities/migration_roadmap.md](xiaozhi_official_capabilities/migration_roadmap.md) | 从官网依赖迁移到自研平台的阶段路线 |
+| 全栈交接 | [xiaozhi_official_capabilities/fullstack_handoff.md](xiaozhi_official_capabilities/fullstack_handoff.md) | 给全栈工程师的模块边界和任务包说明 |
+| 商业 IoT 参考 | [xiaozhi_official_capabilities/commercial_iot_reference_usmile.md](xiaozhi_official_capabilities/commercial_iot_reference_usmile.md) | 类比 usmile 智能牙刷的商业化设备连接、App 配网、云端和 OTA 架构参考 |
 | 全栈实施 | [fullstack_implementation_guide.md](fullstack_implementation_guide.md) | 后端、前端、设备端联调实施说明 |
 | 预算采购 | [phase1_single_robot_budget.md](phase1_single_robot_budget.md) | 单台演示机器人采购预算 |
+| 硬件接线 | [phase1_hardware_wiring_manual.md](phase1_hardware_wiring_manual.md) | 一期真实硬件接线、安全规则、当前 GPIO 和逐模块验收状态 |
 | 角色分工 | [project_role_agents.md](project_role_agents.md) | 产品、架构、研发、全栈等角色责任边界 |
 | 智能体文档要求 | [agent_document_requirements.md](agent_document_requirements.md) | 四类智能体的文档责任、缺失资料补齐顺序和逐项核对规则 |
 
@@ -66,8 +74,9 @@
 17. [security_and_data_governance.md](security_and_data_governance.md)
 18. [open_source_selection.md](open_source_selection.md)
 19. [phase1_single_robot_budget.md](phase1_single_robot_budget.md)
-20. [project_role_agents.md](project_role_agents.md)
-21. [agent_document_requirements.md](agent_document_requirements.md)
+20. [phase1_hardware_wiring_manual.md](phase1_hardware_wiring_manual.md)
+21. [project_role_agents.md](project_role_agents.md)
+22. [agent_document_requirements.md](agent_document_requirements.md)
 
 ## 3. 口径说明
 

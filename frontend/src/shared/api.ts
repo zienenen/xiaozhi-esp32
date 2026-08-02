@@ -4,7 +4,7 @@ export type ApiEnvelope<T> = { success: boolean; data: T; error?: { code?: strin
 export type ListResult<T> = { results: T[]; count?: number } | T[];
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL ?? "/api/v1",
+  baseURL: String(import.meta.env.VITE_API_BASE_URL || "").trim() || "/api/v1",
   timeout: 10000,
   headers: { Accept: "application/json", "Content-Type": "application/json" }
 });
