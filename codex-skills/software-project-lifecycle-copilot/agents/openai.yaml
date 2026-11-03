@@ -1,0 +1,7 @@
+interface:
+  display_name: "软件项目生命周期 Copilot"
+  short_description: "项目启动规则、全生命周期协同、角色边界与证据化交付"
+  default_prompt: "Use $software-project-lifecycle-copilot to establish the project baseline and coordinate product, architecture, engineering, testing, release, and operations with explicit role boundaries and evidence-based handoffs."
+
+policy:
+  allow_implicit_invocation: true
